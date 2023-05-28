@@ -5,16 +5,14 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import main.Constants;
@@ -30,13 +28,19 @@ public class SignInController extends Constants {
     private URL location;
 
     @FXML
-    private Button signInButton;
+    private CheckBox clientButton;
+
+    @FXML
+    private CheckBox employeeButton;
 
     @FXML
     private TextField loginField;
 
     @FXML
     private PasswordField passwordField;
+
+    @FXML
+    private Button signInButton;
 
     @FXML
     private Button signUpWindowButton;
@@ -54,7 +58,7 @@ public class SignInController extends Constants {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("signUp.fxml"));
             Scene scene = null;
             try { scene = new Scene(fxmlLoader.load(), 700, 400); }
-            catch (IOException e) { System.out.println("Error: unidentified error."); }
+            catch (IOException e) { throw new RuntimeException(e); }
             stage.setScene(scene);
             stage.show();
 
@@ -68,24 +72,51 @@ public class SignInController extends Constants {
             
             if (!login.equals("") && !password.equals("")) {
                 try { signInUser(login, password); }
-                catch (SQLException | ClassNotFoundException e) { System.out.println("Error: unidentified error."); }
+                catch (SQLException | ClassNotFoundException e) { throw new RuntimeException(e); }
             }
             else System.out.println("Error: login or password is epmty.");
 
         });
+
+        // реализация возможности выбора только одного варианта
+        clientButton.setOnAction(actionEvent ->  {
+            if (employeeButton.isSelected()) employeeButton.fire();
+        });
+        employeeButton.setOnAction(actionEvent ->  {
+            if (clientButton.isSelected()) clientButton.fire();
+        });
     }
 
     private void signInUser(String login, String password) throws SQLException, ClassNotFoundException {
-        String query = "SELECT * FROM " + USERS_TABLE + " WHERE " + USERS_LOGIN + " =? AND " + USERS_PASSWORD + " =?";
 
-        PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
-        statement.setString(1, login);
-        statement.setString(2, password);
+        if (clientButton.isSelected()) {
+            String query = "SELECT * FROM " + CLIENTS_TABLE + " WHERE " + CLIENTS_LOGIN + " =? AND " + CLIENTS_PASSWORD + " =?";
 
-        ResultSet result = statement.executeQuery();
+            PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
+            statement.setString(1, login);
+            statement.setString(2, password);
 
-        while(result.next()){
-            System.out.println(result.getString(USERS_FIRST_NAME));
+            ResultSet result = statement.executeQuery();
+
+            while(result.next()){
+                System.out.println(result.getString(CLIENTS_FIRST_NAME));
+            }
+
+        }
+
+        if (employeeButton.isSelected()) {
+            String query = "SELECT * FROM " + EMPLOYEE_TABLE + " WHERE " + EMPLOYEE_LOGIN + " =? AND " + EMPLOYEE_PASSWORD + " =?";
+
+            PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
+            statement.setString(1, login);
+            statement.setString(2, password);
+
+            ResultSet result = statement.executeQuery();
+
+            while(result.next()){
+                System.out.println(result.getString(EMPLOYEE_FIRST_NAME));
+            }
+
         }
     }
 }
