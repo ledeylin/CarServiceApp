@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
@@ -58,12 +59,15 @@ public class SignUpController extends Constants {
 
     @FXML
     private TextField signUpSecondName;
-    private DatabaseHandler databaseHandler = new DatabaseHandler();
+
+    private final DatabaseHandler databaseHandler = new DatabaseHandler();
 
     @FXML
-    void initialize() {
+    void initialize()  {
 
+        // переход на окно авторизации
         signInWindowButton.setOnAction(actionEvent -> {
+
             FXMLLoader loader  =  new FXMLLoader(Main.class.getResource("signIn.fxml"));
 
             try { loader.load(); }
@@ -78,32 +82,97 @@ public class SignUpController extends Constants {
 
         });
 
+        // реализация возможности выбора только одного пола (чуть-чуть криво работает, приходится нажимать два раза)
         signUpMale.setOnAction(actionEvent ->  {
             if (signUpFemale.isSelected()) signUpFemale.fire();
         });
-
         signUpFemale.setOnAction(actionEvent ->  {
             if (signUpMale.isSelected()) signUpMale.fire();
         });
 
+        // регистрация в приложении
         signUpButton.setOnAction(actionEvent -> {
-            String gender = null;
-            if (signUpMale.isSelected()) gender = "Male";
-            if (signUpFemale.isSelected()) gender = "Female";
-            String firstName = signUpFirstName.getText();
-            String secondName = "";
-            try { secondName = signUpSecondName.getText(); }
-            catch (Exception ignored) {}
-            String lastName = signUpLastName.getText();
-            LocalDate dateOfBirth = signUpDateOfBirth.getValue();
-            String login = signUpLogin.getText();
-            String password = signUpPassword.getText();
-            try {
-                signUpUser(firstName, secondName, lastName, gender, dateOfBirth, login, password);
-            } catch (SQLException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
+            while (true) {
+
+                // проверки на корректную дату рождения
+                LocalDate dateOfBirth = null;
+                try {
+                    dateOfBirth = signUpDateOfBirth.getValue();
+                    if (LocalDate.now().isBefore(dateOfBirth)) {
+                        System.out.println("Error: incorrect date.");
+                        break;
+                    }
+                } catch (Exception e) {
+                    System.out.println("Error: incorrect date.");
+                    break;
+                }
+
+                // проверка на существование логина
+                try {
+                    String login = signUpLogin.getText();
+                    String query = "SELECT * FROM " + USERS_TABLE + " WHERE " + USERS_LOGIN + " =?";
+                    PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
+                    statement.setString(1, login);
+                    ResultSet result = statement.executeQuery();
+                    if (result.next()) {
+                        System.out.println("Error: login already exist.");
+                        break;
+                    }
+                } catch (SQLException | ClassNotFoundException e) {
+                    System.out.println("Error: incorrect login.");
+                }
+
+                // проверка на то, введён ли пол
+                String gender = null;
+                if (signUpMale.isSelected()) gender = "Male";
+                if (signUpFemale.isSelected()) gender = "Female";
+                else {
+                    System.out.println("Error: please select gender.");
+                    break;
+                }
+
+                // реализация возможности не вводить second name
+                String secondName = "";
+                try { secondName = signUpSecondName.getText(); }
+                catch (Exception ignored) {}
+
+                // остальные данные без проверок
+                String firstName = signUpFirstName.getText();
+                String lastName = signUpLastName.getText();
+                String login = signUpLogin.getText();
+                String password = signUpPassword.getText();
+
+                try {
+                    signUpUser(firstName, secondName, lastName, gender, dateOfBirth, login, password);
+                } catch (SQLException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+
+                // сама регистрация
+                try {
+                    signUpUser(firstName, secondName, lastName, gender, dateOfBirth, login, password);
+                    System.out.println("Registration successful.");
+                } catch (SQLException | ClassNotFoundException e) {
+                    System.out.println("Error: unidentified error.");
+                    break;
+                }
+
+                // смена окна на авторизацию
+                FXMLLoader loader  =  new FXMLLoader(Main.class.getResource("signIn.fxml"));
+
+                try { loader.load(); }
+                catch (IOException ignored) {}
+
+                signInWindowButton.getScene().getWindow().hide();
+
+                Parent root = loader.getRoot();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.showAndWait();
+
             }
         });
+
     }
 
     public String insertNew = "INSERT INTO " + USERS_TABLE + " (" + USERS_FIRST_NAME +  ", " + USERS_SECOND_NAME +

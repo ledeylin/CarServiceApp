@@ -1,7 +1,6 @@
 package main;
 
 import java.sql.*;
-import java.time.LocalDate;
 
 public class DatabaseHandler extends Configs{
     private static Connection dbConnection;
