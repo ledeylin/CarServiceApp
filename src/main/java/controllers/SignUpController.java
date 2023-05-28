@@ -68,17 +68,14 @@ public class SignUpController extends Constants {
         // переход на окно авторизации
         signInWindowButton.setOnAction(actionEvent -> {
 
-            FXMLLoader loader  =  new FXMLLoader(Main.class.getResource("signIn.fxml"));
-
-            try { loader.load(); }
-            catch (IOException ignored) {}
-
             signInWindowButton.getScene().getWindow().hide();
-
-            Parent root = loader.getRoot();
             Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("signIn.fxml"));
+            Scene scene = null;
+            try { scene = new Scene(fxmlLoader.load(), 700, 400); }
+            catch (IOException e) { System.out.println("Error: unidentified error."); }
+            stage.setScene(scene);
+            stage.show();
 
         });
 

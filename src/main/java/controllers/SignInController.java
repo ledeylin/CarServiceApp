@@ -46,33 +46,32 @@ public class SignInController extends Constants {
     @FXML
     void initialize() {
 
+        // переход на окно регистрации
         signUpWindowButton.setOnAction(actionEvent -> {
-            FXMLLoader  loader  =  new FXMLLoader(Main.class.getResource("signUp.fxml"));
-
-            try {
-                loader.load();
-            } catch (IOException ignored) {}
 
             signUpWindowButton.getScene().getWindow().hide();
-
-            Parent root = loader.getRoot();
             Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("signUp.fxml"));
+            Scene scene = null;
+            try { scene = new Scene(fxmlLoader.load(), 700, 400); }
+            catch (IOException e) { System.out.println("Error: unidentified error."); }
+            stage.setScene(scene);
+            stage.show();
+
         });
 
+        // авторизация
         signInButton.setOnAction(actionEvent -> {
+
             String login = loginField.getText().trim();
             String password = passwordField.getText().trim();
             
             if (!login.equals("") && !password.equals("")) {
-                try {
-                    signInUser(login, password);
-                } catch (SQLException | ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+                try { signInUser(login, password); }
+                catch (SQLException | ClassNotFoundException e) { System.out.println("Error: unidentified error."); }
             }
             else System.out.println("Error: login or password is epmty.");
+
         });
     }
 
