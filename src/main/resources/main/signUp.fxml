@@ -28,7 +28,7 @@
                         <Font name="Century Gothic" size="41.0" />
                     </font>
                 </Text>
-                <Button fx:id="signUpButton" layoutX="298.0" layoutY="297.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="103.0" style="-fx-background-color: #C0C0C0;" text="Registration" textFill="DIMGRAY" AnchorPane.topAnchor="300.0">
+                <Button fx:id="signUpButton" layoutX="314.0" layoutY="297.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: #C0C0C0;" text="Sign Up" textFill="DIMGRAY" AnchorPane.topAnchor="297.0">
                     <font>
                         <Font name="Monospaced Bold" size="11.0" />
                     </font>
@@ -38,7 +38,7 @@
                         <Font name="Century Gothic" size="16.0" />
                     </font>
                 </Text>
-                <Button fx:id="logInWindowButton" layoutX="448.0" layoutY="261.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: #C0C0C0;" text="Log in" textFill="DIMGRAY" AnchorPane.topAnchor="261.0">
+                <Button fx:id="signInWindowButton" layoutX="448.0" layoutY="261.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: #C0C0C0;" text="Sign in" textFill="DIMGRAY" AnchorPane.topAnchor="261.0">
                     <font>
                         <Font name="Monospaced Bold" size="11.0" />
                     </font>
