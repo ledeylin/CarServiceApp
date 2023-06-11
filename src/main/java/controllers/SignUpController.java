@@ -133,6 +133,14 @@ public class SignUpController extends Constants {
                         System.out.println("Error: login already exist.");
                         break;
                     }
+                    query = "SELECT * FROM " + EMPLOYEE_TABLE + " WHERE " + EMPLOYEE_LOGIN + " =?";
+                    statement = databaseHandler.getDbConnection().prepareStatement(query);
+                    statement.setString(1, login);
+                    result = statement.executeQuery();
+                    if (result.next()) {
+                        System.out.println("Error: login already exist.");
+                        break;
+                    }
                 } catch (SQLException | ClassNotFoundException e) {
                     System.out.println("Error: incorrect login.");
                 }

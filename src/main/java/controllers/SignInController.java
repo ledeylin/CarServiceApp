@@ -120,7 +120,7 @@ public class SignInController extends Constants {
                 statement.setString(2, password);
 
                 ResultSet result = statement.executeQuery();
-                while(result.next()){
+                if (result.next()){
 
                     Stage stage = new Stage();
                     FXMLLoader fxmlLoader = new FXMLLoader();
@@ -149,7 +149,13 @@ public class SignInController extends Constants {
                     catch (IOException e) { throw new RuntimeException(e); }
                     stage.setScene(scene);
                     stage.show();
-
+                }
+                else {
+                    System.out.println("Error: data entered incorrectly.");
+                    Shake loginAnim = new Shake(loginField);
+                    Shake passwordAnim = new Shake(passwordField);
+                    loginAnim.playAnim();
+                    passwordAnim.playAnim();
                 }
             }
 

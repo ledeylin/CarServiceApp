@@ -10,42 +10,22 @@
     <children>
         <AnchorPane layoutY="31.0" prefHeight="350.0" prefWidth="700.0" style="-fx-background-color: #D3D3D3;" AnchorPane.bottomAnchor="25.0" AnchorPane.topAnchor="25.0">
             <children>
-            <Text fill="DIMGRAY" layoutX="205.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ФИО">
+            <Text fill="DIMGRAY" layoutX="178.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ЛОГИН">
                <font>
                   <Font name="Monospaced Bold" size="21.0" />
                </font>
             </Text>
-            <Text fill="DIMGRAY" layoutX="202.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="АДРЕС">
+            <Text fill="DIMGRAY" layoutX="178.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ПАРОЛЬ">
                <font>
                   <Font name="Monospaced Bold" size="21.0" />
                </font>
             </Text>
-            <Text fill="DIMGRAY" layoutX="202.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ЛОГИН">
-               <font>
-                  <Font name="Monospaced Bold" size="21.0" />
-               </font>
-            </Text>
-            <Text fill="DIMGRAY" layoutX="199.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ПАРОЛЬ">
-               <font>
-                  <Font name="Monospaced Bold" size="21.0" />
-               </font>
-            </Text>
-            <TextField fx:id="text_address" layoutX="324.0" layoutY="128.0" prefHeight="25.0" prefWidth="216.0" promptText="write if you want edit it">
+            <TextField fx:id="text_login" layoutX="301.0" layoutY="110.0" prefHeight="25.0" prefWidth="216.0" promptText="write if you want edit it">
                <font>
                   <Font name="Monospaced Regular" size="13.0" />
                </font>
             </TextField>
-            <TextField fx:id="text_name" layoutX="325.0" layoutY="75.0" prefHeight="25.0" prefWidth="216.0" promptText="write if you want edit it">
-               <font>
-                  <Font name="Monospaced Regular" size="13.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="text_login" layoutX="324.0" layoutY="178.0" prefHeight="25.0" prefWidth="216.0" promptText="write if you want edit it">
-               <font>
-                  <Font name="Monospaced Regular" size="13.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="text_pass" layoutX="325.0" layoutY="228.0" prefHeight="25.0" prefWidth="216.0" promptText="write if you want edit it">
+            <TextField fx:id="text_pass" layoutX="301.0" layoutY="201.0" prefHeight="25.0" prefWidth="216.0" promptText="write if you want edit it">
                <font>
                   <Font name="Monospaced Regular" size="13.0" />
                </font>
