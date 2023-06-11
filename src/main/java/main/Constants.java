@@ -9,11 +9,12 @@ public class Constants {
     protected final String CLIENTS_LOGIN = "login";
     protected final String CLIENTS_PASSWORD = "password";
     protected final String EMPLOYEE_TABLE = "employees";
-    protected final String EMPLOYEE_LAST_NAME = "lastName";
-    protected final String EMPLOYEE_FIRST_NAME = "firstName";
+    protected final String EMPLOYEE_LAST_NAME = "last_name";
+    protected final String EMPLOYEE_FIRST_NAME = "first_name";
+    protected final String EMPLOYEE_SECOND_NAME = "second_name";
     protected final String EMPLOYEE_ADDRESS = "address";
     protected final String EMPLOYEE_LOGIN = "login";
     protected final String EMPLOYEE_PASSWORD = "password";
-    protected final String EMPLOYEE_ACCESS_RIGHTS = "accessRights";
+    protected final String EMPLOYEE_ACCESS_RIGHTS = "permission";
 
 }

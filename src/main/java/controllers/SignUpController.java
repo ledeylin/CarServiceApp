@@ -147,7 +147,7 @@ public class SignUpController extends Constants {
 
                 // сама регистрация
                 try {
-                    signUpClient(lastName, firstName, address, phoneNumber,login, password);
+                    signUpClient(lastName, firstName, address, phoneNumber, login, password);
                     System.out.println("Registration successful.");
 
                     // смена окна на авторизацию

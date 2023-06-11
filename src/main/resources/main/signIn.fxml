@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #A9A9A9;" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SignInController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #A9A9A9;" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SignInController">
    <children>
       <AnchorPane layoutY="31.0" prefHeight="350.0" prefWidth="700.0" style="-fx-background-color: #D3D3D3;" AnchorPane.bottomAnchor="25.0" AnchorPane.topAnchor="25.0">
          <children>
@@ -22,17 +22,17 @@
                   <Font name="Monospaced Regular" size="12.0" />
                </font>
             </PasswordField>
-            <Text fill="DIMGRAY" layoutX="220.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Authorization" AnchorPane.topAnchor="40.0">
+            <Text fill="DIMGRAY" layoutX="236.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Authorization" AnchorPane.topAnchor="40.0">
                <font>
                   <Font name="Century Gothic" size="41.0" />
                </font>
             </Text>
-            <Button fx:id="signUpWindowButton" layoutX="410.0" layoutY="258.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: #C0C0C0;" text="Sign Up" textFill="DIMGRAY" AnchorPane.topAnchor="258.0">
+            <Button fx:id="signUpWindowButton" layoutX="395.0" layoutY="257.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: #C0C0C0;" text="Sign Up" textFill="DIMGRAY" AnchorPane.topAnchor="257.0">
                <font>
                   <Font name="Monospaced Bold" size="11.0" />
                </font>
             </Button>
-            <Text fill="DIMGRAY" layoutX="196.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Are you not in the system?" AnchorPane.topAnchor="261.90625">
+            <Text fill="DIMGRAY" layoutX="208.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Are you not in the system?" AnchorPane.topAnchor="260.53125">
                <font>
                   <Font name="Century Gothic" size="16.0" />
                </font>
