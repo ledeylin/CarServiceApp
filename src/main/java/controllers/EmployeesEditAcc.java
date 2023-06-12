@@ -31,8 +31,6 @@ public class EmployeesEditAcc extends Constants {
 
     @FXML
     private TextField text_pass;
-
-    private final DatabaseHandler databaseHandler = new DatabaseHandler();
     @FXML
     void initialize() {
 
@@ -71,7 +69,7 @@ public class EmployeesEditAcc extends Constants {
         button_personal_service.setOnAction(actionEvent -> {
             button_personal_service.getScene().getWindow().hide();
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(".fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("services_employee.fxml"));
             Scene scene = null;
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);

@@ -2,10 +2,11 @@ package main;
 
 public class Constants {
     protected static final String CLIENTS_TABLE = "clients";
-    protected final String CLIENTS_LAST_NAME = "lastName";
-    protected final String CLIENTS_FIRST_NAME = "firstName";
+    protected final String CLIENTS_LAST_NAME = "last_name";
+    protected final String CLIENTS_FIRST_NAME = "first_name";
+    protected final String CLIENTS_SECOND_NAME = "second_name";
     protected final String CLIENTS_ADDRESS = "address";
-    protected final String CLIENTS_PHONE_NUMBER = "phoneNumber";
+    protected final String CLIENTS_PHONE_NUMBER = "phone_number";
     protected static final String CLIENTS_LOGIN = "login";
     protected final String CLIENTS_PASSWORD = "password";
     protected static final String EMPLOYEE_TABLE = "employees";
@@ -16,5 +17,25 @@ public class Constants {
     protected static final String EMPLOYEE_LOGIN = "login";
     protected static final String EMPLOYEE_PASSWORD = "password";
     protected final String EMPLOYEE_ACCESS_RIGHTS = "permission";
-
+    protected final String SERVICE_TABLE = "service";
+    protected final String SERVICE_ID = "id_service";
+    protected final String SERVICE_WORK_TIME = "work_time";
+    protected final String SERVICE_MILEAGE = "mileage";
+    protected final String SERVICE_START_DATE = "start_date";
+    protected final String SERVICE_FINAL_DATE = "final_date";
+    protected final String SERVICE_ID_EMPLOYEE = "id_employee";
+    protected final String SERVICE_LICENSE_PLATE = "license_plate";
+    protected final String SERVICE_DETAIL_SERIAL_NUMBER = "detail_serial_number";
+    protected final String CAR_TABLE = "car";
+    protected final String CAR_ID_OWNER = "id_owner";
+    protected final String CAR_LICENSE_PLATE = "license_plate";
+    protected final String CAR_MODEL = "model";
+    protected final String CAR_MAKE = "car_make";
+    protected final String DETAILS_TABLE = "details";
+    protected final String DETAILS_CATEGORY = "category";
+    protected final String DETAILS_SERIAL_NUMBER = "serial_number";
+    protected final String DETAILS_PRICE = "price";
+    protected final String COMPATIBILITY_TABLE = "details_compatibility";
+    protected final String COMPATIBILITY_MODEL = "model";
+    protected final String COMPATIBILITY_DETAIL_SERIAL_NUMBER = "detail_serial_number";
 }
