@@ -25,7 +25,7 @@ import main.DatabaseHandler;
 import javafx.scene.text.Text;
 import main.Main;
 
-public class EmployeesServices extends Constants {
+public class AdminServices extends Constants {
 
     @FXML
     private ResourceBundle resources;
@@ -40,7 +40,10 @@ public class EmployeesServices extends Constants {
     private Button button_personal_edit;
 
     @FXML
-    private Button button_personal_service;
+    private Button personal_clients;
+
+    @FXML
+    private Button personal_employees;
 
     @FXML
     private Text text_detail;
@@ -138,6 +141,21 @@ public class EmployeesServices extends Constants {
             button_personal_acc.getScene().getWindow().hide();
             Stage stage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("personal_account_employeers.fxml"));
+            Scene scene = null;
+            try {
+                scene = new Scene(fxmlLoader.load(), 700, 400);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            stage.setScene(scene);
+            stage.show();
+        });
+
+        // переход на окно клиентов
+        personal_clients.setOnAction(actionEvent -> {
+            personal_clients.getScene().getWindow().hide();
+            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("clients_admin.fxml"));
             Scene scene = null;
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);

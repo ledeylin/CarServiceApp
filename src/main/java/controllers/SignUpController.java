@@ -43,6 +43,9 @@ public class SignUpController extends Constants {
     private TextField signUpLastName;
 
     @FXML
+    private TextField signUpSecondName;
+
+    @FXML
     private TextField signUpLogin;
 
     @FXML
@@ -89,6 +92,10 @@ public class SignUpController extends Constants {
                     System.out.println("Error: empty first name.");
                     break;
                 }
+
+                // проверка на отчетсво
+                String secondName = "";
+                try { secondName = signUpSecondName.getText().trim(); } catch (Exception ignored) { }
 
                 // проверка на адрес
                 String address = null;
@@ -155,7 +162,7 @@ public class SignUpController extends Constants {
 
                 // сама регистрация
                 try {
-                    signUpClient(lastName, firstName, address, phoneNumber, login, password);
+                    signUpClient(lastName, firstName, secondName, address, phoneNumber, login, password);
                     System.out.println("Registration successful.");
 
                     // смена окна на авторизацию
@@ -180,19 +187,21 @@ public class SignUpController extends Constants {
 
     }
 
-    public String insertNew = "INSERT INTO " + CLIENTS_TABLE + " (" + CLIENTS_LAST_NAME +  ", " + CLIENTS_FIRST_NAME +
-            ", " + CLIENTS_ADDRESS + ", " + CLIENTS_PHONE_NUMBER + ", " + CLIENTS_LOGIN + ", " + CLIENTS_PASSWORD +
+    public String insertNew = "INSERT INTO " + CLIENTS_TABLE + " (" + CLIENTS_LAST_NAME +  ", " +
+            CLIENTS_FIRST_NAME + ", " + CLIENTS_SECOND_NAME + ", " + CLIENTS_ADDRESS + ", " +
+            CLIENTS_PHONE_NUMBER + ", " + CLIENTS_LOGIN + ", " + CLIENTS_PASSWORD +
             ") VALUES(?, ?, ?, ?, ?, ?)";
 
-    public void signUpClient(String lastName, String firstName, String address, String phoneNumber, String login, String password)
+    public void signUpClient(String lastName, String firstName, String secondName, String address, String phoneNumber, String login, String password)
             throws SQLException, ClassNotFoundException {
         PreparedStatement preparedStatement = databaseHandler.getDbConnection().prepareStatement(insertNew);
         preparedStatement.setString(1, lastName);
         preparedStatement.setString(2, firstName);
-        preparedStatement.setString(3, address);
-        preparedStatement.setString(4, phoneNumber);
-        preparedStatement.setString(5, login);
-        preparedStatement.setString(6, password);
+        preparedStatement.setString(3, secondName);
+        preparedStatement.setString(4, address);
+        preparedStatement.setString(5, phoneNumber);
+        preparedStatement.setString(6, login);
+        preparedStatement.setString(7, password);
         preparedStatement.executeUpdate();
     }
 

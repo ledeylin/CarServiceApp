@@ -15,7 +15,7 @@
                   <Font name="Monospaced Regular" size="12.0" />
                </font>
             </PasswordField>
-            <Text fill="DIMGRAY" layoutX="89.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Authorization" AnchorPane.topAnchor="14.361328125">
+            <Text fill="DIMGRAY" layoutX="25.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter your password" AnchorPane.topAnchor="14.361328125">
                <font>
                   <Font name="Century Gothic" size="41.0" />
                </font>

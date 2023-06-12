@@ -10,10 +10,16 @@ import main.Main;
 
 import java.io.IOException;
 
-public class EmployeesPersonalAcc {
+public class AdminPersonalAcc {
+
+    @FXML
+    private Button personal_clients;
 
     @FXML
     private Button personal_edit;
+
+    @FXML
+    private Button personal_employees;
 
     @FXML
     private Button personal_service;
@@ -41,13 +47,14 @@ public class EmployeesPersonalAcc {
         text_address.setText(SignInController.user.getAddress());
         text_login.setText(SignInController.user.getLogin());
         text_pass.setText("*".repeat(SignInController.user.getPassword().length()));
-        text_permissions.setText("Рабочий");
+        text_permissions.setText("Администратор");
+
 
         // переход на окно редактирования информации
         personal_edit.setOnAction(actionEvent -> {
             personal_edit.getScene().getWindow().hide();
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("edit_account_employeers.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("edit_account_admin.fxml"));
             Scene scene = null;
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);
@@ -62,7 +69,22 @@ public class EmployeesPersonalAcc {
         personal_service.setOnAction(actionEvent -> {
             personal_service.getScene().getWindow().hide();
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("services_employee.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("services_admin.fxml"));
+            Scene scene = null;
+            try {
+                scene = new Scene(fxmlLoader.load(), 700, 400);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            stage.setScene(scene);
+            stage.show();
+        });
+
+        // переход на окно клиентов
+        personal_clients.setOnAction(actionEvent -> {
+            personal_clients.getScene().getWindow().hide();
+            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("clients_admin.fxml"));
             Scene scene = null;
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);

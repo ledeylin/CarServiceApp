@@ -135,7 +135,9 @@ public class SignInController extends Constants {
 
                     // администратор
                    else if (result.getInt(EMPLOYEE_ACCESS_RIGHTS) == 2) {
-
+                        signUpWindowButton.getScene().getWindow().hide();
+                        stage = new Stage();
+                        fxmlLoader = new FXMLLoader(Main.class.getResource("personal_account_admin.fxml"));
                    }
 
                     user.setLast_name(result.getString(EMPLOYEE_LAST_NAME));

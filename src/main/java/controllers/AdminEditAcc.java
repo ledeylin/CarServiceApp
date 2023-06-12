@@ -15,7 +15,7 @@ import main.Main;
 import javafx.scene.control.PasswordField;
 import main.SaveInformation;
 
-public class EmployeesEditAcc extends Constants {
+public class AdminEditAcc {
 
     @FXML
     private Button button_personal_acc;
@@ -25,6 +25,12 @@ public class EmployeesEditAcc extends Constants {
 
     @FXML
     private Button button_save;
+
+    @FXML
+    private Button personal_clients;
+
+    @FXML
+    private Button personal_employees;
 
     @FXML
     private TextField text_login;
@@ -72,6 +78,21 @@ public class EmployeesEditAcc extends Constants {
             button_personal_service.getScene().getWindow().hide();
             Stage stage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("services_employee.fxml"));
+            Scene scene = null;
+            try {
+                scene = new Scene(fxmlLoader.load(), 700, 400);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            stage.setScene(scene);
+            stage.show();
+        });
+
+        // переход на окно клиентов
+        personal_clients.setOnAction(actionEvent -> {
+            personal_clients.getScene().getWindow().hide();
+            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("clients_admin.fxml"));
             Scene scene = null;
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);
