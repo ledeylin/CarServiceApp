@@ -16,7 +16,7 @@ public class Constants {
     protected static final String EMPLOYEE_ADDRESS = "address";
     protected static final String EMPLOYEE_LOGIN = "login";
     protected static final String EMPLOYEE_PASSWORD = "password";
-    protected final String EMPLOYEE_ACCESS_RIGHTS = "permission";
+    protected static final String EMPLOYEE_ACCESS_RIGHTS = "permission";
     protected final String SERVICE_TABLE = "service";
     protected final String SERVICE_ID = "id_service";
     protected final String SERVICE_WORK_TIME = "work_time";

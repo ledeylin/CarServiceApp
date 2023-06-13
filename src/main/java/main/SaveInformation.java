@@ -75,10 +75,10 @@ public class SaveInformation extends Constants{
                     result = preparedStatement.executeQuery();
                     if (result.next()) {
                         System.out.println("Error: login already exist.");
-                    } else if (permissions == 1) {
+                    } else if (permissions != 0) {
                         sqlAlterTable = "UPDATE " + EMPLOYEE_TABLE + " SET " + EMPLOYEE_LOGIN + " = '" + text_login
                                 + "' WHERE " + EMPLOYEE_LOGIN + " = '" + text_old_login + "';";
-                    } else if (permissions == 0) {
+                    } else {
                         sqlAlterTable = "UPDATE " + CLIENTS_TABLE + " SET " + CLIENTS_LOGIN + " = '" + text_login
                                 + "' WHERE " + CLIENTS_LOGIN + " = '" + text_old_login + "';";
                     }
@@ -97,7 +97,7 @@ public class SaveInformation extends Constants{
         // пароль
         if (!Objects.equals(text_pass, "")) {
             String sqlAlterTable = null;
-            if (permissions == 1) {
+            if (permissions != 0) {
                 sqlAlterTable = "UPDATE " + EMPLOYEE_TABLE + " SET " + EMPLOYEE_PASSWORD + " = '" + text_pass
                         + "' WHERE " + EMPLOYEE_LOGIN + " = '" + text_old_login + "';";
             }
@@ -115,7 +115,7 @@ public class SaveInformation extends Constants{
         // фамилия
         if (!Objects.equals(last_name, "")) {
             String sqlAlterTable = null;
-            if (permissions == 1) {
+            if (permissions != 0) {
                 sqlAlterTable = "UPDATE " + EMPLOYEE_TABLE + " SET " + EMPLOYEE_LAST_NAME + " = '" + last_name
                         + "' WHERE " + EMPLOYEE_LOGIN + " = '" + text_old_login + "';";
             }
@@ -133,7 +133,7 @@ public class SaveInformation extends Constants{
         // имя
         if (!Objects.equals(first_name, "")) {
             String sqlAlterTable = null;
-            if (permissions == 1) {
+            if (permissions != 0) {
                 sqlAlterTable = "UPDATE " + EMPLOYEE_TABLE + " SET " + EMPLOYEE_FIRST_NAME + " = '" + first_name
                         + "' WHERE " + EMPLOYEE_LOGIN + " = '" + text_old_login + "';";
             }
@@ -151,7 +151,7 @@ public class SaveInformation extends Constants{
         // отчество
         if (!Objects.equals(second_name, "")) {
             String sqlAlterTable = null;
-            if (permissions == 1) {
+            if (permissions != 0) {
                 sqlAlterTable = "UPDATE " + EMPLOYEE_TABLE + " SET " + EMPLOYEE_SECOND_NAME + " = '" + second_name
                         + "' WHERE " + EMPLOYEE_LOGIN + " = '" + text_old_login + "';";
             }
@@ -169,7 +169,7 @@ public class SaveInformation extends Constants{
         // адрес
         if (!Objects.equals(address, "")) {
             String sqlAlterTable = null;
-            if (permissions == 1) {
+            if (permissions != 0) {
                 sqlAlterTable = "UPDATE " + EMPLOYEE_TABLE + " SET " + EMPLOYEE_ADDRESS + " = '" + address
                         + "' WHERE " + EMPLOYEE_LOGIN + " = '" + text_old_login + "';";
             }
@@ -188,6 +188,24 @@ public class SaveInformation extends Constants{
         if (!Objects.equals(phone, "")) {
             String sqlAlterTable = "UPDATE " + CLIENTS_TABLE + " SET " + CLIENTS_PHONE_NUMBER + " = '" + phone
                         + "' WHERE " + CLIENTS_LOGIN + " = '" + text_old_login + "';";
+            Connection connection = databaseHandler.getDbConnection();
+            Statement statement = connection.createStatement();
+            System.out.println(sqlAlterTable);
+            statement.executeUpdate(sqlAlterTable);
+            System.out.println("Success!");
+        }
+
+        // права
+        if (permissions != 0) {
+            String sqlAlterTable = null;
+            if (permissions == 1) {
+                sqlAlterTable = "UPDATE " + EMPLOYEE_TABLE + " SET " + EMPLOYEE_ACCESS_RIGHTS +
+                        " = 1 WHERE " + CLIENTS_LOGIN + " = '" + text_old_login + "';";
+            }
+            else {
+                sqlAlterTable = "UPDATE " + EMPLOYEE_TABLE + " SET " + EMPLOYEE_ACCESS_RIGHTS +
+                        " = 2 WHERE " + CLIENTS_LOGIN + " = '" + text_old_login + "';";
+            }
             Connection connection = databaseHandler.getDbConnection();
             Statement statement = connection.createStatement();
             System.out.println(sqlAlterTable);

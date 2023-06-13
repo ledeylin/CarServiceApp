@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #A9A9A9;" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminClients">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #A9A9A9;" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminEmployees">
     <children>
         <AnchorPane layoutY="31.0" prefHeight="350.0" prefWidth="700.0" style="-fx-background-color: #D3D3D3;" AnchorPane.bottomAnchor="25.0" AnchorPane.topAnchor="25.0">
             <children>
@@ -26,7 +26,7 @@
                   <Font name="Monospaced Bold" size="11.0" />
                </font>
             </Button>
-            <Text fill="DIMGRAY" layoutX="302.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clients">
+            <Text fill="DIMGRAY" layoutX="272.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employees">
                <font>
                   <Font size="33.0" />
                </font>
@@ -41,7 +41,7 @@
                   <ListView fx:id="list_view" prefHeight="529.0" prefWidth="141.0" style="-fx-background-color: #C0C0C0; -fx-background-radius: 5; -fx-border-radius: 5;" />
                </content>
             </ScrollPane>
-            <Text fx:id="text_name" fill="DIMGRAY" layoutX="347.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+            <Text fx:id="text_name" fill="DIMGRAY" layoutX="394.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
                <font>
                   <Font name="Monospaced Regular" size="13.0" />
                </font>
@@ -51,37 +51,27 @@
                   <Font name="Monospaced Bold" size="13.0" />
                </font>
             </Text>
-            <Text fx:id="text_address" fill="DIMGRAY" layoutX="347.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+            <Text fx:id="text_address" fill="DIMGRAY" layoutX="394.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
                <font>
                   <Font name="Monospaced Regular" size="13.0" />
                </font>
             </Text>
-            <Text fill="DIMGRAY" layoutX="194.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Номер телефона">
+            <Text fill="DIMGRAY" layoutX="194.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Логин">
                <font>
                   <Font name="Monospaced Bold" size="13.0" />
                </font>
             </Text>
-            <Text fx:id="text_phone" fill="DIMGRAY" layoutX="347.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+            <Text fx:id="text_login" fill="DIMGRAY" layoutX="395.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
                <font>
                   <Font name="Monospaced Regular" size="13.0" />
                </font>
             </Text>
-            <Text fill="DIMGRAY" layoutX="194.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Логин">
+            <Text fill="DIMGRAY" layoutX="194.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Пароль">
                <font>
                   <Font name="Monospaced Bold" size="13.0" />
                </font>
             </Text>
-            <Text fx:id="text_login" fill="DIMGRAY" layoutX="346.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
-               <font>
-                  <Font name="Monospaced Regular" size="13.0" />
-               </font>
-            </Text>
-            <Text fill="DIMGRAY" layoutX="194.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Пароль">
-               <font>
-                  <Font name="Monospaced Bold" size="13.0" />
-               </font>
-            </Text>
-            <Text fx:id="text_pass" fill="DIMGRAY" layoutX="346.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+            <Text fx:id="text_pass" fill="DIMGRAY" layoutX="394.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
                <font>
                   <Font name="Monospaced Regular" size="13.0" />
                </font>
@@ -101,22 +91,32 @@
                   <Font name="Monospaced Bold" size="11.0" />
                </font>
             </Button>
-            <Text fill="DIMGRAY" layoutX="193.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Количество зарегестрированных машин">
+            <Text fill="DIMGRAY" layoutX="194.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Кол-во выполненных услуг">
                <font>
                   <Font name="Monospaced Bold" size="13.0" />
                </font>
             </Text>
-            <Text fill="DIMGRAY" layoutX="193.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Количество полученных услуг">
+            <Text fill="DIMGRAY" layoutX="194.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Суммарное время работы">
                <font>
                   <Font name="Monospaced Bold" size="13.0" />
                </font>
             </Text>
-            <Text fx:id="text_cars" fill="DIMGRAY" layoutX="479.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+            <Text fill="DIMGRAY" layoutX="194.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Полученная зарплата">
+               <font>
+                  <Font name="Monospaced Bold" size="13.0" />
+               </font>
+            </Text>
+            <Text fx:id="text_services_count" fill="DIMGRAY" layoutX="394.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
                <font>
                   <Font name="Monospaced Regular" size="13.0" />
                </font>
             </Text>
-            <Text fx:id="text_services" fill="DIMGRAY" layoutX="479.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+            <Text fx:id="text_work_time" fill="DIMGRAY" layoutX="394.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+               <font>
+                  <Font name="Monospaced Regular" size="13.0" />
+               </font>
+            </Text>
+            <Text fx:id="text_salary" fill="DIMGRAY" layoutX="395.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
                <font>
                   <Font name="Monospaced Regular" size="13.0" />
                </font>

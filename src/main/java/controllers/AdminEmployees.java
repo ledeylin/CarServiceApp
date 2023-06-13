@@ -16,15 +16,14 @@ import main.Main;
 import main.SaveInformation;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeMap;
-
-public class AdminClients extends Constants {
+import java.net.URL;
+public class AdminEmployees extends Constants {
 
     @FXML
     private ResourceBundle resources;
@@ -48,13 +47,10 @@ public class AdminClients extends Constants {
     private ListView<String> list_view;
 
     @FXML
-    private Button personal_employees;
+    private Button personal_clients;
 
     @FXML
     private Text text_address;
-
-    @FXML
-    private Text text_cars;
 
     @FXML
     private Text text_login;
@@ -66,11 +62,13 @@ public class AdminClients extends Constants {
     private Text text_pass;
 
     @FXML
-    private Text text_phone;
+    private Text text_salary;
 
     @FXML
-    private Text text_services;
+    private Text text_services_count;
 
+    @FXML
+    private Text text_work_time;
 
     private String text_old_login;
 
@@ -79,96 +77,95 @@ public class AdminClients extends Constants {
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
 
-        // добавление информации о клиентах
-        TreeMap<String, Integer> clients = new TreeMap<>();
-        String query = "SELECT * FROM " + CLIENTS_TABLE + " ORDER BY " + CLIENTS_TABLE + "." + CLIENTS_LAST_NAME + " ASC, " +
-                CLIENTS_TABLE + "." + CLIENTS_FIRST_NAME + " ASC, " + CLIENTS_TABLE + "." + CLIENTS_SECOND_NAME + " ASC";
+        // добавление информации о сотрудниках
+        TreeMap<String, Integer> employees = new TreeMap<>();
+        String query = "SELECT * FROM " + EMPLOYEE_TABLE + " ORDER BY " + EMPLOYEE_TABLE + "." + EMPLOYEE_LAST_NAME + " ASC, " +
+                EMPLOYEE_TABLE + "." + EMPLOYEE_FIRST_NAME + " ASC, " + EMPLOYEE_TABLE + "." + EMPLOYEE_SECOND_NAME + " ASC";
         PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
         ResultSet result = statement.executeQuery();
         int i = 0;
         while (result.next()) {
-            String first_name = " " + result.getString(CLIENTS_FIRST_NAME).charAt(0) + ".";
+            String first_name = " " + result.getString(EMPLOYEE_FIRST_NAME).charAt(0) + ".";
             String second_name = "";
-            second_name = " " + result.getString(CLIENTS_SECOND_NAME).charAt(0) + ".";
-            clients.put(result.getString(CLIENTS_LAST_NAME) + first_name + second_name, i);
+            second_name = " " + result.getString(EMPLOYEE_SECOND_NAME).charAt(0) + ".";
+            employees.put(result.getString(EMPLOYEE_LAST_NAME) + first_name + second_name, i);
             i++;
         }
-        Set<String> setKeys = clients.keySet();
+        Set<String> setKeys = employees.keySet();
         for(String k: setKeys){
             list_view.getItems().add(k);
         }
-        System.out.println(clients);
+        System.out.println(employees);
+        System.out.println(setKeys);
 
         // добавление в массивы для последующего вывода
         TreeMap<Integer, String> name = new TreeMap<>();
         TreeMap<Integer, String> address = new TreeMap<>();
-        TreeMap<Integer, String> phone_number = new TreeMap<>();
         TreeMap<Integer, String> login = new TreeMap<>();
         TreeMap<Integer, String> pass = new TreeMap<>();
-        TreeMap<Integer, String> cars = new TreeMap<>();
-        TreeMap<Integer, String> services = new TreeMap<>();
-        query = "SELECT c." + CLIENTS_LAST_NAME + ", c." + CLIENTS_FIRST_NAME + ", c." + CLIENTS_SECOND_NAME +
-                ", c." + CLIENTS_ADDRESS + ", c." + CLIENTS_PHONE_NUMBER + ", c." + CLIENTS_LOGIN + ", c." +
-                CLIENTS_PASSWORD +
-                ", COUNT(DISTINCT " + CAR_TABLE + "." + CAR_LICENSE_PLATE + ") AS car_count, COUNT(DISTINCT " +
-                SERVICE_TABLE + "." + SERVICE_ID + ") as service_count" +
-                " FROM " + CLIENTS_TABLE + " c" +
-                " LEFT JOIN " + CAR_TABLE + " ON " + CAR_TABLE + "." + CAR_ID_OWNER + " = c." + CLIENTS_LOGIN +
-                " LEFT JOIN " + SERVICE_TABLE + " ON " + SERVICE_TABLE + "." + SERVICE_LICENSE_PLATE + " = " +
-                CAR_TABLE + "." + CAR_LICENSE_PLATE +
-                " GROUP BY c." + CLIENTS_LAST_NAME + ", c." + CLIENTS_FIRST_NAME + ", c." + CLIENTS_SECOND_NAME +
-                ", c." + CLIENTS_ADDRESS + ", c." + CLIENTS_PHONE_NUMBER + ", c." + CLIENTS_LOGIN +
-                " ORDER BY c." + CLIENTS_LAST_NAME + " ASC, c." +
-                CLIENTS_FIRST_NAME + " ASC, c." + CLIENTS_SECOND_NAME + " ASC";
+        TreeMap<Integer, String> services_count = new TreeMap<>();
+        TreeMap<Integer, String> work_time = new TreeMap<>();
+        TreeMap<Integer, String> salary = new TreeMap<>();
+        query = "SELECT " + EMPLOYEE_TABLE + ".*, COUNT(" + SERVICE_TABLE + "." + SERVICE_ID + ") AS services_count, SUM(DATEDIFF(" +
+                SERVICE_TABLE + "." + SERVICE_FINAL_DATE + ", " + SERVICE_TABLE + "." + SERVICE_START_DATE + ")) AS days_worked, SUM(" +
+                DETAILS_TABLE + "." + DETAILS_PRICE + " * 0.2) AS total_salary FROM " + EMPLOYEE_TABLE + " LEFT JOIN " + SERVICE_TABLE +
+                " ON " + EMPLOYEE_TABLE + "." + EMPLOYEE_LOGIN + " = " + SERVICE_TABLE + "." + SERVICE_ID_EMPLOYEE + " LEFT JOIN " +
+                DETAILS_TABLE + " ON " + SERVICE_TABLE + "." + SERVICE_DETAIL_SERIAL_NUMBER + " = " + DETAILS_TABLE + "." +
+                DETAILS_SERIAL_NUMBER + " GROUP BY " + EMPLOYEE_TABLE + "." + EMPLOYEE_LOGIN +
+                " ORDER BY " + EMPLOYEE_TABLE + "." + EMPLOYEE_LAST_NAME + " ASC, " +
+                EMPLOYEE_TABLE + "." + EMPLOYEE_FIRST_NAME + " ASC, " + EMPLOYEE_TABLE + "." + EMPLOYEE_SECOND_NAME + " ASC";
 
         System.out.println(query);
         result = statement.executeQuery(query);
         i = 0;
-        while (i < clients.size()) {
+        while (i < employees.size()) {
             if (result.next()) {
-                String name_str = result.getString(CLIENTS_LAST_NAME) + " " + result.getString(CLIENTS_FIRST_NAME) +
-                        " " + result.getString(CLIENTS_SECOND_NAME);
+                String second_name = result.getString(EMPLOYEE_SECOND_NAME);
+                if (second_name == null) second_name = "";
+                String name_str = result.getString(EMPLOYEE_LAST_NAME) + " " + result.getString(EMPLOYEE_FIRST_NAME) +
+                        " " + second_name;
                 if (i == 0) {
                     name.put(i, name_str);
-                    address.put(i, result.getString(CLIENTS_ADDRESS));
-                    phone_number.put(i, result.getString(CLIENTS_PHONE_NUMBER));
-                    login.put(i, result.getString(CLIENTS_LOGIN));
-                    pass.put(i, result.getString(CLIENTS_PASSWORD));
-                    cars.put(i, result.getString("car_count") + " шт.");
-                    services.put(i, result.getString("service_count") + " шт.");
+                    address.put(i, result.getString(EMPLOYEE_ADDRESS));
+                    login.put(i, result.getString(EMPLOYEE_LOGIN));
+                    pass.put(i, result.getString(EMPLOYEE_PASSWORD));
+                    services_count.put(i, result.getString("services_count") + " шт.");
+                    work_time.put(i, result.getString("days_worked") + " дней");
+                    salary.put(i, result.getString("total_salary") + " р.");
                     i++;
                 }
                 else if (!name_str.equals(name.get(i - 1))) {
                     name.put(i, name_str);
-                    address.put(i, result.getString(CLIENTS_ADDRESS));
-                    phone_number.put(i, result.getString(CLIENTS_PHONE_NUMBER));
-                    login.put(i, result.getString(CLIENTS_LOGIN));
-                    pass.put(i, result.getString(CLIENTS_PASSWORD));
-                    cars.put(i, result.getString("car_count") + " шт.");
-                    services.put(i, result.getString("service_count") + " шт.");
+                    address.put(i, result.getString(EMPLOYEE_ADDRESS));
+                    login.put(i, result.getString(EMPLOYEE_LOGIN));
+                    pass.put(i, result.getString(EMPLOYEE_PASSWORD));
+                    services_count.put(i, result.getString("services_count") + " шт.");
+                    work_time.put(i, result.getString("days_worked") + " дней");
+                    salary.put(i, result.getString("total_salary") + " р.");
                     i++;
                 }
             }
         }
+
         list_view.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                text_name.setText(name.get(clients.get(list_view.getSelectionModel().getSelectedItem())));
-                text_address.setText(address.get(clients.get(list_view.getSelectionModel().getSelectedItem())));
-                text_phone.setText(phone_number.get(clients.get(list_view.getSelectionModel().getSelectedItem())));
-                text_login.setText(login.get(clients.get(list_view.getSelectionModel().getSelectedItem())));
-                text_pass.setText(pass.get(clients.get(list_view.getSelectionModel().getSelectedItem())));
-                text_cars.setText(cars.get(clients.get(list_view.getSelectionModel().getSelectedItem())));
-                text_services.setText(services.get(clients.get(list_view.getSelectionModel().getSelectedItem())));
-                text_old_login = login.get(clients.get(list_view.getSelectionModel().getSelectedItem()));
+                text_name.setText(name.get(employees.get(list_view.getSelectionModel().getSelectedItem())));
+                text_address.setText(address.get(employees.get(list_view.getSelectionModel().getSelectedItem())));
+                text_login.setText(login.get(employees.get(list_view.getSelectionModel().getSelectedItem())));
+                text_pass.setText(pass.get(employees.get(list_view.getSelectionModel().getSelectedItem())));
+                text_work_time.setText(work_time.get(employees.get(list_view.getSelectionModel().getSelectedItem())));
+                text_salary.setText(salary.get(employees.get(list_view.getSelectionModel().getSelectedItem())));
+                text_services_count.setText(services_count.get(employees.get(list_view.getSelectionModel().getSelectedItem())));
+                text_old_login = login.get(employees.get(list_view.getSelectionModel().getSelectedItem()));
             }
         });
 
-        // редактирование информации о клиенте
+        // редактирование информации о сотруднике
         button_edit.setOnAction(actionEvent -> {
             SaveInformation.setText_old_login(text_old_login);
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("editClients.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("editEmployees.fxml"));
             Scene scene = null;
             try {
                 scene = new Scene(fxmlLoader.load(), 529, 267);
@@ -224,11 +221,11 @@ public class AdminClients extends Constants {
             stage.show();
         });
 
-        // переход на окно работников
-        personal_employees.setOnAction(actionEvent -> {
-            personal_employees.getScene().getWindow().hide();
+        // переход на окно клиентов
+        personal_clients.setOnAction(actionEvent -> {
+            personal_clients.getScene().getWindow().hide();
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("employee_admin.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("clients_admin.fxml"));
             Scene scene = null;
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);
@@ -238,5 +235,6 @@ public class AdminClients extends Constants {
             stage.setScene(scene);
             stage.show();
         });
+
     }
 }

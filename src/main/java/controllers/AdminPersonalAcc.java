@@ -65,6 +65,21 @@ public class AdminPersonalAcc {
             stage.show();
         });
 
+        // переход на окно работников
+        personal_employees.setOnAction(actionEvent -> {
+            personal_employees.getScene().getWindow().hide();
+            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("employee_admin.fxml"));
+            Scene scene = null;
+            try {
+                scene = new Scene(fxmlLoader.load(), 700, 400);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            stage.setScene(scene);
+            stage.show();
+        });
+
         // переход на окно просмотра услуг
         personal_service.setOnAction(actionEvent -> {
             personal_service.getScene().getWindow().hide();
