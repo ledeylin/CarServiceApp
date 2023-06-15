@@ -189,7 +189,7 @@ public class SignUpController extends Constants {
 
     }
 
-    public String insertNew = "INSERT INTO " + CLIENTS_TABLE + " (" + CLIENTS_LAST_NAME +  ", " +
+    private String insertNew = "INSERT INTO " + CLIENTS_TABLE + " (" + CLIENTS_LAST_NAME +  ", " +
             CLIENTS_FIRST_NAME + ", " + CLIENTS_SECOND_NAME + ", " + CLIENTS_ADDRESS + ", " +
             CLIENTS_PHONE_NUMBER + ", " + CLIENTS_LOGIN + ", " + CLIENTS_PASSWORD +
             ") VALUES(?, ?, ?, ?, ?, ?, ?)";
@@ -206,5 +206,4 @@ public class SignUpController extends Constants {
         preparedStatement.setString(7, password);
         preparedStatement.executeUpdate();
     }
-
 }

@@ -30,13 +30,13 @@ public class AdminServices extends Constants {
     private Button button_edit;
 
     @FXML
+    private Button button_add;
+
+    @FXML
     private Button button_personal_acc;
 
     @FXML
     private Button button_personal_edit;
-
-    @FXML
-    private Button button_personal_service;
 
     @FXML
     private Button personal_clients;
@@ -61,12 +61,6 @@ public class AdminServices extends Constants {
 
     @FXML
     private Text text_login_employee;
-
-    @FXML
-    private Text text_pass;
-
-    @FXML
-    private Text text_phone;
 
     @FXML
     private Text text_price;
@@ -163,6 +157,20 @@ public class AdminServices extends Constants {
             EditServices.setFinalDate(final__date);
             Stage stage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("editServices.fxml"));
+            Scene scene = null;
+            try {
+                scene = new Scene(fxmlLoader.load(), 529, 267);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            stage.setScene(scene);
+            stage.show();
+        });
+
+        // добавление новой услуги
+        button_add.setOnAction(actionEvent -> {
+            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("addNewService.fxml"));
             Scene scene = null;
             try {
                 scene = new Scene(fxmlLoader.load(), 529, 267);

@@ -2,6 +2,7 @@ package main;
 
 import controllers.SignInController;
 
+import java.net.Inet4Address;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -16,6 +17,10 @@ public class SaveInformationServices extends Constants{
 
     private static String licensePlate = "";
 
+    private static String mileage = "";
+
+    private static String workTime = "";
+
     private static LocalDate startDate = null;
 
     private static LocalDate finalDate = null;
@@ -24,6 +29,14 @@ public class SaveInformationServices extends Constants{
 
     public static void setDetailSerialNumber(String detailSerialNumber) {
         SaveInformationServices.detailSerialNumber = detailSerialNumber;
+    }
+
+    public static void setMileage(String mileage) {
+        SaveInformationServices.mileage = mileage;
+    }
+
+    public static void setWorkTime(String workTime) {
+        SaveInformationServices.workTime = workTime;
     }
 
     public static void setEmployeeLogin(String employeeLogin) {
@@ -85,6 +98,42 @@ public class SaveInformationServices extends Constants{
             System.out.println(sqlAlterTable);
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
+        }
+
+        // пробег машины
+        if (!Objects.equals(mileage, "")) {
+            String sqlAlterTable = null;
+            int end_mileage = 0;
+            try {
+                end_mileage = Integer.parseInt(mileage);
+                sqlAlterTable = "UPDATE " + SERVICE_TABLE + " SET " + SERVICE_MILEAGE + " = '" + end_mileage
+                        + "' WHERE " + SERVICE_ID + " = '" + id + "';";
+
+                Connection connection = databaseHandler.getDbConnection();
+                Statement statement = connection.createStatement();
+                System.out.println(sqlAlterTable);
+                statement.executeUpdate(sqlAlterTable);
+                System.out.println("Success!");
+            }
+            catch (NumberFormatException e) { System.out.println("Error: incorrect mileage"); }
+        }
+
+        // номер машины
+        if (!Objects.equals(workTime, "")) {
+            String sqlAlterTable = null;
+            int end_workTime = 0;
+            try {
+                end_workTime = Integer.parseInt(workTime);
+                sqlAlterTable = "UPDATE " + SERVICE_TABLE + " SET " + SERVICE_WORK_TIME + " = '" + end_workTime
+                        + "' WHERE " + SERVICE_ID + " = '" + id + "';";
+
+                Connection connection = databaseHandler.getDbConnection();
+                Statement statement = connection.createStatement();
+                System.out.println(sqlAlterTable);
+                statement.executeUpdate(sqlAlterTable);
+                System.out.println("Success!");
+            }
+            catch (NumberFormatException e) { System.out.println("Error: incorrect work time"); }
         }
 
         // начальная дата

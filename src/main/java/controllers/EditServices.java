@@ -36,6 +36,13 @@ public class EditServices {
     @FXML
     private DatePicker text_start_date;
 
+    @FXML
+    private TextField signUpMileage;
+
+    @FXML
+    private TextField signUpWorkTime;
+
+
     private static LocalDate startDate;
 
     private static LocalDate finalDate;
@@ -54,10 +61,14 @@ public class EditServices {
             String detailSerialNumber = "";
             String employeeLogin = "";
             String licensePlate = "";
+            String mileage = "";
+            String workTime = "";
 
             try { detailSerialNumber = signUpDetailSerialNumber.getText().trim(); } catch (Exception ignored) { }
             try { employeeLogin = signUpEmployee.getText().trim(); } catch (Exception ignored) { }
             try { licensePlate = signUpLicensePlate.getText().trim(); } catch (Exception ignored) { }
+            try { mileage = signUpMileage.getText().trim(); } catch (Exception ignored) { }
+            try { workTime = signUpWorkTime.getText().trim(); } catch (Exception ignored) { }
             if (text_start_date.getValue() != null) try { startDate = text_start_date.getValue(); } catch (Exception ignored) { }
             if (text_final_date.getValue() != null ) try { finalDate = text_final_date.getValue(); } catch (Exception ignored) { }
 
@@ -66,6 +77,8 @@ public class EditServices {
             SaveInformationServices.setStartDate(startDate);
             SaveInformationServices.setFinalDate(finalDate);
             SaveInformationServices.setLicensePlate(licensePlate);
+            SaveInformationServices.setMileage(mileage);
+            SaveInformationServices.setWorkTime(workTime);
 
             Stage stage = new Stage();
             PassController.setId(1);

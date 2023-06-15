@@ -136,11 +136,16 @@
                   <Font name="Monospaced Regular" size="13.0" />
                </font>
             </Text>
-            <Text fx:id="text_detail" fill="DIMGRAY" layoutX="459.0" layoutY="311.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+            <Text fx:id="text_detail" fill="DIMGRAY" layoutX="377.0" layoutY="312.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
                <font>
                   <Font name="Monospaced Regular" size="13.0" />
                </font>
             </Text>
+            <Button fx:id="button_add" layoutX="541.0" layoutY="289.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="139.0" style="-fx-background-color: #C0C0C0;" text="Add new service" textFill="DIMGRAY">
+               <font>
+                  <Font name="Monospaced Bold" size="11.0" />
+               </font>
+            </Button>
             </children>
         </AnchorPane>
     </children>
