@@ -180,7 +180,7 @@ public class AdminEmployees extends Constants {
         button_personal_edit.setOnAction(actionEvent -> {
             button_personal_edit.getScene().getWindow().hide();
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("edit_account_employeers.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("edit_account_admin.fxml"));
             Scene scene = null;
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);
@@ -195,7 +195,7 @@ public class AdminEmployees extends Constants {
         button_personal_acc.setOnAction(actionEvent -> {
             button_personal_acc.getScene().getWindow().hide();
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("personal_account_employeers.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("personal_account_admin.fxml"));
             Scene scene = null;
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);

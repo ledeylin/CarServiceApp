@@ -26,62 +26,62 @@
                   <Font name="Monospaced Bold" size="11.0" />
                </font>
             </Button>
-            <Text fill="DIMGRAY" layoutX="257.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your services">
+            <Text fill="DIMGRAY" layoutX="302.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Services">
                <font>
                   <Font size="33.0" />
                </font>
             </Text>
-            <Text fill="DIMGRAY" layoutX="244.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Время, потраченное на работу">
+            <Text fill="DIMGRAY" layoutX="195.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Логин сотруника">
                <font>
                   <Font name="Monospaced Bold" size="13.0" />
                </font>
             </Text>
-            <ScrollPane layoutX="37.0" layoutY="107.0" prefHeight="225.0" prefWidth="186.0" style="-fx-background-radius: 5; -fx-border-radius: 5;">
+            <ScrollPane layoutX="8.0" layoutY="71.0" prefHeight="207.0" prefWidth="178.0" style="-fx-background-radius: 5; -fx-border-radius: 5;">
                <content>
-                  <ListView fx:id="list_view" prefHeight="529.0" prefWidth="169.0" style="-fx-background-color: #C0C0C0; -fx-background-radius: 5; -fx-border-radius: 5;" />
+                  <ListView fx:id="list_view" prefHeight="529.0" prefWidth="161.0" style="-fx-background-color: #C0C0C0; -fx-background-radius: 5; -fx-border-radius: 5;" />
                </content>
             </ScrollPane>
-            <Text fx:id="text_time" fill="DIMGRAY" layoutX="489.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+            <Text fx:id="text_login_employee" fill="DIMGRAY" layoutX="459.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
                <font>
                   <Font name="Monospaced Regular" size="13.0" />
                </font>
             </Text>
-            <Text fill="DIMGRAY" layoutX="244.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Пробег ремонтируемой машины">
+            <Text fill="DIMGRAY" layoutX="195.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дата начала работы">
                <font>
                   <Font name="Monospaced Bold" size="13.0" />
                </font>
             </Text>
-            <Text fx:id="text_mileage" fill="DIMGRAY" layoutX="489.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+            <Text fx:id="text_start_date" fill="DIMGRAY" layoutX="459.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
                <font>
                   <Font name="Monospaced Regular" size="13.0" />
                </font>
             </Text>
-            <Text fill="DIMGRAY" layoutX="244.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Модель ремонтируемой машины">
+            <Text fill="DIMGRAY" layoutX="194.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дата окончания работы">
                <font>
                   <Font name="Monospaced Bold" size="13.0" />
                </font>
             </Text>
-            <Text fx:id="text_model" fill="DIMGRAY" layoutX="489.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+            <Text fx:id="text_phone" fill="DIMGRAY" layoutX="347.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
                <font>
                   <Font name="Monospaced Regular" size="13.0" />
                </font>
             </Text>
-            <Text fill="DIMGRAY" layoutX="244.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Устанавливаемая деталь">
+            <Text fill="DIMGRAY" layoutX="194.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Оплата">
                <font>
                   <Font name="Monospaced Bold" size="13.0" />
                </font>
             </Text>
-            <Text fx:id="text_detail" fill="DIMGRAY" layoutX="489.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+            <Text fx:id="text_final_date" fill="DIMGRAY" layoutX="459.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
                <font>
                   <Font name="Monospaced Regular" size="13.0" />
                </font>
             </Text>
-            <Text fill="DIMGRAY" layoutX="244.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Оплата ">
+            <Text fill="DIMGRAY" layoutX="194.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Модель ремонтируемой машины">
                <font>
                   <Font name="Monospaced Bold" size="13.0" />
                </font>
             </Text>
-            <Text fx:id="text_price" fill="DIMGRAY" layoutX="489.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+            <Text fx:id="text_pass" fill="DIMGRAY" layoutX="346.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
                <font>
                   <Font name="Monospaced Regular" size="13.0" />
                </font>
@@ -96,6 +96,51 @@
                   <Font name="Monospaced Bold" size="11.0" />
                </font>
             </Button>
+            <Button fx:id="button_edit" layoutX="31.0" layoutY="290.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="139.0" style="-fx-background-color: #C0C0C0;" text="Edit information" textFill="DIMGRAY">
+               <font>
+                  <Font name="Monospaced Bold" size="11.0" />
+               </font>
+            </Button>
+            <Text fill="DIMGRAY" layoutX="193.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Владелец ремонтируемой машины">
+               <font>
+                  <Font name="Monospaced Bold" size="13.0" />
+               </font>
+            </Text>
+            <Text fill="DIMGRAY" layoutX="192.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Серийный номер детали">
+               <font>
+                  <Font name="Monospaced Bold" size="13.0" />
+               </font>
+            </Text>
+            <Text fx:id="text_price" fill="DIMGRAY" layoutX="459.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+               <font>
+                  <Font name="Monospaced Regular" size="13.0" />
+               </font>
+            </Text>
+            <Text fx:id="text_car_model" fill="DIMGRAY" layoutX="459.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+               <font>
+                  <Font name="Monospaced Regular" size="13.0" />
+               </font>
+            </Text>
+            <Text fill="DIMGRAY" layoutX="192.0" layoutY="312.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Деталь">
+               <font>
+                  <Font name="Monospaced Bold" size="13.0" />
+               </font>
+            </Text>
+            <Text fx:id="text_car_owner" fill="DIMGRAY" layoutX="459.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+               <font>
+                  <Font name="Monospaced Regular" size="13.0" />
+               </font>
+            </Text>
+            <Text fx:id="text_detail_serial_number" fill="DIMGRAY" layoutX="459.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+               <font>
+                  <Font name="Monospaced Regular" size="13.0" />
+               </font>
+            </Text>
+            <Text fx:id="text_detail" fill="DIMGRAY" layoutX="459.0" layoutY="311.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+               <font>
+                  <Font name="Monospaced Regular" size="13.0" />
+               </font>
+            </Text>
             </children>
         </AnchorPane>
     </children>

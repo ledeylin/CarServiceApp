@@ -49,19 +49,21 @@ public class EditClients {
     void initialize() {
         signUpButton.setOnAction(actionEvent -> {
             String lastName = "";
-            try { lastName = signUpLastName.getText().trim(); } catch (Exception ignored) { }
             String firstName = "";
-            try { firstName = signUpFirstName.getText().trim(); } catch (Exception ignored) { }
             String secondName = "";
-            try { secondName = signUpSecondName.getText().trim(); } catch (Exception ignored) { }
             String address = "";
-            try { address = signUpAddress.getText().trim(); } catch (Exception ignored) { }
             String phone = "";
-            try { phone = signUpPhoneNumber.getText().trim(); } catch (Exception ignored) { }
             String login = "";
-            try { login = signUpLogin.getText().trim(); } catch (Exception ignored) { }
             String pass = "";
+
+            try { lastName = signUpLastName.getText().trim(); } catch (Exception ignored) { }
+            try { firstName = signUpFirstName.getText().trim(); } catch (Exception ignored) { }
+            try { secondName = signUpSecondName.getText().trim(); } catch (Exception ignored) { }
+            try { address = signUpAddress.getText().trim(); } catch (Exception ignored) { }
+            try { phone = signUpPhoneNumber.getText().trim(); } catch (Exception ignored) { }
+            try { login = signUpLogin.getText().trim(); } catch (Exception ignored) { }
             try { pass = signUpPassword.getText().trim(); } catch (Exception ignored) { }
+
             SaveInformation.setText_permissions(0);
             SaveInformation.setPhone(phone);
             SaveInformation.setAddress(address);
@@ -71,7 +73,9 @@ public class EditClients {
             SaveInformation.setText_login(login);
             SaveInformation.setText_pass(pass);
             SaveInformation.setText_permissions(0);
+
             Stage stage = new Stage();
+            PassController.setId(0);
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pass.fxml"));
             Scene scene = null;
             try {

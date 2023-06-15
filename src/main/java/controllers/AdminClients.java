@@ -71,7 +71,6 @@ public class AdminClients extends Constants {
     @FXML
     private Text text_services;
 
-
     private String text_old_login;
 
     private final DatabaseHandler databaseHandler = new DatabaseHandler();
@@ -183,7 +182,7 @@ public class AdminClients extends Constants {
         button_personal_edit.setOnAction(actionEvent -> {
             button_personal_edit.getScene().getWindow().hide();
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("edit_account_employeers.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("edit_account_admin.fxml"));
             Scene scene = null;
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);
@@ -198,7 +197,7 @@ public class AdminClients extends Constants {
         button_personal_acc.setOnAction(actionEvent -> {
             button_personal_acc.getScene().getWindow().hide();
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("personal_account_employeers.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("personal_account_admin.fxml"));
             Scene scene = null;
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);
@@ -214,21 +213,6 @@ public class AdminClients extends Constants {
             button_personal_service.getScene().getWindow().hide();
             Stage stage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("services_admin.fxml"));
-            Scene scene = null;
-            try {
-                scene = new Scene(fxmlLoader.load(), 700, 400);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            stage.setScene(scene);
-            stage.show();
-        });
-
-        // переход на окно работников
-        personal_employees.setOnAction(actionEvent -> {
-            personal_employees.getScene().getWindow().hide();
-            Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("employee_admin.fxml"));
             Scene scene = null;
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);

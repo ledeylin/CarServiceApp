@@ -62,7 +62,7 @@ public class AdminEditAcc {
         button_personal_acc.setOnAction(actionEvent -> {
             button_personal_acc.getScene().getWindow().hide();
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("personal_account_employeers.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("personal_account_admin.fxml"));
             Scene scene = null;
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);
@@ -77,7 +77,7 @@ public class AdminEditAcc {
         button_personal_service.setOnAction(actionEvent -> {
             button_personal_service.getScene().getWindow().hide();
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("services_employee.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("services_admin.fxml"));
             Scene scene = null;
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);
@@ -93,6 +93,21 @@ public class AdminEditAcc {
             personal_clients.getScene().getWindow().hide();
             Stage stage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("clients_admin.fxml"));
+            Scene scene = null;
+            try {
+                scene = new Scene(fxmlLoader.load(), 700, 400);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            stage.setScene(scene);
+            stage.show();
+        });
+
+        // переход на окно работников
+        personal_employees.setOnAction(actionEvent -> {
+            personal_employees.getScene().getWindow().hide();
+            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("employee_admin.fxml"));
             Scene scene = null;
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);

@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import graphics.Shake;
 import main.SaveInformation;
+import main.SaveInformationServices;
 
 import java.util.Objects;
 
@@ -25,6 +26,8 @@ public class PassController {
     @FXML
     private Button signInButton;
 
+    private static int id; // 0 - people  1 - service
+
     @FXML
     void initialize() {
 
@@ -32,7 +35,10 @@ public class PassController {
         signInButton.setOnAction(actionEvent -> {
             if (Objects.equals(passwordField.getText(), SignInController.user.getPassword())) {
                 signInButton.getScene().getWindow().hide();
-                try { SaveInformation.save(); }
+                try {
+                    if (id == 0) SaveInformation.save();
+                    else if (id == 1) SaveInformationServices.save();
+                }
                 catch (SQLException | ClassNotFoundException e) { throw new RuntimeException(e); }
             }
             else {
@@ -43,5 +49,8 @@ public class PassController {
         });
     }
 
+    public static void setId(int id) {
+        PassController.id = id;
+    }
 }
 

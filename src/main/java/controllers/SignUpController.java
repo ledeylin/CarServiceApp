@@ -2,10 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -79,28 +76,34 @@ public class SignUpController extends Constants {
 
                 // проверка на фамилию
                 String lastName = null;
-                try { lastName = signUpLastName.getText().trim(); }
-                catch (Exception e) {
+                try {
+                    lastName = signUpLastName.getText().trim();
+                } catch (Exception e) {
                     System.out.println("Error: empty last name.");
                     break;
                 }
 
                 // проверка на имя
                 String firstName = null;
-                try { firstName = signUpFirstName.getText().trim(); }
-                catch (Exception e) {
+                try {
+                    firstName = signUpFirstName.getText().trim();
+                } catch (Exception e) {
                     System.out.println("Error: empty first name.");
                     break;
                 }
 
                 // проверка на отчетсво
                 String secondName = "";
-                try { secondName = signUpSecondName.getText().trim(); } catch (Exception ignored) { }
+                try {
+                    secondName = signUpSecondName.getText().trim();
+                } catch (Exception ignored) {
+                }
 
                 // проверка на адрес
                 String address = null;
-                try { address = signUpAddress.getText().trim(); }
-                catch (Exception e) {
+                try {
+                    address = signUpAddress.getText().trim();
+                } catch (Exception e) {
                     System.out.println("Error: empty address.");
                     break;
                 }
@@ -113,16 +116,15 @@ public class SignUpController extends Constants {
                     break;
                 }
                 try {
-                    if (!(phoneNumber.length() == 10)) {
-                        System.out.println("Error: incorrect phone number.");
+                    String regex = "\\+7\\s\\([0-9]{3}\\)-[0-9]{3}-[0-9]{2}-[0-9]{2}";
+                    if (!phoneNumber.matches(regex)) {
+                        System.out.println("Error: incorrect phone number");
                         break;
                     }
-                    Long.parseLong(phoneNumber);
                 } catch (Exception e) {
                     System.out.println("Error: incorrect phone number.");
-                    break;
-                }
-                phoneNumber = "+7" + phoneNumber;
+                    break; }
+
 
                 // проверка на существование логина
                 String login = null;
@@ -190,7 +192,7 @@ public class SignUpController extends Constants {
     public String insertNew = "INSERT INTO " + CLIENTS_TABLE + " (" + CLIENTS_LAST_NAME +  ", " +
             CLIENTS_FIRST_NAME + ", " + CLIENTS_SECOND_NAME + ", " + CLIENTS_ADDRESS + ", " +
             CLIENTS_PHONE_NUMBER + ", " + CLIENTS_LOGIN + ", " + CLIENTS_PASSWORD +
-            ") VALUES(?, ?, ?, ?, ?, ?)";
+            ") VALUES(?, ?, ?, ?, ?, ?, ?)";
 
     public void signUpClient(String lastName, String firstName, String secondName, String address, String phoneNumber, String login, String password)
             throws SQLException, ClassNotFoundException {

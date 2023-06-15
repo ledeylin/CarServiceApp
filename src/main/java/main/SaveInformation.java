@@ -186,13 +186,19 @@ public class SaveInformation extends Constants{
 
         // номер телефона
         if (!Objects.equals(phone, "")) {
-            String sqlAlterTable = "UPDATE " + CLIENTS_TABLE + " SET " + CLIENTS_PHONE_NUMBER + " = '" + phone
+            String regex = "\\+7\\s\\([0-9]{3}\\)-[0-9]{3}-[0-9]{2}-[0-9]{2}";
+            if (phone.matches(regex)) {
+                String sqlAlterTable = "UPDATE " + CLIENTS_TABLE + " SET " + CLIENTS_PHONE_NUMBER + " = '" + phone
                         + "' WHERE " + CLIENTS_LOGIN + " = '" + text_old_login + "';";
-            Connection connection = databaseHandler.getDbConnection();
-            Statement statement = connection.createStatement();
-            System.out.println(sqlAlterTable);
-            statement.executeUpdate(sqlAlterTable);
-            System.out.println("Success!");
+                Connection connection = databaseHandler.getDbConnection();
+                Statement statement = connection.createStatement();
+                System.out.println(sqlAlterTable);
+                statement.executeUpdate(sqlAlterTable);
+                System.out.println("Success!");
+            }
+            else {
+                System.out.println("Incorrect phone number");
+            }
         }
 
         // права

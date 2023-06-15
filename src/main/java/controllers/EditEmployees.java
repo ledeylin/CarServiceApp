@@ -72,6 +72,7 @@ public class EditEmployees {
                 SaveInformation.setText_permissions(1);
             }
             Stage stage = new Stage();
+            PassController.setId(0);
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pass.fxml"));
             Scene scene = null;
             try {
