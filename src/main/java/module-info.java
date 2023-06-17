@@ -4,7 +4,6 @@ module sample.d {
     requires java.sql;
     requires mysql.connector.java;
 
-
     exports main;
     opens main to javafx.fxml;
     exports controllers;

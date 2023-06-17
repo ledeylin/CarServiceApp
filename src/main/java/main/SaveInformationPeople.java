@@ -1,11 +1,9 @@
 package main;
 
-import controllers.SignInController;
-
 import java.sql.*;
 import java.util.Objects;
 
-public class SaveInformation extends Constants{
+public class SaveInformationPeople extends Constants{
 
     static DatabaseHandler databaseHandler = new DatabaseHandler();
 
@@ -20,39 +18,39 @@ public class SaveInformation extends Constants{
     private static int permissions;
 
     public static void setText_pass(String text_pass) {
-        SaveInformation.text_pass = text_pass;
+        SaveInformationPeople.text_pass = text_pass;
     }
 
     public static void setText_old_login(String text_old_login) {
-        SaveInformation.text_old_login = text_old_login;
+        SaveInformationPeople.text_old_login = text_old_login;
     }
 
     public static void setText_login(String text_login) {
-        SaveInformation.text_login = text_login;
+        SaveInformationPeople.text_login = text_login;
     }
 
     public static void setText_permissions(int permissions) {
-        SaveInformation.permissions = permissions;
+        SaveInformationPeople.permissions = permissions;
     }
 
     public static void setLast_name(String last_name) {
-        SaveInformation.last_name = last_name;
+        SaveInformationPeople.last_name = last_name;
     }
 
     public static void setFirst_name(String first_name) {
-        SaveInformation.first_name = first_name;
+        SaveInformationPeople.first_name = first_name;
     }
 
     public static void setSecond_name(String second_name) {
-        SaveInformation.second_name = second_name;
+        SaveInformationPeople.second_name = second_name;
     }
 
     public static void setAddress(String address) {
-        SaveInformation.address = address;
+        SaveInformationPeople.address = address;
     }
 
     public static void setPhone(String phone) {
-        SaveInformation.phone = phone;
+        SaveInformationPeople.phone = phone;
     }
 
     public static void save() throws SQLException, ClassNotFoundException {

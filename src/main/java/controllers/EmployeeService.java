@@ -6,14 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -25,22 +22,10 @@ import main.DatabaseHandler;
 import javafx.scene.text.Text;
 import main.Main;
 
-public class EmployeesServices extends Constants {
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
+public class EmployeeService extends Constants {
 
     @FXML
     private Button button_personal_acc;
-
-    @FXML
-    private Button button_personal_edit;
-
-    @FXML
-    private Button button_personal_service;
 
     @FXML
     private Text text_detail;
@@ -57,7 +42,6 @@ public class EmployeesServices extends Constants {
     @FXML
     private Text text_time;
 
-
     @FXML
     private ListView<String> list_view;
 
@@ -67,15 +51,19 @@ public class EmployeesServices extends Constants {
     void initialize() throws SQLException, ClassNotFoundException {
 
         // добавление информации об услугах
+
         TreeMap<String, Integer> services = new TreeMap<>();
-        String query = "SELECT * FROM " + SERVICE_TABLE + " WHERE " + SERVICE_ID_EMPLOYEE + " = '" + SignInController.user.getLogin() + "';";
+
+        String query = "SELECT * FROM service WHERE id_employee = '" + EmployeeAcc.getLogin() + "';";
         PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
         ResultSet result = statement.executeQuery();
+
         int i = 0;
         while (result.next()) {
-            services.put(result.getDate(SERVICE_START_DATE) + " / " + result.getDate(SERVICE_FINAL_DATE), i);
+            services.put(result.getDate("start_date") + " / " + result.getDate("final_date"), i);
             i++;
         }
+
         ArrayList<String> all = new ArrayList<>();
         statement = databaseHandler.getDbConnection().prepareStatement(query);
         result = statement.executeQuery();
@@ -85,19 +73,22 @@ public class EmployeesServices extends Constants {
         list_view.getItems().addAll(all);
 
         // добавление в массивы для последующего вывода
+
         TreeMap<Integer, String> work_time = new TreeMap<>();
         TreeMap<Integer, String> mileage = new TreeMap<>();
         TreeMap<Integer, String> model = new TreeMap<>();
         TreeMap<Integer, String> detail = new TreeMap<>();
         TreeMap<Integer, Integer> price = new TreeMap<>();
+
         query = "SELECT " + CAR_TABLE + "." + CAR_MODEL + ", " + DETAILS_TABLE + "." + DETAILS_CATEGORY + ", " +
                 DETAILS_TABLE + "." + DETAILS_PRICE + ", " + SERVICE_TABLE + "." + SERVICE_WORK_TIME + ", " +
                 SERVICE_TABLE + "." + SERVICE_MILEAGE + " FROM " + SERVICE_TABLE + " INNER JOIN " + CAR_TABLE +
                 " ON " + SERVICE_TABLE + "." + SERVICE_LICENSE_PLATE + " = " + CAR_TABLE + "." + CAR_LICENSE_PLATE +
                 " INNER JOIN " + DETAILS_TABLE + " ON " + SERVICE_TABLE + "." + SERVICE_DETAIL_SERIAL_NUMBER +
                 " = " + DETAILS_TABLE + "." + DETAILS_SERIAL_NUMBER +  " WHERE " + SERVICE_TABLE + "." +
-                SERVICE_ID_EMPLOYEE + " = '" + SignInController.user.getLogin() + "';";
+                SERVICE_ID_EMPLOYEE + " = '" + EmployeeAcc.getLogin() + "';";
         result = statement.executeQuery(query);
+
         for (i = 0; i < services.size(); i++) {
             if (result.next()) {
                 work_time.put(i, result.getString(SERVICE_WORK_TIME) + " ч.");
@@ -107,7 +98,10 @@ public class EmployeesServices extends Constants {
                 price.put(i, (result.getInt(DETAILS_PRICE)) * 2 / 10);
             }
         }
+
+        // просмотр выбора
         list_view.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String s1) {
                 text_detail.setText(detail.get(services.get(list_view.getSelectionModel().getSelectedItem())));
@@ -116,28 +110,15 @@ public class EmployeesServices extends Constants {
                 text_price.setText(String.valueOf(price.get(services.get(list_view.getSelectionModel().getSelectedItem()))));
                 text_time.setText(work_time.get(services.get(list_view.getSelectionModel().getSelectedItem())));
             }
-        });
 
-        // переход на окно редактирования информации
-        button_personal_edit.setOnAction(actionEvent -> {
-            button_personal_edit.getScene().getWindow().hide();
-            Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("edit_account_employeers.fxml"));
-            Scene scene = null;
-            try {
-                scene = new Scene(fxmlLoader.load(), 700, 400);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            stage.setScene(scene);
-            stage.show();
         });
 
         // переход на окно личного кабинета
         button_personal_acc.setOnAction(actionEvent -> {
+
             button_personal_acc.getScene().getWindow().hide();
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("personal_account_employeers.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("employee_acc.fxml"));
             Scene scene = null;
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);
@@ -146,6 +127,7 @@ public class EmployeesServices extends Constants {
             }
             stage.setScene(scene);
             stage.show();
+
         });
 
     }

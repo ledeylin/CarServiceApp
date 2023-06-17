@@ -6,11 +6,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import main.DatabaseHandler;
 import main.Main;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-public class AdminPersonalAcc {
+public class AdminAcc {
 
     @FXML
     private Button personal_clients;
@@ -40,37 +44,75 @@ public class AdminPersonalAcc {
     private Text text_permissions;
 
     @FXML
-    void initialize() {
+    private Text text_salary;
+
+    @FXML
+    private Text text_work_time;
+
+    private static String login;
+
+    private final DatabaseHandler databaseHandler = new DatabaseHandler();
+
+    @FXML
+    void initialize() throws SQLException, ClassNotFoundException {
 
         // отображение информации о сотруднике
-        text_name.setText(SignInController.user.getLast_name() + " " + SignInController.user.getFirst_name() + " " + SignInController.user.getSecond_name());
-        text_address.setText(SignInController.user.getAddress());
-        text_login.setText(SignInController.user.getLogin());
-        text_pass.setText("*".repeat(SignInController.user.getPassword().length()));
-        text_permissions.setText("Администратор");
 
+        String query = "SELECT e.last_name,\n" +
+                "    e.first_name,\n" +
+                "    e.second_name,\n" +
+                "    e.address,\n" +
+                "    e.login,\n" +
+                "    e.password,\n" +
+                "    e.permission,\n" +
+                "    SUM(s.work_time) AS total_work_time,\n" +
+                "    SUM(d.price) * 0.2 AS total_salary\n" +
+                "FROM employees e\n" +
+                "JOIN service s ON e.login = s.id_employee\n" +
+                "JOIN details d ON s.detail_serial_number = d.serial_number\n" +
+                "GROUP BY e.login\n" +
+                "HAVING e.login = '" + login + "';";
+
+        PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
+        ResultSet result = statement.executeQuery(query);
+
+        if (result.next()) {
+            text_name.setText(result.getString("last_name") + " " +
+                    result.getString("first_name") + " " +
+                    result.getString("second_name"));
+            text_address.setText(result.getString("address"));
+            text_login.setText(result.getString("login"));
+            text_pass.setText("*".repeat(result.getString("password").length()));
+            text_permissions.setText("Администратор");
+            text_work_time.setText(result.getString("total_work_time"));
+            text_salary.setText(result.getString("total_salary"));
+        }
 
         // переход на окно редактирования информации
         personal_edit.setOnAction(actionEvent -> {
-            personal_edit.getScene().getWindow().hide();
+
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("edit_account_admin.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_edit.fxml"));
             Scene scene = null;
+
             try {
-                scene = new Scene(fxmlLoader.load(), 700, 400);
+                scene = new Scene(fxmlLoader.load(), 400, 250);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
             stage.setScene(scene);
             stage.show();
+
         });
 
         // переход на окно работников
         personal_employees.setOnAction(actionEvent -> {
+
             personal_employees.getScene().getWindow().hide();
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("employee_admin.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_employees.fxml"));
             Scene scene = null;
+
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);
             } catch (IOException e) {
@@ -78,14 +120,17 @@ public class AdminPersonalAcc {
             }
             stage.setScene(scene);
             stage.show();
+
         });
 
         // переход на окно просмотра услуг
         personal_service.setOnAction(actionEvent -> {
+
             personal_service.getScene().getWindow().hide();
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("services_admin.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_services.fxml"));
             Scene scene = null;
+
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);
             } catch (IOException e) {
@@ -93,14 +138,17 @@ public class AdminPersonalAcc {
             }
             stage.setScene(scene);
             stage.show();
+
         });
 
         // переход на окно клиентов
         personal_clients.setOnAction(actionEvent -> {
+
             personal_clients.getScene().getWindow().hide();
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("clients_admin.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_clients.fxml"));
             Scene scene = null;
+
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);
             } catch (IOException e) {
@@ -108,7 +156,16 @@ public class AdminPersonalAcc {
             }
             stage.setScene(scene);
             stage.show();
+
         });
 
+    }
+
+    public static String getLogin() {
+        return login;
+    }
+
+    public static void setLogin(String login) {
+        AdminAcc.login = login;
     }
 }

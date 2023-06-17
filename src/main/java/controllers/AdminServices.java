@@ -2,19 +2,14 @@ package controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -27,16 +22,22 @@ import javafx.scene.text.Text;
 public class AdminServices extends Constants {
 
     @FXML
-    private Button button_edit;
+    private ResourceBundle resources;
+
+    @FXML
+    private URL location;
 
     @FXML
     private Button button_add;
 
     @FXML
-    private Button button_personal_acc;
+    private Button button_delete;
 
     @FXML
-    private Button button_personal_edit;
+    private Button button_edit;
+
+    @FXML
+    private Button button_personal_acc;
 
     @FXML
     private Button personal_clients;
@@ -48,13 +49,10 @@ public class AdminServices extends Constants {
     private Text text_car_model;
 
     @FXML
-    private Text text_car_owner;
+    private Text text_client_login;
 
     @FXML
     private Text text_detail;
-
-    @FXML
-    private Text text_detail_serial_number;
 
     @FXML
     private Text text_final_date;
@@ -64,6 +62,9 @@ public class AdminServices extends Constants {
 
     @FXML
     private Text text_price;
+
+    @FXML
+    private Text text_serial_number;
 
     @FXML
     private Text text_start_date;
@@ -77,21 +78,24 @@ public class AdminServices extends Constants {
 
     private static LocalDate final__date;
 
-    private final DatabaseHandler databaseHandler = new DatabaseHandler();
+    private static final DatabaseHandler databaseHandler = new DatabaseHandler();
 
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
 
         // добавление информации об услугах
+
         TreeMap<String, Integer> services = new TreeMap<>();
         String query = "SELECT * FROM " + SERVICE_TABLE;
         PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
         ResultSet result = statement.executeQuery();
+
         int i = 0;
         while (result.next()) {
             services.put(result.getDate(SERVICE_START_DATE) + " / " + result.getDate(SERVICE_FINAL_DATE), i);
             i++;
         }
+
         ArrayList<String> all = new ArrayList<>();
         statement = databaseHandler.getDbConnection().prepareStatement(query);
         result = statement.executeQuery();
@@ -101,15 +105,17 @@ public class AdminServices extends Constants {
         list_view.getItems().addAll(all);
 
         // добавление в массивы для последующего вывода
+
         TreeMap<Integer, String> login_employee = new TreeMap<>();
         TreeMap<Integer, String> start_date = new TreeMap<>();
         TreeMap<Integer, String> final_date = new TreeMap<>();
         TreeMap<Integer, Integer> price = new TreeMap<>();
         TreeMap<Integer, String> car_model = new TreeMap<>();
-        TreeMap<Integer, String> detail_serial_number = new TreeMap<>();
+        TreeMap<Integer, String> serial_number = new TreeMap<>();
         TreeMap<Integer, String> detail = new TreeMap<>();
         TreeMap<Integer, String> car_owner = new TreeMap<>();
         TreeMap<Integer, Integer> id_service = new TreeMap<>();
+
         query = "SELECT employees.login AS employee_login, service.start_date, service.final_date," +
                 "details.price, car.model AS car_model, details.serial_number AS detail_serial_number," +
                 "clients.login AS car_owner, details.category AS detail, service.id_service AS id_service\n" +
@@ -119,6 +125,7 @@ public class AdminServices extends Constants {
                 "INNER JOIN clients ON car.id_owner = clients.login\n" +
                 "INNER JOIN details_compatibility ON car.model = details_compatibility.model\n" +
                 "INNER JOIN details ON details_compatibility.detail_serial_number = details.serial_number AND service.detail_serial_number = details.serial_number;";
+
         result = statement.executeQuery(query);
         for (i = 0; i < services.size(); i++) {
             if (result.next()) {
@@ -127,17 +134,19 @@ public class AdminServices extends Constants {
                 final_date.put(i, result.getString("final_date"));
                 price.put(i, (result.getInt(DETAILS_PRICE)));
                 car_model.put(i, result.getString("car_model"));
-                detail_serial_number.put(i, result.getString("detail_serial_number"));
+                serial_number.put(i, result.getString("detail_serial_number"));
                 car_owner.put(i, result.getString("car_owner"));
                 detail.put(i, result.getString("detail"));
                 id_service.put(i, result.getInt("id_service"));
             }
         }
+
+        // просмотр выбора
         list_view.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String s1) {
-                text_detail_serial_number.setText(detail_serial_number.get(services.get(list_view.getSelectionModel().getSelectedItem())));
-                text_car_owner.setText(car_owner.get(services.get(list_view.getSelectionModel().getSelectedItem())));
+                text_serial_number.setText(serial_number.get(services.get(list_view.getSelectionModel().getSelectedItem())));
+                text_client_login.setText(car_owner.get(services.get(list_view.getSelectionModel().getSelectedItem())));
                 text_car_model.setText(car_model.get(services.get(list_view.getSelectionModel().getSelectedItem())));
                 text_price.setText(String.valueOf(price.get(services.get(list_view.getSelectionModel().getSelectedItem()))));
                 text_login_employee.setText(login_employee.get(services.get(list_view.getSelectionModel().getSelectedItem())));
@@ -152,94 +161,122 @@ public class AdminServices extends Constants {
 
         // редактирование информации об услуге
         button_edit.setOnAction(actionEvent -> {
-            SaveInformationServices.setId(id);
-            EditServices.setStartDate(start__date);
-            EditServices.setFinalDate(final__date);
+
+            EditAdminServices.setId(id);
+            EditAdminServices.setStartDate(start__date);
+            EditAdminServices.setFinalDate(final__date);
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("editServices.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("edit_admin_services.fxml"));
             Scene scene = null;
+
             try {
                 scene = new Scene(fxmlLoader.load(), 529, 267);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
             stage.setScene(scene);
             stage.show();
+
         });
 
         // добавление новой услуги
         button_add.setOnAction(actionEvent -> {
+
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("addNewService.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("add_admin_services.fxml"));
             Scene scene = null;
+
             try {
                 scene = new Scene(fxmlLoader.load(), 529, 267);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
             stage.setScene(scene);
             stage.show();
+
         });
 
-        // переход на окно редактирования информации
-        button_personal_edit.setOnAction(actionEvent -> {
-            button_personal_edit.getScene().getWindow().hide();
+        // удаление услуги
+        button_delete.setOnAction(actionEvent -> {
+
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("edit_account_admin.fxml"));
+            MainPass.setId(5);
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main_pass.fxml"));
             Scene scene = null;
-            try {
-                scene = new Scene(fxmlLoader.load(), 700, 400);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+
+            try { scene = new Scene(fxmlLoader.load(), 400, 250); }
+            catch (IOException e) { throw new RuntimeException(e); }
+
             stage.setScene(scene);
             stage.show();
+
         });
 
         // переход на окно личного кабинета
         button_personal_acc.setOnAction(actionEvent -> {
+
             button_personal_acc.getScene().getWindow().hide();
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("personal_account_admin.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_acc.fxml"));
             Scene scene = null;
+
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
             stage.setScene(scene);
             stage.show();
+
         });
 
         // переход на окно клиентов
         personal_clients.setOnAction(actionEvent -> {
+
             personal_clients.getScene().getWindow().hide();
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("clients_admin.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_clients.fxml"));
             Scene scene = null;
+
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
             stage.setScene(scene);
             stage.show();
+
         });
 
         // переход на окно работников
         personal_employees.setOnAction(actionEvent -> {
+
             personal_employees.getScene().getWindow().hide();
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("employee_admin.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_employees.fxml"));
             Scene scene = null;
+
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
             stage.setScene(scene);
             stage.show();
+
         });
+
+    }
+
+    public static void delete() throws SQLException, ClassNotFoundException {
+        Connection connection = databaseHandler.getDbConnection();
+        Statement statement = connection.createStatement();
+        statement.executeUpdate("DELETE FROM " + SERVICE_TABLE + " WHERE " + SERVICE_ID + " = '" + id + "'");
 
     }
 

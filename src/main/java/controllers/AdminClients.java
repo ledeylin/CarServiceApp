@@ -6,14 +6,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.Constants;
 import main.DatabaseHandler;
 import main.Main;
-import main.SaveInformation;
+import main.SaveInformationPeople;
 
 import java.io.IOException;
 import java.net.URL;
@@ -165,7 +164,7 @@ public class AdminClients extends Constants {
 
         // редактирование информации о клиенте
         button_edit.setOnAction(actionEvent -> {
-            SaveInformation.setText_old_login(text_old_login);
+            SaveInformationPeople.setText_old_login(text_old_login);
             Stage stage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("editClients.fxml"));
             Scene scene = null;

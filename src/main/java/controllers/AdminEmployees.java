@@ -6,39 +6,32 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.Constants;
 import main.DatabaseHandler;
 import main.Main;
-import main.SaveInformation;
+import main.SaveInformationPeople;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ResourceBundle;
+import java.sql.*;
 import java.util.Set;
 import java.util.TreeMap;
-import java.net.URL;
+
 public class AdminEmployees extends Constants {
 
     @FXML
-    private ResourceBundle resources;
+    private Button button_add;
 
     @FXML
-    private URL location;
+    private Button button_delete;
 
     @FXML
     private Button button_edit;
 
     @FXML
     private Button button_personal_acc;
-
-    @FXML
-    private Button button_personal_edit;
 
     @FXML
     private Button button_personal_service;
@@ -48,6 +41,9 @@ public class AdminEmployees extends Constants {
 
     @FXML
     private Button personal_clients;
+
+    @FXML
+    private Button personal_employees;
 
     @FXML
     private Text text_address;
@@ -70,19 +66,21 @@ public class AdminEmployees extends Constants {
     @FXML
     private Text text_work_time;
 
-    private String text_old_login;
+    private static String text_old_login;
 
-    private final DatabaseHandler databaseHandler = new DatabaseHandler();
+    private static final DatabaseHandler databaseHandler = new DatabaseHandler();
 
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
 
         // добавление информации о сотрудниках
+
         TreeMap<String, Integer> employees = new TreeMap<>();
         String query = "SELECT * FROM " + EMPLOYEE_TABLE + " ORDER BY " + EMPLOYEE_TABLE + "." + EMPLOYEE_LAST_NAME + " ASC, " +
                 EMPLOYEE_TABLE + "." + EMPLOYEE_FIRST_NAME + " ASC, " + EMPLOYEE_TABLE + "." + EMPLOYEE_SECOND_NAME + " ASC";
         PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
         ResultSet result = statement.executeQuery();
+
         int i = 0;
         while (result.next()) {
             String first_name = " " + result.getString(EMPLOYEE_FIRST_NAME).charAt(0) + ".";
@@ -91,6 +89,7 @@ public class AdminEmployees extends Constants {
             employees.put(result.getString(EMPLOYEE_LAST_NAME) + first_name + second_name, i);
             i++;
         }
+
         Set<String> setKeys = employees.keySet();
         for(String k: setKeys){
             list_view.getItems().add(k);
@@ -99,6 +98,7 @@ public class AdminEmployees extends Constants {
         System.out.println(setKeys);
 
         // добавление в массивы для последующего вывода
+
         TreeMap<Integer, String> name = new TreeMap<>();
         TreeMap<Integer, String> address = new TreeMap<>();
         TreeMap<Integer, String> login = new TreeMap<>();
@@ -106,6 +106,7 @@ public class AdminEmployees extends Constants {
         TreeMap<Integer, String> services_count = new TreeMap<>();
         TreeMap<Integer, String> work_time = new TreeMap<>();
         TreeMap<Integer, String> salary = new TreeMap<>();
+
         query = "SELECT " + EMPLOYEE_TABLE + ".*, COUNT(" + SERVICE_TABLE + "." + SERVICE_ID + ") AS services_count, SUM(DATEDIFF(" +
                 SERVICE_TABLE + "." + SERVICE_FINAL_DATE + ", " + SERVICE_TABLE + "." + SERVICE_START_DATE + ")) AS days_worked, SUM(" +
                 DETAILS_TABLE + "." + DETAILS_PRICE + " * 0.2) AS total_salary FROM " + EMPLOYEE_TABLE + " LEFT JOIN " + SERVICE_TABLE +
@@ -118,12 +119,16 @@ public class AdminEmployees extends Constants {
         System.out.println(query);
         result = statement.executeQuery(query);
         i = 0;
+
         while (i < employees.size()) {
+
             if (result.next()) {
+
                 String second_name = result.getString(EMPLOYEE_SECOND_NAME);
                 if (second_name == null) second_name = "";
                 String name_str = result.getString(EMPLOYEE_LAST_NAME) + " " + result.getString(EMPLOYEE_FIRST_NAME) +
                         " " + second_name;
+
                 if (i == 0) {
                     name.put(i, name_str);
                     address.put(i, result.getString(EMPLOYEE_ADDRESS));
@@ -134,6 +139,7 @@ public class AdminEmployees extends Constants {
                     salary.put(i, result.getString("total_salary") + " р.");
                     i++;
                 }
+
                 else if (!name_str.equals(name.get(i - 1))) {
                     name.put(i, name_str);
                     address.put(i, result.getString(EMPLOYEE_ADDRESS));
@@ -144,10 +150,14 @@ public class AdminEmployees extends Constants {
                     salary.put(i, result.getString("total_salary") + " р.");
                     i++;
                 }
+
             }
+
         }
 
+        // просмотр выбора
         list_view.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 text_name.setText(name.get(employees.get(list_view.getSelectionModel().getSelectedItem())));
@@ -159,13 +169,15 @@ public class AdminEmployees extends Constants {
                 text_services_count.setText(services_count.get(employees.get(list_view.getSelectionModel().getSelectedItem())));
                 text_old_login = login.get(employees.get(list_view.getSelectionModel().getSelectedItem()));
             }
+
         });
 
         // редактирование информации о сотруднике
         button_edit.setOnAction(actionEvent -> {
-            SaveInformation.setText_old_login(text_old_login);
+
+            EditAdminEmployees.setOld_login(text_old_login);
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("editEmployees.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("edit_admin_employees.fxml"));
             Scene scene = null;
             try {
                 scene = new Scene(fxmlLoader.load(), 529, 267);
@@ -174,28 +186,47 @@ public class AdminEmployees extends Constants {
             }
             stage.setScene(scene);
             stage.show();
+
         });
 
-        // переход на окно редактирования информации
-        button_personal_edit.setOnAction(actionEvent -> {
-            button_personal_edit.getScene().getWindow().hide();
+        // добавление нового сотрудника
+        button_add.setOnAction(actionEvent -> {
+
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("edit_account_admin.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("add_admin_employees.fxml"));
             Scene scene = null;
             try {
-                scene = new Scene(fxmlLoader.load(), 700, 400);
+                scene = new Scene(fxmlLoader.load(), 529, 267);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
             stage.setScene(scene);
             stage.show();
+
+        });
+
+        // удаление услуги
+        button_delete.setOnAction(actionEvent -> {
+
+            Stage stage = new Stage();
+            MainPass.setId(4);
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main_pass.fxml"));
+            Scene scene = null;
+
+            try { scene = new Scene(fxmlLoader.load(), 400, 250); }
+            catch (IOException e) { throw new RuntimeException(e); }
+
+            stage.setScene(scene);
+            stage.show();
+
         });
 
         // переход на окно личного кабинета
         button_personal_acc.setOnAction(actionEvent -> {
+
             button_personal_acc.getScene().getWindow().hide();
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("personal_account_admin.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_acc.fxml"));
             Scene scene = null;
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);
@@ -204,13 +235,15 @@ public class AdminEmployees extends Constants {
             }
             stage.setScene(scene);
             stage.show();
+
         });
 
         // переход на окно просмотра услуг
         button_personal_service.setOnAction(actionEvent -> {
+
             button_personal_service.getScene().getWindow().hide();
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("services_admin.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_services.fxml"));
             Scene scene = null;
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);
@@ -219,13 +252,15 @@ public class AdminEmployees extends Constants {
             }
             stage.setScene(scene);
             stage.show();
+
         });
 
         // переход на окно клиентов
         personal_clients.setOnAction(actionEvent -> {
+
             personal_clients.getScene().getWindow().hide();
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("clients_admin.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_clients.fxml"));
             Scene scene = null;
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);
@@ -234,7 +269,15 @@ public class AdminEmployees extends Constants {
             }
             stage.setScene(scene);
             stage.show();
+
         });
+
+    }
+
+    public static void delete() throws SQLException, ClassNotFoundException {
+        Connection connection = databaseHandler.getDbConnection();
+        Statement statement = connection.createStatement();
+        statement.executeUpdate("DELETE FROM " + EMPLOYEE_TABLE + " WHERE " + EMPLOYEE_LOGIN + " = '" + text_old_login + "'");
 
     }
 }
