@@ -73,6 +73,9 @@ public class AdminAcc {
                 "GROUP BY e.login\n" +
                 "HAVING e.login = '" + login + "';";
 
+        System.out.println(query);
+
+
         PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
         ResultSet result = statement.executeQuery(query);
 

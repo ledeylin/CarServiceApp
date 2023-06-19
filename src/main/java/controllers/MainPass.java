@@ -48,6 +48,7 @@ public class MainPass {
                 try {
                     if (id == 0) EditAdminEmployees.save();
                     if (id == 1) EditAdminServices.save();
+                    if (id == 2) AddAdminEmployee.add();
                     if (id == 3) AddAdminService.add();
                     if (id == 4) AdminEmployees.delete();
                     if (id == 5) AdminServices.delete();

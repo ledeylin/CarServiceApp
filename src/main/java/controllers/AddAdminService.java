@@ -63,6 +63,8 @@ public class AddAdminService extends Constants {
 
     private static Date final_date = null;
 
+    private boolean flag = true;
+
     private static final DatabaseHandler databaseHandler = new DatabaseHandler();
 
     @FXML
@@ -71,57 +73,56 @@ public class AddAdminService extends Constants {
         // сохранение
         signUpButton.setOnAction(actionEvent -> {
 
-            while (true) {
+            // проверка серийного номера
+            serial_number = signUpDetailSerialNumber.getText().trim();
+            if (serial_number.equals("")) {
+                System.out.println("Error: empty serial number.");
+                flag = false;
+            }
 
-                // проверка серийного номера
-                serial_number = signUpDetailSerialNumber.getText().trim();
-                if (serial_number.equals("")) {
-                    System.out.println("Error: empty serial number.");
-                    break;
-                }
+            // проверка логина работника
+            employee = signUpEmployee.getText().trim();
+            if (employee.equals("")) {
+                System.out.println("Error: empty login employee.");
+                flag = false;
+            }
 
-                // проверка логина работника
-                employee = signUpEmployee.getText().trim();
-                if (employee.equals("")) {
-                    System.out.println("Error: empty login employee.");
-                    break;
-                }
+            // проверка номера машины
+            license_plate = signUpLicensePlate.getText().trim();
+            if (license_plate.equals("")) {
+                System.out.println("Error: empty license plate.");
+                flag = false;
+            }
 
-                // проверка номера машины
-                license_plate = signUpLicensePlate.getText().trim();
-                if (license_plate.equals("")) {
-                    System.out.println("Error: empty license plate.");
-                    break;
-                }
+            // проверка пробега машины
+            mileage = signUpMileage.getText().trim();
+            if (mileage.equals("")) {
+                System.out.println("Error: empty mileage.");
+                flag = false;
+            }
 
-                // проверка пробега машины
-                mileage = signUpMileage.getText().trim();
-                if (mileage.equals("")) {
-                    System.out.println("Error: empty mileage.");
-                    break;
-                }
+            // проверка времени работы
+            work_time = signUpWorkTime.getText().trim();
+            if (work_time.equals("")) {
+                System.out.println("Error: empty work time.");
+                flag = false;
+            }
 
-                // проверка времени работы
-                work_time = signUpWorkTime.getText().trim();
-                if (work_time.equals("")) {
-                    System.out.println("Error: empty work time.");
-                    break;
-                }
+            // проверка даты начала
+            try { start_date = Date.valueOf(text_start_date.getValue()); } catch (Exception ignored) { }
+            if (start_date == null) {
+                System.out.println("Error: incorrect start date.");
+                flag = false;
+            }
 
-                // проверка даты начала
-                try { start_date = Date.valueOf(text_start_date.getValue()); } catch (Exception ignored) { }
-                if (start_date == null) {
-                    System.out.println("Error: incorrect start date.");
-                    break;
-                }
+            // проверка даты конца
+            try { final_date = Date.valueOf(text_final_date.getValue()); } catch (Exception ignored) { }
+            if (final_date == null) {
+                System.out.println("Error: incorrect final date.");
+                flag = false;
+            }
 
-                // проверка даты конца
-                try { final_date = Date.valueOf(text_final_date.getValue()); } catch (Exception ignored) { }
-                if (final_date == null) {
-                    System.out.println("Error: incorrect final date.");
-                    break;
-                }
-
+            if (flag) {
                 // проверка пароля
                 Stage stage = new Stage();
                 MainPass.setId(3);
@@ -134,8 +135,8 @@ public class AddAdminService extends Constants {
                 }
                 stage.setScene(scene);
                 stage.show();
-
             }
+
         });
 
     }

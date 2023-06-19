@@ -16,6 +16,7 @@ import main.SaveInformationPeople;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -43,9 +44,6 @@ public class AdminEmployees extends Constants {
     private Button personal_clients;
 
     @FXML
-    private Button personal_employees;
-
-    @FXML
     private Text text_address;
 
     @FXML
@@ -66,6 +64,9 @@ public class AdminEmployees extends Constants {
     @FXML
     private Text text_work_time;
 
+    @FXML
+    private Text text_post;
+
     private static String text_old_login;
 
     private static final DatabaseHandler databaseHandler = new DatabaseHandler();
@@ -85,7 +86,9 @@ public class AdminEmployees extends Constants {
         while (result.next()) {
             String first_name = " " + result.getString(EMPLOYEE_FIRST_NAME).charAt(0) + ".";
             String second_name = "";
-            second_name = " " + result.getString(EMPLOYEE_SECOND_NAME).charAt(0) + ".";
+            if (!Objects.equals(result.getString(EMPLOYEE_SECOND_NAME), "")) {
+                second_name = " " + result.getString(EMPLOYEE_SECOND_NAME).charAt(0) + ".";
+            }
             employees.put(result.getString(EMPLOYEE_LAST_NAME) + first_name + second_name, i);
             i++;
         }
@@ -106,6 +109,7 @@ public class AdminEmployees extends Constants {
         TreeMap<Integer, String> services_count = new TreeMap<>();
         TreeMap<Integer, String> work_time = new TreeMap<>();
         TreeMap<Integer, String> salary = new TreeMap<>();
+        TreeMap<Integer, String> post = new TreeMap<>();
 
         query = "SELECT " + EMPLOYEE_TABLE + ".*, COUNT(" + SERVICE_TABLE + "." + SERVICE_ID + ") AS services_count, SUM(DATEDIFF(" +
                 SERVICE_TABLE + "." + SERVICE_FINAL_DATE + ", " + SERVICE_TABLE + "." + SERVICE_START_DATE + ")) AS days_worked, SUM(" +
@@ -137,6 +141,17 @@ public class AdminEmployees extends Constants {
                     services_count.put(i, result.getString("services_count") + " шт.");
                     work_time.put(i, result.getString("days_worked") + " дней");
                     salary.put(i, result.getString("total_salary") + " р.");
+                    String pp = null;
+                    if (result.getInt(EMPLOYEE_ACCESS_RIGHTS) == 0) {
+                        pp = "Уволен";
+                    }
+                    else if (result.getInt(EMPLOYEE_ACCESS_RIGHTS) == 1) {
+                        pp = "Рабочий";
+                    }
+                    else if (result.getInt(EMPLOYEE_ACCESS_RIGHTS) == 2) {
+                        pp = "Администратор";
+                    }
+                    post.put(i, pp);
                     i++;
                 }
 
@@ -148,6 +163,18 @@ public class AdminEmployees extends Constants {
                     services_count.put(i, result.getString("services_count") + " шт.");
                     work_time.put(i, result.getString("days_worked") + " дней");
                     salary.put(i, result.getString("total_salary") + " р.");
+                    String pp = null;
+                    int permissions = result.getInt(EMPLOYEE_ACCESS_RIGHTS);
+                    if (permissions == 0) {
+                        pp = "Уволен";
+                    }
+                    else if (permissions == 1) {
+                        pp = "Рабочий";
+                    }
+                    else if (permissions == 2) {
+                        pp = "Администратор";
+                    }
+                    post.put(i, pp);
                     i++;
                 }
 
@@ -167,6 +194,7 @@ public class AdminEmployees extends Constants {
                 text_work_time.setText(work_time.get(employees.get(list_view.getSelectionModel().getSelectedItem())));
                 text_salary.setText(salary.get(employees.get(list_view.getSelectionModel().getSelectedItem())));
                 text_services_count.setText(services_count.get(employees.get(list_view.getSelectionModel().getSelectedItem())));
+                text_post.setText(post.get(employees.get(list_view.getSelectionModel().getSelectedItem())));
                 text_old_login = login.get(employees.get(list_view.getSelectionModel().getSelectedItem()));
             }
 
@@ -277,7 +305,9 @@ public class AdminEmployees extends Constants {
     public static void delete() throws SQLException, ClassNotFoundException {
         Connection connection = databaseHandler.getDbConnection();
         Statement statement = connection.createStatement();
-        statement.executeUpdate("DELETE FROM " + EMPLOYEE_TABLE + " WHERE " + EMPLOYEE_LOGIN + " = '" + text_old_login + "'");
+        statement.executeUpdate("UPDATE " + EMPLOYEE_TABLE +
+                " SET " + EMPLOYEE_ACCESS_RIGHTS + " = '0' WHERE " +
+                EMPLOYEE_LOGIN + " = '" + text_old_login + "';");
 
     }
 }
