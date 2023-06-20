@@ -16,9 +16,7 @@ import main.SaveInformationPeople;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeMap;
@@ -32,13 +30,16 @@ public class AdminClients extends Constants {
     private URL location;
 
     @FXML
+    private Button button_add;
+
+    @FXML
+    private Button button_delete;
+
+    @FXML
     private Button button_edit;
 
     @FXML
     private Button button_personal_acc;
-
-    @FXML
-    private Button button_personal_edit;
 
     @FXML
     private Button button_personal_service;
@@ -68,11 +69,28 @@ public class AdminClients extends Constants {
     private Text text_phone;
 
     @FXML
+    private Text text_post;
+
+    @FXML
     private Text text_services;
 
-    private String text_old_login;
+    private static String old_login;
 
-    private final DatabaseHandler databaseHandler = new DatabaseHandler();
+    private static String old_post;
+
+    private static int key;
+
+
+    private TreeMap<Integer, String> name = new TreeMap<>();
+    private TreeMap<Integer, String> address = new TreeMap<>();
+    private TreeMap<Integer, String> phone_number = new TreeMap<>();
+    private TreeMap<Integer, String> login = new TreeMap<>();
+    private TreeMap<Integer, String> pass = new TreeMap<>();
+    private TreeMap<Integer, String> cars = new TreeMap<>();
+    private TreeMap<Integer, String> services = new TreeMap<>();
+    private static TreeMap<Integer, String> posts = new TreeMap<>();
+
+    private static final DatabaseHandler databaseHandler = new DatabaseHandler();
 
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
@@ -92,24 +110,17 @@ public class AdminClients extends Constants {
             i++;
         }
         Set<String> setKeys = clients.keySet();
-        for(String k: setKeys){
+        for (String k : setKeys) {
             list_view.getItems().add(k);
         }
         System.out.println(clients);
 
         // добавление в массивы для последующего вывода
-        TreeMap<Integer, String> name = new TreeMap<>();
-        TreeMap<Integer, String> address = new TreeMap<>();
-        TreeMap<Integer, String> phone_number = new TreeMap<>();
-        TreeMap<Integer, String> login = new TreeMap<>();
-        TreeMap<Integer, String> pass = new TreeMap<>();
-        TreeMap<Integer, String> cars = new TreeMap<>();
-        TreeMap<Integer, String> services = new TreeMap<>();
         query = "SELECT c." + CLIENTS_LAST_NAME + ", c." + CLIENTS_FIRST_NAME + ", c." + CLIENTS_SECOND_NAME +
                 ", c." + CLIENTS_ADDRESS + ", c." + CLIENTS_PHONE_NUMBER + ", c." + CLIENTS_LOGIN + ", c." +
                 CLIENTS_PASSWORD +
                 ", COUNT(DISTINCT " + CAR_TABLE + "." + CAR_LICENSE_PLATE + ") AS car_count, COUNT(DISTINCT " +
-                SERVICE_TABLE + "." + SERVICE_ID + ") as service_count" +
+                SERVICE_TABLE + "." + SERVICE_ID + ") as service_count, c.status" +
                 " FROM " + CLIENTS_TABLE + " c" +
                 " LEFT JOIN " + CAR_TABLE + " ON " + CAR_TABLE + "." + CAR_ID_OWNER + " = c." + CLIENTS_LOGIN +
                 " LEFT JOIN " + SERVICE_TABLE + " ON " + SERVICE_TABLE + "." + SERVICE_LICENSE_PLATE + " = " +
@@ -134,9 +145,16 @@ public class AdminClients extends Constants {
                     pass.put(i, result.getString(CLIENTS_PASSWORD));
                     cars.put(i, result.getString("car_count") + " шт.");
                     services.put(i, result.getString("service_count") + " шт.");
+                    String pp = null;
+                    if (result.getInt("status") == 0) {
+                        pp = "Клиент";
+                    }
+                    else if (result.getInt("status") == 1) {
+                        pp = "Услуги не предоставляются";
+                    }
+                    posts.put(i, pp);
                     i++;
-                }
-                else if (!name_str.equals(name.get(i - 1))) {
+                } else if (!name_str.equals(name.get(i - 1))) {
                     name.put(i, name_str);
                     address.put(i, result.getString(CLIENTS_ADDRESS));
                     phone_number.put(i, result.getString(CLIENTS_PHONE_NUMBER));
@@ -144,6 +162,14 @@ public class AdminClients extends Constants {
                     pass.put(i, result.getString(CLIENTS_PASSWORD));
                     cars.put(i, result.getString("car_count") + " шт.");
                     services.put(i, result.getString("service_count") + " шт.");
+                    String pp = null;
+                    if (result.getInt("status") == 0) {
+                        pp = "Активен";
+                    }
+                    else if (result.getInt("status") == 1) {
+                        pp = "Заблокирован";
+                    }
+                    posts.put(i, pp);
                     i++;
                 }
             }
@@ -158,61 +184,96 @@ public class AdminClients extends Constants {
                 text_pass.setText(pass.get(clients.get(list_view.getSelectionModel().getSelectedItem())));
                 text_cars.setText(cars.get(clients.get(list_view.getSelectionModel().getSelectedItem())));
                 text_services.setText(services.get(clients.get(list_view.getSelectionModel().getSelectedItem())));
-                text_old_login = login.get(clients.get(list_view.getSelectionModel().getSelectedItem()));
+                text_post.setText(posts.get(clients.get(list_view.getSelectionModel().getSelectedItem())));
+                old_login = login.get(clients.get(list_view.getSelectionModel().getSelectedItem()));
+                old_post = posts.get(clients.get(list_view.getSelectionModel().getSelectedItem()));
+                key = clients.get(list_view.getSelectionModel().getSelectedItem());
             }
         });
 
         // редактирование информации о клиенте
         button_edit.setOnAction(actionEvent -> {
-            SaveInformationPeople.setText_old_login(text_old_login);
+
+            EditAdminClients.setOld_login(old_login);
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("editClients.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("edit_admin_clients.fxml"));
             Scene scene = null;
+
             try {
                 scene = new Scene(fxmlLoader.load(), 529, 267);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
             stage.setScene(scene);
             stage.show();
+
         });
 
-        // переход на окно редактирования информации
-        button_personal_edit.setOnAction(actionEvent -> {
-            button_personal_edit.getScene().getWindow().hide();
+        // добавление нового пользователя
+        button_add.setOnAction(actionEvent -> {
+
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("edit_account_admin.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("add_admin_clients.fxml"));
             Scene scene = null;
+
             try {
-                scene = new Scene(fxmlLoader.load(), 700, 400);
+                scene = new Scene(fxmlLoader.load(), 529, 267);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
             stage.setScene(scene);
             stage.show();
+
+        });
+
+        // удаление клиента
+        button_delete.setOnAction(actionEvent -> {
+
+            Stage stage = new Stage();
+            MainPass.setId(10);
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main_pass.fxml"));
+            Scene scene = null;
+
+            try {
+                scene = new Scene(fxmlLoader.load(), 400, 250);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            stage.setScene(scene);
+            stage.show();
+
         });
 
         // переход на окно личного кабинета
         button_personal_acc.setOnAction(actionEvent -> {
+
             button_personal_acc.getScene().getWindow().hide();
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("personal_account_admin.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_acc.fxml"));
             Scene scene = null;
+
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
             stage.setScene(scene);
             stage.show();
+
         });
 
         // переход на окно просмотра услуг
         button_personal_service.setOnAction(actionEvent -> {
+
             button_personal_service.getScene().getWindow().hide();
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("services_admin.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_services.fxml"));
             Scene scene = null;
+
             try {
                 scene = new Scene(fxmlLoader.load(), 700, 400);
             } catch (IOException e) {
@@ -220,6 +281,46 @@ public class AdminClients extends Constants {
             }
             stage.setScene(scene);
             stage.show();
+
         });
+
+        // переход на окно работников
+        personal_employees.setOnAction(actionEvent -> {
+
+            personal_employees.getScene().getWindow().hide();
+            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_employees.fxml"));
+            Scene scene = null;
+
+            try {
+                scene = new Scene(fxmlLoader.load(), 700, 400);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            stage.setScene(scene);
+            stage.show();
+
+        });
+
     }
+
+    public static void delete() throws SQLException, ClassNotFoundException {
+        Connection connection = databaseHandler.getDbConnection();
+        Statement statement = connection.createStatement();
+        if (old_post == "Заблокирован") {
+            statement.executeUpdate("UPDATE " + CLIENTS_TABLE +
+                    " SET status = '0' WHERE " +
+                    CLIENTS_LOGIN + " = '" + old_login + "';");
+            posts.put(key, "Активен");
+        }
+
+        else {
+            statement.executeUpdate("UPDATE " + CLIENTS_TABLE +
+                    " SET status = '1' WHERE " +
+                    CLIENTS_LOGIN + " = '" + old_login + "';");
+            posts.put(key, "Заблокирован");
+        }
+    }
+
 }

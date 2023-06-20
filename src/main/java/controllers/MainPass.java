@@ -54,6 +54,9 @@ public class MainPass {
                     if (id == 5) AdminServices.delete();
                     if (id == 6) AdminEdit.save();
                     if (id == 7) EmployeeEdit.save();
+                    if (id == 8) EditAdminClients.save();
+                    if (id == 9) AddAdminClients.add();
+                    if (id == 10) AdminClients.delete();
 
                 } catch (SQLException | ClassNotFoundException e) {
                     throw new RuntimeException(e);
