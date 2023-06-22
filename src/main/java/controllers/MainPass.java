@@ -34,6 +34,11 @@ public class MainPass {
                            // 6 - edit
                            // employee:
                            // 7 - edit
+                           // client:
+                           // 11 - edit
+                           // 12 - edit car
+                           // 13 - add car
+                           // 14 - delete car
 
 
     @FXML
@@ -57,6 +62,8 @@ public class MainPass {
                     if (id == 8) EditAdminClients.save();
                     if (id == 9) AddAdminClients.add();
                     if (id == 10) AdminClients.delete();
+                    if (id == 11) ClientEdit.save();
+                    if (id == 14) ClientGarage.delete();
 
                 } catch (SQLException | ClassNotFoundException e) {
                     throw new RuntimeException(e);

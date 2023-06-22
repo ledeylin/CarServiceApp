@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -10,133 +11,155 @@
     <children>
         <AnchorPane layoutY="31.0" prefHeight="350.0" prefWidth="700.0" style="-fx-background-color: #D3D3D3;" AnchorPane.bottomAnchor="25.0" AnchorPane.topAnchor="25.0">
             <children>
-            <Button fx:id="button_personal_acc" layoutX="315.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: #C0C0C0;" text="Personal" textFill="DIMGRAY" AnchorPane.leftAnchor="315.0" AnchorPane.topAnchor="14.0">
+            <Button fx:id="button_personal_acc" layoutX="315.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: #C0C0C0;" text="Personal" textFill="DIMGRAY" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="15.0">
                <font>
                   <Font name="Monospaced Bold" size="11.0" />
                </font>
             </Button>
-            <Button fx:id="button_personal_edit" layoutX="397.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: #C0C0C0;" text="Edit" textFill="DIMGRAY" AnchorPane.rightAnchor="236.0" AnchorPane.topAnchor="14.0">
+            <Button fx:id="button_personal_service" layoutX="236.0" layoutY="13.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: #C0C0C0;" text="Service" textFill="DIMGRAY" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="15.0">
                <font>
                   <Font name="Monospaced Bold" size="11.0" />
                </font>
             </Button>
-            <Button fx:id="button_personal_service" layoutX="236.0" layoutY="13.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: #C0C0C0;" text="Garage" textFill="DIMGRAY" AnchorPane.rightAnchor="393.0" AnchorPane.topAnchor="14.0">
+            <Text fill="DIMGRAY" layoutX="195.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ГОС.НОМЕР" AnchorPane.leftAnchor="220.0" AnchorPane.topAnchor="110.0">
+               <font>
+                  <Font name="Monospaced Bold" size="13.0" />
+               </font>
+            </Text>
+            <Text fx:id="text_plate" fill="DIMGRAY" layoutX="459.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="470.0" AnchorPane.topAnchor="110.0">
+               <font>
+                  <Font name="Monospaced Regular" size="13.0" />
+               </font>
+            </Text>
+            <Text fill="DIMGRAY" layoutX="195.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="МОДЕЛЬ" AnchorPane.leftAnchor="220.0" AnchorPane.topAnchor="135.0">
+               <font>
+                  <Font name="Monospaced Bold" size="13.0" />
+               </font>
+            </Text>
+            <Text fx:id="text_model" fill="DIMGRAY" layoutX="459.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="470.0" AnchorPane.topAnchor="135.0">
+               <font>
+                  <Font name="Monospaced Regular" size="13.0" />
+               </font>
+            </Text>
+            <Text fill="DIMGRAY" layoutX="194.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="МАРКА" AnchorPane.leftAnchor="220.0" AnchorPane.topAnchor="160.0">
+               <font>
+                  <Font name="Monospaced Bold" size="13.0" />
+               </font>
+            </Text>
+            <Text fill="DIMGRAY" layoutX="194.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="КОЛ-ВО ВЫПОЛНЕННЫХ УСЛУГ" AnchorPane.leftAnchor="220.0" AnchorPane.topAnchor="185.0">
+               <font>
+                  <Font name="Monospaced Bold" size="13.0" />
+               </font>
+            </Text>
+            <Text fx:id="text_make" fill="DIMGRAY" layoutX="459.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="470.0" AnchorPane.topAnchor="160.0">
+               <font>
+                  <Font name="Monospaced Regular" size="13.0" />
+               </font>
+            </Text>
+            <Button fx:id="personal_employees" layoutX="472.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="76.0" style="-fx-background-color: #C0C0C0;" text="Employees" textFill="DIMGRAY" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="15.0">
                <font>
                   <Font name="Monospaced Bold" size="11.0" />
                </font>
             </Button>
-            <Text fill="DIMGRAY" layoutX="299.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Garage" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="50.0">
+            <Button fx:id="personal_clients" layoutX="159.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: #C0C0C0;" text="Clients" textFill="DIMGRAY" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="15.0">
+               <font>
+                  <Font name="Monospaced Bold" size="11.0" />
+               </font>
+            </Button>
+            <Button fx:id="button_edit" layoutX="429.0" layoutY="310.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: #C0C0C0;" text="✏️" textFill="DIMGRAY" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="311.0">
+               <font>
+                  <Font name="Monospaced Bold" size="16.0" />
+               </font>
+            </Button>
+            <Text fx:id="text_services" fill="DIMGRAY" layoutX="459.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="470.0" AnchorPane.topAnchor="185.0">
+               <font>
+                  <Font name="Monospaced Regular" size="13.0" />
+               </font>
+            </Text>
+            <Button fx:id="button_add" layoutX="231.0" layoutY="321.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: #C0C0C0;" text="+" textFill="DIMGRAY" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="625.0">
+               <font>
+                  <Font name="Monospaced Bold" size="15.0" />
+               </font>
+            </Button>
+            <AnchorPane layoutX="20.0" layoutY="49.0" prefHeight="4.0" prefWidth="660.0" style="-fx-background-color: #A9A9A9;" AnchorPane.bottomAnchor="295.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="50.0" />
+            <Text fill="DIMGRAY" layoutX="285.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GARAGE" AnchorPane.leftAnchor="277.0" AnchorPane.topAnchor="64.0">
                <font>
                   <Font size="33.0" />
                </font>
             </Text>
-            <Text fill="DIMGRAY" layoutX="198.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Номерной знак" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="200.0">
+            <Button fx:id="button_delete" layoutX="215.0" layoutY="311.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: #C0C0C0;" text="-" textFill="DIMGRAY" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="545.0" AnchorPane.topAnchor="311.0">
                <font>
-                  <Font name="Monospaced Bold" size="13.0" />
-               </font>
-            </Text>
-            <Text fx:id="text_license_plate" fill="DIMGRAY" layoutX="440.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="440.0">
-               <font>
-                  <Font name="Monospaced Regular" size="13.0" />
-               </font>
-            </Text>
-            <Text fill="DIMGRAY" layoutX="198.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Модель" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="200.0">
-               <font>
-                  <Font name="Monospaced Bold" size="13.0" />
-               </font>
-            </Text>
-            <Text fx:id="text_model" fill="DIMGRAY" layoutX="440.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="440.0">
-               <font>
-                  <Font name="Monospaced Regular" size="13.0" />
-               </font>
-            </Text>
-            <Text fill="DIMGRAY" layoutX="198.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Марка" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="200.0">
-               <font>
-                  <Font name="Monospaced Bold" size="13.0" />
-               </font>
-            </Text>
-            <Text fx:id="text_mark" fill="DIMGRAY" layoutX="440.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="440.0">
-               <font>
-                  <Font name="Monospaced Regular" size="13.0" />
-               </font>
-            </Text>
-            <Button fx:id="button_edit" layoutX="15.0" layoutY="313.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="198.0" style="-fx-background-color: #C0C0C0;" text="Edit information about car" textFill="DIMGRAY" AnchorPane.leftAnchor="15.0">
-               <font>
-                  <Font name="Monospaced Bold" size="11.0" />
+                  <Font name="Monospaced Bold" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="button_add_car" layoutX="27.0" layoutY="230.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="95.0" style="-fx-background-color: #C0C0C0;" text="Add new car" textFill="DIMGRAY" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="15.0">
+            <Text fill="DIMGRAY" layoutX="262.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ИНФОРМАЦИЯ ОБ УСЛУГЕ">
                <font>
-                  <Font name="Monospaced Bold" size="11.0" />
+                  <Font name="Monospaced Bold" size="13.0" />
+               </font>
+            </Text>
+            <Text fill="DIMGRAY" layoutX="216.0" layoutY="234.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ПРОБЕГ МАШИНЫ">
+               <font>
+                  <Font name="Monospaced Bold" size="13.0" />
+               </font>
+            </Text>
+            <Text fill="DIMGRAY" layoutX="215.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ДАТА НАЧАЛА РАБОТЫ">
+               <font>
+                  <Font name="Monospaced Bold" size="13.0" />
+               </font>
+            </Text>
+            <Text fill="DIMGRAY" layoutX="215.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ДАТА ОКОНЧАНИЯ РАБОТЫ">
+               <font>
+                  <Font name="Monospaced Bold" size="13.0" />
+               </font>
+            </Text>
+            <Text fill="DIMGRAY" layoutX="215.0" layoutY="329.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ФИО РАБОЧЕГО">
+               <font>
+                  <Font name="Monospaced Bold" size="13.0" />
+               </font>
+            </Text>
+            <Text fx:id="text_mileage" fill="DIMGRAY" layoutX="470.0" layoutY="234.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+               <font>
+                  <Font name="Monospaced Regular" size="13.0" />
+               </font>
+            </Text>
+            <Text fx:id="text_start_date" fill="DIMGRAY" layoutX="470.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+               <font>
+                  <Font name="Monospaced Regular" size="13.0" />
+               </font>
+            </Text>
+            <Text fx:id="text_final_date" fill="DIMGRAY" layoutX="470.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+               <font>
+                  <Font name="Monospaced Regular" size="13.0" />
+               </font>
+            </Text>
+            <Text fx:id="text_employee" fill="DIMGRAY" layoutX="470.0" layoutY="329.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+               <font>
+                  <Font name="Monospaced Regular" size="13.0" />
+               </font>
+            </Text>
+            <Text fill="DIMGRAY" layoutX="223.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" text="УСТАНАВЛИВАЕМАЯ ДЕТАЛЬ">
+               <font>
+                  <Font name="Monospaced Bold" size="13.0" />
+               </font>
+            </Text>
+            <Text fx:id="text_detail" fill="DIMGRAY" layoutX="470.0" layoutY="302.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+               <font>
+                  <Font name="Monospaced Regular" size="13.0" />
+               </font>
+            </Text>
+            <ListView fx:id="view_old" layoutX="23.0" layoutY="100.0" prefHeight="200.0" prefWidth="150.0" visible="false" />
+            <Button fx:id="button_now" layoutX="23.0" layoutY="69.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="76.0" style="-fx-background-color: #C0C0C0;" text="Во владении" textFill="DIMGRAY">
+               <font>
+                  <Font name="Monospaced Bold" size="9.0" />
                </font>
             </Button>
-            <Button fx:id="button_add_service" layoutX="19.0" layoutY="276.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="117.0" style="-fx-background-color: #C0C0C0;" text="Add new service" textFill="DIMGRAY" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0">
+            <Button fx:id="button_old" layoutX="97.0" layoutY="69.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="76.0" style="-fx-background-color: #C0C0C0;" text="Устаревшие" textFill="DIMGRAY">
                <font>
-                  <Font name="Monospaced Bold" size="11.0" />
+                  <Font name="Monospaced Bold" size="10.0" />
                </font>
             </Button>
-            <ChoiceBox fx:id="choice_box_car" layoutX="20.0" layoutY="102.0" prefHeight="5.0" prefWidth="115.0" style="-fx-background-color: #C0C0C0;" AnchorPane.leftAnchor="20.0" />
-            <Text fill="DIMGRAY" layoutX="198.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Количество выполненных услуг" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="200.0">
-               <font>
-                  <Font name="Monospaced Bold" size="13.0" />
-               </font>
-            </Text>
-            <Text fx:id="text_services" fill="DIMGRAY" layoutX="440.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="440.0">
-               <font>
-                  <Font name="Monospaced Regular" size="13.0" />
-               </font>
-            </Text>
-            <Text fill="DIMGRAY" layoutX="197.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дата начала работы" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="200.0">
-               <font>
-                  <Font name="Monospaced Bold" size="13.0" />
-               </font>
-            </Text>
-            <Text fill="DIMGRAY" layoutX="195.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дата окончания работы" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="200.0">
-               <font>
-                  <Font name="Monospaced Bold" size="13.0" />
-               </font>
-            </Text>
-            <Text fill="DIMGRAY" layoutX="212.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Стоимость работы" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="200.0">
-               <font>
-                  <Font name="Monospaced Bold" size="13.0" />
-               </font>
-            </Text>
-            <Text fx:id="text_final_date" fill="DIMGRAY" layoutX="403.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="400.0">
-               <font>
-                  <Font name="Monospaced Regular" size="13.0" />
-               </font>
-            </Text>
-            <Text fx:id="text_price" fill="DIMGRAY" layoutX="403.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="400.0">
-               <font>
-                  <Font name="Monospaced Regular" size="13.0" />
-               </font>
-            </Text>
-            <Text fx:id="text_detail" fill="DIMGRAY" layoutX="403.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="400.0">
-               <font>
-                  <Font name="Monospaced Regular" size="13.0" />
-               </font>
-            </Text>
-            <Text fill="DIMGRAY" layoutX="222.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Устанавливаемая деталь" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="200.0">
-               <font>
-                  <Font name="Monospaced Bold" size="13.0" />
-               </font>
-            </Text>
-            <Text fx:id="text_start_date" fill="DIMGRAY" layoutX="404.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="400.0">
-               <font>
-                  <Font name="Monospaced Regular" size="13.0" />
-               </font>
-            </Text>
-            <Text fill="DIMGRAY" layoutX="15.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Выберите машину:" AnchorPane.leftAnchor="15.0">
-               <font>
-                  <Font name="Monospaced Bold" size="13.0" />
-               </font>
-            </Text>
-            <Text fill="DIMGRAY" layoutX="15.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Выберите услугу:" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="148.17724609375">
-               <font>
-                  <Font name="Monospaced Bold" size="13.0" />
-               </font>
-            </Text>
-            <ChoiceBox fx:id="choice_box_service" layoutX="20.0" layoutY="169.0" prefHeight="5.0" prefWidth="115.0" style="-fx-background-color: #C0C0C0;" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="169.0" />
+            <ListView fx:id="view_now" layoutX="24.0" layoutY="100.0" prefHeight="200.0" prefWidth="150.0" />
+            <ChoiceBox fx:id="choice_box" layoutX="521.0" layoutY="70.0" prefWidth="150.0" style="-fx-background-color: #C0C0C0;" />
             </children>
         </AnchorPane>
     </children>

@@ -111,12 +111,19 @@ public class MainSignIn extends Constants {
                 ResultSet result = statement.executeQuery();
 
                 if (result.next()) {
-                    Stage stage = new Stage();
-                    FXMLLoader fxmlLoader = new FXMLLoader();
-                    Scene scene = null;
-                    signUpWindowButton.getScene().getWindow().hide();
-                    stage = new Stage();
-                    fxmlLoader = new FXMLLoader(Main.class.getResource("client_acc.fxml"));
+
+                    if (result.getInt("status") == 1) {
+                        ClientAcc.setLogin(login);
+                        MainPass.setPassword(password);
+                        signUpWindowButton.getScene().getWindow().hide();
+                        Stage stage = new Stage();
+                        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("client_acc.fxml"));
+                        Scene scene = new Scene(fxmlLoader.load(), 700, 400);
+                        stage.setScene(scene);
+                        stage.show();
+                    }
+
+                    else System.out.println("Вы заблокированны.");
                 }
 
                 else {
@@ -127,7 +134,6 @@ public class MainSignIn extends Constants {
                     passwordAnim.playAnim();
                 }
 
-                MainPass.setPassword(password);
             }
 
             // сотрудник
@@ -161,12 +167,7 @@ public class MainSignIn extends Constants {
                         AdminAcc.setLogin(login);
                     }
 
-                    try {
-                        scene = new Scene(fxmlLoader.load(), 700, 400);
-                    }
-                    catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    scene = new Scene(fxmlLoader.load(), 700, 400);
                     stage.setScene(scene);
                     stage.show();
 
@@ -187,6 +188,6 @@ public class MainSignIn extends Constants {
                 ticket_client.playAnim();
             }
 
-        } catch (SQLException | ClassNotFoundException e) { throw new RuntimeException(e); }
+        } catch (SQLException | ClassNotFoundException | IOException e) { throw new RuntimeException(e); }
     }
 }
