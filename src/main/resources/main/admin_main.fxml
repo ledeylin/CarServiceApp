@@ -15,11 +15,6 @@
          <children>
             <Pane prefHeight="220.0" prefWidth="40.0">
                <children>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/menu.png" />
-                     </image>
-                  </ImageView>
                   <Button fx:id="button_menu1" mnemonicParsing="false" prefHeight="220.0" prefWidth="60.0" style="-fx-background-color: transparent;" />
                </children>
             </Pane>

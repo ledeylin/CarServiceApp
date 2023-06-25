@@ -129,9 +129,6 @@ public class AdminMainController {
                 "GROUP BY e.login\n" +
                 "HAVING e.login = '" + login + "';";
 
-        System.out.println(query);
-
-
         PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
         ResultSet result = statement.executeQuery(query);
 
@@ -153,6 +150,42 @@ public class AdminMainController {
 
             try {
                 scene = new Scene(fxmlLoader.load(), 400, 250);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            stage.setScene(scene);
+            stage.show();
+
+        });
+
+        // переход на окно работников 1
+        personal_employees1.setOnAction(actionEvent -> {
+
+            personal_employees1.getScene().getWindow().hide();
+            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_employees.fxml"));
+            Scene scene = null;
+
+            try {
+                scene = new Scene(fxmlLoader.load(), 800, 600);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            stage.setScene(scene);
+            stage.show();
+
+        });
+
+        // переход на окно работников 2
+        personal_employees2.setOnAction(actionEvent -> {
+
+            personal_employees2.getScene().getWindow().hide();
+            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_employees.fxml"));
+            Scene scene = null;
+
+            try {
+                scene = new Scene(fxmlLoader.load(), 800, 600);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
