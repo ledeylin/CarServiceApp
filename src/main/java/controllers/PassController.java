@@ -1,29 +1,21 @@
 package controllers;
 
-import java.net.URL;
-import java.sql.SQLException;
-import java.util.ResourceBundle;
+import graphics.Shake;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import graphics.Shake;
-import main.SaveInformationPeople;
+import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
+import java.sql.SQLException;
 import java.util.Objects;
 
-public class MainPass {
-
+public class PassController {
     @FXML
-    private ResourceBundle resources;
-
+    private Button button_save;
     @FXML
-    private URL location;
-
+    private TextField passwordField;
     @FXML
-    private PasswordField passwordField;
-
-    @FXML
-    private Button signInButton;
+    private Text text_mistake;
 
     private static String password;
 
@@ -39,31 +31,31 @@ public class MainPass {
                            // 12 - edit car
                            // 13 - add car
                            // 14 - delete car
-
-
     @FXML
     void initialize() {
 
         // окно подтверждения пароля перед сохранением редактирования
-        signInButton.setOnAction(actionEvent -> {
+        button_save.setOnAction(actionEvent -> {
 
             if (Objects.equals(passwordField.getText(), password)) {
-                signInButton.getScene().getWindow().hide();
+                button_save.getScene().getWindow().hide();
 
                 try {
-                    if (id == 0) EditAdminEmployees.save();
-                    if (id == 1) EditAdminServices.save();
-                    if (id == 2) AddAdminEmployee.add();
-                    if (id == 3) AddAdminService.add();
-                    if (id == 4) AdminEmployees.delete();
-                    if (id == 5) AdminServices.delete();
-                    if (id == 6) AdminEdit.save();
-                    if (id == 7) EmployeeEdit.save();
-                    if (id == 8) EditAdminClients.save();
-                    if (id == 9) AddAdminClients.add();
-                    if (id == 10) AdminClients.delete();
-                    if (id == 11) ClientEdit.save();
-                    if (id == 14) ClientGarage.delete();
+//                    if (id == 0) EditAdminEmployees.save();
+//                    if (id == 1) EditAdminServices.save();
+//                    if (id == 2) AddAdminEmployee.add();
+//                    if (id == 3) AddAdminService.add();
+//                    if (id == 4) AdminEmployees.delete();
+//                    if (id == 5) AdminServices.delete();
+                    if (id == 6) AdminEditController.save();
+//                    if (id == 7) EmployeeEdit.save();
+//                    if (id == 8) EditAdminClients.save();
+//                    if (id == 9) AddAdminClients.add();
+//                    if (id == 10) AdminClients.delete();
+//                    if (id == 11) ClientEdit.save();
+//                    if (id == 12) EditClientCar.save();
+//                    if (id == 13) AddClientCar.add();
+//                    if (id == 14) ClientGarage.delete();
 
                 } catch (SQLException | ClassNotFoundException e) {
                     throw new RuntimeException(e);
@@ -71,6 +63,7 @@ public class MainPass {
             }
             else {
                 System.out.println("Error: password entered incorrectly.");
+                text_mistake.setText("Пароль введён неправильно!");
                 Shake passwordAnim = new Shake(passwordField);
                 passwordAnim.playAnim();
             }
@@ -79,11 +72,11 @@ public class MainPass {
     }
 
     public static void setId(int id) {
-        MainPass.id = id;
+        PassController.id = id;
     }
 
     public static void setPassword(String password) {
-        MainPass.password = password;
+        PassController.password = password;
     }
 }
 
