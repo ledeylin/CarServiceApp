@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 
@@ -22,10 +23,7 @@ import main.Main;
 public class ClientGarage extends Constants {
 
     @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
+    private Button button_add_services;
 
     @FXML
     private Button button_add;
@@ -44,15 +42,6 @@ public class ClientGarage extends Constants {
 
     @FXML
     private Button button_personal_acc;
-
-    @FXML
-    private Button button_personal_service;
-
-    @FXML
-    private Button personal_clients;
-
-    @FXML
-    private Button personal_employees;
 
     @FXML
     private Text text_detail;
@@ -94,6 +83,8 @@ public class ClientGarage extends Constants {
 
     private boolean flag = true;
 
+    public static ArrayList<String> now = new ArrayList<>();
+    private static ArrayList<String> old = new ArrayList<>();
 
     private static final DatabaseHandler databaseHandler = new DatabaseHandler();
 
@@ -102,12 +93,10 @@ public class ClientGarage extends Constants {
 
         // добавление информации о машинах
 
-        TreeMap<String, Integer> old = new TreeMap<>();
-        TreeMap<String, Integer> now = new TreeMap<>();
+        TreeMap<String, Integer> car = new TreeMap<>();
         TreeMap<Integer, ArrayList<String>> services_choice_for_box = new TreeMap<>();
         TreeMap<String, Integer> services_choice_with_id = new TreeMap<>();
         TreeMap<String, Integer> services_choice_with_id_car = new TreeMap<>();
-        ArrayList<String> all = new ArrayList<>();
         ArrayList<String> services_choice_list = new ArrayList<>();
 
         TreeMap<Integer, String> license_plate = new TreeMap<>();
@@ -131,8 +120,8 @@ public class ClientGarage extends Constants {
         int y = 0;
 
         while (result.next()) {
-            now.put(result.getString(CAR_LICENSE_PLATE), i);
-            all.add(result.getString(CAR_LICENSE_PLATE));
+            car.put(result.getString(CAR_LICENSE_PLATE), i);
+            now.add(result.getString(CAR_LICENSE_PLATE));
 
             license_plate.put(i, result.getString(CAR_LICENSE_PLATE));
             model.put(i, result.getString(CAR_MODEL));
@@ -167,7 +156,7 @@ public class ClientGarage extends Constants {
 
             i++;
         }
-        view_now.getItems().addAll(all);
+        view_now.getItems().addAll(now);
 
         query = "SELECT c.*, COUNT(s.id_service) AS total_services\n" +
                 "FROM car c\n" +
@@ -177,11 +166,10 @@ public class ClientGarage extends Constants {
         statement = databaseHandler.getDbConnection().prepareStatement(query);
         result = statement.executeQuery();
         System.out.println(query);
-        all = new ArrayList<>();
 
         while (result.next()) {
-            old.put(result.getString(CAR_LICENSE_PLATE), i);
-            all.add(result.getString(CAR_LICENSE_PLATE));
+            car.put(result.getString(CAR_LICENSE_PLATE), i);
+            old.add(result.getString(CAR_LICENSE_PLATE));
 
             license_plate.put(i, result.getString(CAR_LICENSE_PLATE));
             model.put(i, result.getString(CAR_MODEL));
@@ -216,13 +204,14 @@ public class ClientGarage extends Constants {
 
             i++;
         }
-        view_old.getItems().addAll(all);
+        view_old.getItems().addAll(old);
 
         // новые машины
         button_now.setOnAction(actionEvent -> {
 
             view_old.setVisible(false);
             view_now.setVisible(true);
+            flag = true;
 
         });
 
@@ -231,6 +220,7 @@ public class ClientGarage extends Constants {
 
             view_old.setVisible(true);
             view_now.setVisible(false);
+            flag = false;
 
         });
 
@@ -244,10 +234,10 @@ public class ClientGarage extends Constants {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 System.out.println(view_now.getSelectionModel().getSelectedItem());
-                text_services.setText(services.get(now.get(view_now.getSelectionModel().getSelectedItem())));
-                text_plate.setText(license_plate.get(now.get(view_now.getSelectionModel().getSelectedItem())));
-                text_model.setText(model.get(now.get(view_now.getSelectionModel().getSelectedItem())));
-                text_make.setText(make.get(now.get(view_now.getSelectionModel().getSelectedItem())));
+                text_services.setText(services.get(car.get(view_now.getSelectionModel().getSelectedItem())));
+                text_plate.setText(license_plate.get(car.get(view_now.getSelectionModel().getSelectedItem())));
+                text_model.setText(model.get(car.get(view_now.getSelectionModel().getSelectedItem())));
+                text_make.setText(make.get(car.get(view_now.getSelectionModel().getSelectedItem())));
                 choice_box.getItems().clear();
                 choice_box.getItems().addAll(services_choice_for_box.get(services_choice_with_id_car.get(view_now.getSelectionModel().getSelectedItem())));
                 text_start_date.setText("-");
@@ -256,7 +246,6 @@ public class ClientGarage extends Constants {
                 text_employee.setText("-");
                 text_mileage.setText("-");
                 now_license_plate = text_plate.getText();
-                flag = true;
             }
         });
 
@@ -264,19 +253,18 @@ public class ClientGarage extends Constants {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 System.out.println(view_old.getSelectionModel().getSelectedItem());
-                text_mileage.setText(mileage.get(old.get(view_old.getSelectionModel().getSelectedItem())));
-                text_plate.setText(license_plate.get(old.get(view_old.getSelectionModel().getSelectedItem())));
-                text_model.setText(model.get(old.get(view_old.getSelectionModel().getSelectedItem())));
-                text_services.setText(services.get(old.get(view_old.getSelectionModel().getSelectedItem())));
+                text_mileage.setText(mileage.get(car.get(view_old.getSelectionModel().getSelectedItem())));
+                text_plate.setText(license_plate.get(car.get(view_old.getSelectionModel().getSelectedItem())));
+                text_model.setText(model.get(car.get(view_old.getSelectionModel().getSelectedItem())));
+                text_services.setText(services.get(car.get(view_old.getSelectionModel().getSelectedItem())));
                 choice_box.getItems().clear();
-                choice_box.getItems().addAll(services_choice_for_box.get(services_choice_with_id_car.get(view_now.getSelectionModel().getSelectedItem())));
+                choice_box.getItems().addAll(services_choice_for_box.get(services_choice_with_id_car.get(view_old.getSelectionModel().getSelectedItem())));
                 text_start_date.setText("-");
                 text_final_date.setText("-");
                 text_detail.setText("-");
                 text_employee.setText("-");
                 text_mileage.setText("-");
                 now_license_plate = text_plate.getText();
-                flag = false;
             }
         });
 
@@ -291,17 +279,18 @@ public class ClientGarage extends Constants {
         // редактирование информации о машине
         button_edit.setOnAction(actionEvent -> {
 
-//            EditAdminEmployees.setOld_login(text_old_login);
-//            Stage stage = new Stage();
-//            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("edit_admin_employees.fxml"));
-//            Scene scene = null;
-//            try {
-//                scene = new Scene(fxmlLoader.load(), 529, 267);
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//            stage.setScene(scene);
-//            stage.show();
+            EditClientCar.setOld_license_plate(now_license_plate);
+
+            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("edit_client_car.fxml"));
+            Scene scene = null;
+            try {
+                scene = new Scene(fxmlLoader.load(), 529, 267);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            stage.setScene(scene);
+            stage.show();
 
         });
 
@@ -322,13 +311,22 @@ public class ClientGarage extends Constants {
                 }
 
             else {
-                Connection connection = null;
                 try {
-                    connection = databaseHandler.getDbConnection();
+                    Connection connection = databaseHandler.getDbConnection();
                     Statement statement1 = connection.createStatement();
                     statement1.executeUpdate("UPDATE " + CAR_TABLE +
                             " SET status = '1' WHERE " +
-                            CAR_LICENSE_PLATE + " = '" + now_license_plate + "';");
+                            CAR_LICENSE_PLATE + " = '" + text_plate.getText() + "';");
+
+                    now.add(now_license_plate);
+                    int q = 0;
+                    while (true) {
+                        if (Objects.equals(old.get(q), now_license_plate)) {
+                            old.remove(q);
+                            break;
+                        }
+                        q++;
+                    }
 
                 } catch (ClassNotFoundException | SQLException e) {
                     throw new RuntimeException(e);
@@ -340,14 +338,48 @@ public class ClientGarage extends Constants {
         // удаление машины
         button_delete.setOnAction(actionEvent -> {
 
+            if (flag) {
+                Stage stage = new Stage();
+                MainPass.setId(14);
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main_pass.fxml"));
+                Scene scene = null;
+
+                try { scene = new Scene(fxmlLoader.load(), 400, 250); }
+                catch (IOException e) { throw new RuntimeException(e); }
+
+                stage.setScene(scene);
+                stage.show();
+
+                old.add(now_license_plate);
+                int q = 0;
+                while (true) {
+                    if (Objects.equals(now.get(q), now_license_plate)) {
+                        now.remove(q);
+                        break;
+                    }
+                    q++;
+                }
+            }
+
+            else {
+                System.out.println("Error: car also deleted.");
+            }
+
+        });
+
+        // переход на окно аккаунта
+        button_personal_acc.setOnAction(actionEvent -> {
+
+            button_personal_acc.getScene().getWindow().hide();
             Stage stage = new Stage();
-            MainPass.setId(14);
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main_pass.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("client_acc.fxml"));
             Scene scene = null;
 
-            try { scene = new Scene(fxmlLoader.load(), 400, 250); }
-            catch (IOException e) { throw new RuntimeException(e); }
-
+            try {
+                scene = new Scene(fxmlLoader.load(), 700, 400);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             stage.setScene(scene);
             stage.show();
 
@@ -361,6 +393,7 @@ public class ClientGarage extends Constants {
         statement.executeUpdate("UPDATE " + CAR_TABLE +
                 " SET status = '0' WHERE " +
                 CAR_LICENSE_PLATE + " = '" + now_license_plate + "';");
+
     }
 
 }

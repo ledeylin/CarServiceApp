@@ -2,6 +2,7 @@ package controllers;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -63,6 +64,8 @@ public class MainPass {
                     if (id == 9) AddAdminClients.add();
                     if (id == 10) AdminClients.delete();
                     if (id == 11) ClientEdit.save();
+                    if (id == 12) EditClientCar.save();
+                    if (id == 13) AddClientCar.add();
                     if (id == 14) ClientGarage.delete();
 
                 } catch (SQLException | ClassNotFoundException e) {

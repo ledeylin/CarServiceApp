@@ -160,6 +160,11 @@
             </Button>
             <ListView fx:id="view_now" layoutX="24.0" layoutY="100.0" prefHeight="200.0" prefWidth="150.0" />
             <ChoiceBox fx:id="choice_box" layoutX="521.0" layoutY="70.0" prefWidth="150.0" style="-fx-background-color: #C0C0C0;" />
+            <Button fx:id="button_add_services" layoutX="641.0" layoutY="103.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: #C0C0C0;" text="+" textFill="DIMGRAY">
+               <font>
+                  <Font name="Monospaced Bold" size="15.0" />
+               </font>
+            </Button>
             </children>
         </AnchorPane>
     </children>
