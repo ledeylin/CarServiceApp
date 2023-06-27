@@ -33,7 +33,7 @@
                   <Button fx:id="personal_employees1" mnemonicParsing="false" prefHeight="70.0" prefWidth="60.0" style="-fx-background-color: transparent;" />
                   <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../img/menu.png" />
+                        <Image url="@../img/employee.png" />
                      </image>
                   </ImageView>
                </children>
@@ -140,5 +140,6 @@
             </Button>
          </children>
       </VBox>
+      <Button fx:id="button_menu_close" layoutX="289.0" layoutY="1.0" mnemonicParsing="false" prefHeight="598.0" prefWidth="513.0" style="-fx-background-color: transparency;" visible="false" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>

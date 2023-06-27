@@ -11,9 +11,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #889c65;" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminEmployeesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #889c65;" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminServicesController">
    <children>
-      <Text fill="#1e290b" layoutX="170.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="сотрудники" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="15.0">
+      <Text fill="#1e290b" layoutX="294.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="услуги" AnchorPane.leftAnchor="294.0" AnchorPane.topAnchor="15.0">
          <font>
             <Font name="RussianPunk" size="78.0" />
          </font>
@@ -35,7 +35,7 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane prefHeight="70.0" prefWidth="60.0" style="-fx-background-color: #5e7536;">
+            <Pane prefHeight="70.0" prefWidth="60.0">
                <children>
                   <Button fx:id="personal_employees1" mnemonicParsing="false" prefHeight="70.0" prefWidth="60.0" style="-fx-background-color: transparent;" />
                   <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
@@ -55,7 +55,7 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane prefHeight="70.0" prefWidth="60.0">
+            <Pane prefHeight="70.0" prefWidth="60.0" style="-fx-background-color: #5e7536;">
                <children>
                   <Button fx:id="personal_service1" mnemonicParsing="false" prefHeight="70.0" prefWidth="60.0" style="-fx-background-color: transparent;" />
                   <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
@@ -92,87 +92,97 @@
             <Font name="Monospaced Bold" size="25.0" />
          </font>
       </Button>
-      <Text fill="#1e290b" layoutX="303.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ФИО" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="150.0">
+      <Text fill="#1e290b" layoutX="303.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="СОТРУДНИК" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="150.0">
          <font>
             <Font name="Rostov" size="25.0" />
          </font>
       </Text>
-      <Text fill="#1e290b" layoutX="297.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" text="АДРЕС" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="200.0">
+      <Text fill="#1e290b" layoutX="297.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" text="НАЧАЛО РАБОТЫ" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="200.0">
          <font>
             <Font name="Rostov" size="25.0" />
          </font>
       </Text>
-      <Text fill="#1e290b" layoutX="399.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ЛОГИН" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="250.0">
+      <Text fill="#1e290b" layoutX="399.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="КОНЕЦ РАБОТЫ" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="250.0">
          <font>
             <Font name="Rostov" size="25.0" />
          </font>
       </Text>
-      <Text fill="#1e290b" layoutX="312.0" layoutY="356.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ПАРОЛЬ" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="300.0">
+      <Text fill="#1e290b" layoutX="312.0" layoutY="356.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ОПЛАТА" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="300.0">
          <font>
             <Font name="Rostov" size="25.0" />
          </font>
       </Text>
-      <Text fill="#1e290b" layoutX="305.0" layoutY="411.0" strokeType="OUTSIDE" strokeWidth="0.0" text="КОЛ-ВО УСЛУГ" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="350.0">
+      <Text fill="#1e290b" layoutX="305.0" layoutY="411.0" strokeType="OUTSIDE" strokeWidth="0.0" text="МОДЕЛЬ МАШИНЫ" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="350.0">
          <font>
             <Font name="Rostov" size="25.0" />
          </font>
       </Text>
-      <Text fill="#1e290b" layoutX="303.0" layoutY="468.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ВРЕМЯ РАБОТЫ" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="400.0">
+      <Text fill="#1e290b" layoutX="303.0" layoutY="468.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ВЛАДЕЛЕЦ" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="400.0">
          <font>
             <Font name="Rostov" size="25.0" />
          </font>
       </Text>
-      <Text fill="#1e290b" layoutX="308.0" layoutY="515.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ПРИБЫЛЬ" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="450.0">
+      <Text fill="#1e290b" layoutX="308.0" layoutY="515.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ДЕТАЛЬ" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="450.0">
          <font>
             <Font name="Rostov" size="25.0" />
          </font>
       </Text>
-      <Text fill="#1e290b" layoutX="354.0" layoutY="530.0" strokeType="OUTSIDE" strokeWidth="0.0" text="СТАТУС" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="500.0">
+      <Text fill="#1e290b" layoutX="312.0" layoutY="520.0" strokeType="OUTSIDE" strokeWidth="0.0" text="СЕРИЙНЫЙ НОМЕР" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="500.0">
          <font>
             <Font name="Rostov" size="25.0" />
          </font>
       </Text>
-      <Text fx:id="text_pass" fill="#1e290b" layoutX="445.0" layoutY="318.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="440.0" AnchorPane.topAnchor="300.0">
+      <Text fx:id="text_price" fill="#1e290b" layoutX="602.0" layoutY="321.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="580.0" AnchorPane.topAnchor="305.0">
          <font>
             <Font name="Rostov" size="20.0" />
          </font>
       </Text>
-      <Text fx:id="text_login" fill="#1e290b" layoutX="444.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="440.0" AnchorPane.topAnchor="250.0">
+      <Text fx:id="text_final_date" fill="#1e290b" layoutX="606.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="580.0" AnchorPane.topAnchor="255.0">
          <font>
             <Font name="Rostov" size="20.0" />
          </font>
       </Text>
-      <Text fx:id="text_address" fill="#1e290b" layoutX="443.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="440.0" AnchorPane.topAnchor="200.0">
+      <Text fx:id="text_start_date" fill="#1e290b" layoutX="602.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="580.0" AnchorPane.topAnchor="205.0">
          <font>
             <Font name="Rostov" size="20.0" />
          </font>
       </Text>
-      <Text fx:id="text_name" fill="#1e290b" layoutX="442.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="440.0" AnchorPane.topAnchor="150.0">
+      <Text fx:id="text_login_employee" fill="#1e290b" layoutX="602.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="580.0" AnchorPane.topAnchor="155.0">
          <font>
             <Font name="Rostov" size="20.0" />
          </font>
       </Text>
-      <Text fx:id="text_salary" fill="#1e290b" layoutX="444.0" layoutY="471.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="440.0" AnchorPane.topAnchor="450.0">
+      <Text fx:id="text_detail" fill="#1e290b" layoutX="609.0" layoutY="467.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="580.0" AnchorPane.topAnchor="455.0">
          <font>
             <Font name="Rostov" size="20.0" />
          </font>
       </Text>
-      <Text fx:id="text_post" fill="#1e290b" layoutX="444.0" layoutY="521.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="440.0" AnchorPane.topAnchor="500.0">
+      <Text fx:id="text_serial_number" fill="#1e290b" layoutX="606.0" layoutY="517.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="580.0" AnchorPane.topAnchor="505.0">
          <font>
             <Font name="Rostov" size="20.0" />
          </font>
       </Text>
-      <Text fx:id="text_services_count" fill="#1e290b" layoutX="515.0" layoutY="371.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="510.0" AnchorPane.topAnchor="350.0">
+      <Text fx:id="text_car_model" fill="#1e290b" layoutX="606.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="580.0" AnchorPane.topAnchor="355.0">
          <font>
             <Font name="Rostov" size="20.0" />
          </font>
       </Text>
-      <Text fx:id="text_work_time" fill="#1e290b" layoutX="515.0" layoutY="421.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="510.0" AnchorPane.topAnchor="400.0">
+      <Text fx:id="text_client_login" fill="#1e290b" layoutX="609.0" layoutY="418.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="580.0" AnchorPane.topAnchor="405.0">
          <font>
             <Font name="Rostov" size="20.0" />
          </font>
       </Text>
-      <VBox fx:id="pane_menu" layoutX="44.0" layoutY="200.0" prefHeight="200.0" prefWidth="230.0" style="-fx-background-color: #637a3a;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="0.0">
+      <Text fill="#1e290b" layoutX="306.0" layoutY="551.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ГОС.НОМЕР МАШИНЫ" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="550.0">
+         <font>
+            <Font name="Rostov" size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="text_license_plate" fill="#1e290b" layoutX="616.0" layoutY="527.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="580.0" AnchorPane.topAnchor="555.0">
+         <font>
+            <Font name="Rostov" size="20.0" />
+         </font>
+      </Text>
+      <VBox fx:id="pane_menu" layoutX="44.0" layoutY="200.0" prefHeight="200.0" prefWidth="230.0" style="-fx-background-color: #637a3a;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="0.0">
          <children>
             <Pane prefHeight="220.0" prefWidth="230.0" />
             <Button fx:id="personal_acc2" alignment="TOP_CENTER" mnemonicParsing="false" prefHeight="70.0" prefWidth="230.0" style="-fx-background-color: #637a3a;" text="ПОЛЬЗОВАТЕЛЬ" textFill="#1e290b">
@@ -180,7 +190,7 @@
                   <Font name="RussianPunk" size="28.0" />
                </font>
             </Button>
-            <Button fx:id="personal_employees2" alignment="TOP_CENTER" mnemonicParsing="false" prefHeight="70.0" prefWidth="230.0" style="-fx-background-color: #5e7536;" text="сотрудники" textFill="#1e290b">
+            <Button fx:id="personal_employees2" alignment="TOP_CENTER" mnemonicParsing="false" prefHeight="70.0" prefWidth="230.0" style="-fx-background-color: #637a3a;" text="сотрудники" textFill="#1e290b">
                <font>
                   <Font name="RussianPunk" size="28.0" />
                </font>
@@ -190,7 +200,7 @@
                   <Font name="RussianPunk" size="28.0" />
                </font>
             </Button>
-            <Button fx:id="personal_service2" alignment="TOP_CENTER" mnemonicParsing="false" prefHeight="70.0" prefWidth="230.0" style="-fx-background-color: #637a3a;" text="услуги" textFill="#1e290b">
+            <Button fx:id="personal_service2" alignment="TOP_CENTER" mnemonicParsing="false" prefHeight="70.0" prefWidth="230.0" style="-fx-background-color: #5e7536;" text="услуги" textFill="#1e290b">
                <font>
                   <Font name="RussianPunk" size="28.0" />
                </font>

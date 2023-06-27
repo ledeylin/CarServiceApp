@@ -197,5 +197,6 @@
             </Button>
          </children>
       </VBox>
+      <Button fx:id="button_menu_close" layoutX="299.0" layoutY="11.0" mnemonicParsing="false" prefHeight="598.0" prefWidth="513.0" style="-fx-background-color: transparency;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="290.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>

@@ -42,11 +42,11 @@ public class PassController {
 
                 try {
                     if (id == 0) AdminEmployeesEditController.save();
-//                    if (id == 1) EditAdminServices.save();
+                    if (id == 1) AdminServicesEditController.save();
                     if (id == 2) AdminEmployeesAddController.add();
-//                    if (id == 3) AddAdminService.add();
+                    if (id == 3) AdminServicesAddController.add();
                     if (id == 4) AdminEmployeesController.delete();
-//                    if (id == 5) AdminServices.delete();
+                    if (id == 5) AdminServicesController.delete();
                     if (id == 6) AdminEditController.save();
 //                    if (id == 7) EmployeeEdit.save();
                     if (id == 8) AdminClientsEditController.save();

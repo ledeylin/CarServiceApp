@@ -52,6 +52,9 @@ public class AdminEmployeesController extends Constants {
     private Button personal_acc2;
 
     @FXML
+    private Button button_menu_close;
+
+    @FXML
     private Button personal_clients1;
 
     @FXML
@@ -225,15 +228,18 @@ public class AdminEmployeesController extends Constants {
         // меню
 
         pane_menu.setVisible(false);
+        button_menu_close.setVisible(false);
 
         button_menu1.setOnMouseClicked(mouseEvent -> {
             if (pane_flag) {
                 pane_menu.setVisible(false);
                 pane_flag = false;
+                button_menu_close.setVisible(false);
             }
             else {
                 pane_menu.setVisible(true);
                 pane_flag = true;
+                button_menu_close.setVisible(true);
 
                 TranslateTransition translateTransition1 = new TranslateTransition(Duration.seconds(0.5), pane_menu);
                 translateTransition1.play();
@@ -244,17 +250,27 @@ public class AdminEmployeesController extends Constants {
             if (pane_flag) {
                 pane_menu.setVisible(false);
                 pane_flag = false;
+                button_menu_close.setVisible(false);
             }
             else {
                 pane_menu.setVisible(true);
                 pane_flag = true;
+                button_menu_close.setVisible(true);
 
                 TranslateTransition translateTransition1 = new TranslateTransition(Duration.seconds(0.5), pane_menu);
                 translateTransition1.play();
             }
         });
 
-        // переход на окно личного кабинета
+        button_menu_close.setOnMouseClicked(mouseEvent -> {
+
+            pane_menu.setVisible(false);
+            pane_flag = false;
+            button_menu_close.setVisible(false);
+
+        });
+
+        // переход на окно личного кабинета 1
         personal_acc1.setOnAction(actionEvent -> {
 
             personal_acc1.getScene().getWindow().hide();
@@ -271,7 +287,7 @@ public class AdminEmployeesController extends Constants {
 
         });
 
-        // переход на окно личного кабинета
+        // переход на окно личного кабинета 2
         personal_acc2.setOnAction(actionEvent -> {
 
             personal_acc2.getScene().getWindow().hide();
@@ -311,6 +327,40 @@ public class AdminEmployeesController extends Constants {
             personal_clients2.getScene().getWindow().hide();
             Stage stage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_clients.fxml"));
+            Scene scene = null;
+            try {
+                scene = new Scene(fxmlLoader.load(), 800, 600);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            stage.setScene(scene);
+            stage.show();
+
+        });
+
+        // переход на окно услуг 1
+        personal_service1.setOnAction(actionEvent -> {
+
+            personal_service1.getScene().getWindow().hide();
+            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_services.fxml"));
+            Scene scene = null;
+            try {
+                scene = new Scene(fxmlLoader.load(), 800, 600);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            stage.setScene(scene);
+            stage.show();
+
+        });
+
+        // переход на окно услуг 2
+        personal_service2.setOnAction(actionEvent -> {
+
+            personal_service2.getScene().getWindow().hide();
+            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_services.fxml"));
             Scene scene = null;
             try {
                 scene = new Scene(fxmlLoader.load(), 800, 600);
