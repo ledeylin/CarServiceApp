@@ -351,43 +351,56 @@ public class AdminClientsController extends Constants {
         });
 
         // редактирование информации о клиенте
-//        button_edit.setOnAction(actionEvent -> {
-//
-//            EditAdminClients.setOld_login(old_login);
-//            Stage stage = new Stage();
-//            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("edit_admin_clients.fxml"));
-//            Scene scene = null;
-//
-//            try {
-//                scene = new Scene(fxmlLoader.load(), 529, 267);
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//
-//            stage.setScene(scene);
-//            stage.show();
-//
-//        });
+        button_edit.setOnAction(actionEvent -> {
 
-//
+            AdminClientsEditController.setOld_login(old_login);
+            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_clients_edit.fxml"));
+            Scene scene = null;
 
-//        // добавление нового пользователя
-//        button_add.setOnAction(actionEvent -> {
-//
-//            Stage stage = new Stage();
-//            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("add_admin_clients.fxml"));
-//            Scene scene = null;
-//
-//            try {
-//                scene = new Scene(fxmlLoader.load(), 529, 267);
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//
-//            stage.setScene(scene);
-//            stage.show();
-//
-//        });
+            try {
+                scene = new Scene(fxmlLoader.load(), 529, 267);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            stage.setScene(scene);
+            stage.show();
+
+        });
+
+        // добавление нового пользователя
+        button_add.setOnAction(actionEvent -> {
+
+            try {
+                Connection connection = databaseHandler.getDbConnection();
+                Statement statement1 = connection.createStatement();
+
+                if (Objects.equals(old_post, "Заблокирован")) {
+                    statement1.executeUpdate("UPDATE " + CLIENTS_TABLE +
+                            " SET status = '1' WHERE " +
+                            CLIENTS_LOGIN + " = '" + old_login + "';");
+                    posts.put(key, "Активен");
+                }
+
+            else {
+                Stage stage = new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_clients_add.fxml"));
+                Scene scene = null;
+
+                try {
+                    scene = new Scene(fxmlLoader.load(), 529, 267);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                stage.setScene(scene);
+                stage.show();
+            }
+
+            } catch (ClassNotFoundException | SQLException e) { throw new RuntimeException(e); }
+
+        });
 
         // удаление клиента
         button_delete.setOnAction(actionEvent -> {
@@ -413,19 +426,10 @@ public class AdminClientsController extends Constants {
     public static void delete() throws SQLException, ClassNotFoundException {
         Connection connection = databaseHandler.getDbConnection();
         Statement statement = connection.createStatement();
-        if (Objects.equals(old_post, "Заблокирован")) {
-            statement.executeUpdate("UPDATE " + CLIENTS_TABLE +
-                    " SET status = '0' WHERE " +
-                    CLIENTS_LOGIN + " = '" + old_login + "';");
-            posts.put(key, "Активен");
-        }
-
-        else {
-            statement.executeUpdate("UPDATE " + CLIENTS_TABLE +
-                    " SET status = '1' WHERE " +
-                    CLIENTS_LOGIN + " = '" + old_login + "';");
-            posts.put(key, "Заблокирован");
-        }
+        statement.executeUpdate("UPDATE " + CLIENTS_TABLE +
+                " SET status = '0' WHERE " +
+                CLIENTS_LOGIN + " = '" + old_login + "';");
+        posts.put(key, "Заблокирован");
     }
 
 }

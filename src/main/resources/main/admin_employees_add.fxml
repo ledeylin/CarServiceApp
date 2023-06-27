@@ -10,32 +10,32 @@
     <children>
         <AnchorPane layoutY="24.0" prefHeight="219.0" prefWidth="529.0" style="-fx-background-color: #889c65;" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
             <children>
-            <TextField fx:id="text_last_name" layoutX="22.0" layoutY="14.0" prefHeight="26.0" prefWidth="216.0" promptText="Last Name" style="-fx-background-color: #556B2F;" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="15.0">
+            <TextField fx:id="text_last_name" layoutX="22.0" layoutY="14.0" prefHeight="26.0" prefWidth="216.0" promptText="Фамилия" style="-fx-background-color: #556B2F;" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="15.0">
                <font>
                   <Font name="Monospaced Regular" size="12.0" />
                </font>
             </TextField>
-            <TextField fx:id="text_address" layoutX="292.0" layoutY="14.0" prefHeight="26.0" prefWidth="216.0" promptText="Address" style="-fx-background-color: #556B2F;" AnchorPane.leftAnchor="292.0" AnchorPane.topAnchor="15.0">
+            <TextField fx:id="text_address" layoutX="292.0" layoutY="14.0" prefHeight="26.0" prefWidth="216.0" promptText="Адрес" style="-fx-background-color: #556B2F;" AnchorPane.leftAnchor="292.0" AnchorPane.topAnchor="15.0">
                <font>
                   <Font name="Monospaced Regular" size="12.0" />
                </font>
             </TextField>
-            <TextField fx:id="text_first_name" layoutX="22.0" layoutY="59.0" prefHeight="26.0" prefWidth="216.0" promptText="First Name" style="-fx-background-color: #556B2F;" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="60.0">
+            <TextField fx:id="text_first_name" layoutX="22.0" layoutY="59.0" prefHeight="26.0" prefWidth="216.0" promptText="Имя" style="-fx-background-color: #556B2F;" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="60.0">
                <font>
                   <Font name="Monospaced Regular" size="12.0" />
                </font>
             </TextField>
-            <TextField fx:id="text_second_name" layoutX="22.0" layoutY="110.0" prefHeight="26.0" prefWidth="216.0" promptText="Second Name" style="-fx-background-color: #556B2F;" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="105.0">
+            <TextField fx:id="text_second_name" layoutX="22.0" layoutY="110.0" prefHeight="26.0" prefWidth="216.0" promptText="Фамилия" style="-fx-background-color: #556B2F;" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="105.0">
                <font>
                   <Font name="Monospaced Regular" size="12.0" />
                </font>
             </TextField>
-            <TextField fx:id="text_login" layoutX="294.0" layoutY="53.0" prefHeight="26.0" prefWidth="216.0" promptText="Login" style="-fx-background-color: #556B2F;" AnchorPane.leftAnchor="292.0" AnchorPane.topAnchor="60.0">
+            <TextField fx:id="text_login" layoutX="292.0" layoutY="53.0" prefHeight="26.0" prefWidth="216.0" promptText="Логин" style="-fx-background-color: #556B2F;" AnchorPane.leftAnchor="292.0" AnchorPane.topAnchor="60.0">
                <font>
                   <Font name="Monospaced Regular" size="12.0" />
                </font>
             </TextField>
-            <TextField fx:id="text_password" layoutX="283.0" layoutY="113.0" prefHeight="26.0" prefWidth="216.0" promptText="Password" style="-fx-background-color: #556B2F;" AnchorPane.leftAnchor="292.0" AnchorPane.topAnchor="105.0">
+            <TextField fx:id="text_password" layoutX="283.0" layoutY="113.0" prefHeight="26.0" prefWidth="216.0" promptText="Пароль" style="-fx-background-color: #556B2F;" AnchorPane.leftAnchor="292.0" AnchorPane.topAnchor="105.0">
                <font>
                   <Font name="Monospaced Regular" size="12.0" />
                </font>

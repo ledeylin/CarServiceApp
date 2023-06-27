@@ -49,8 +49,8 @@ public class PassController {
 //                    if (id == 5) AdminServices.delete();
                     if (id == 6) AdminEditController.save();
 //                    if (id == 7) EmployeeEdit.save();
-//                    if (id == 8) EditAdminClients.save();
-//                    if (id == 9) AddAdminClients.add();
+                    if (id == 8) AdminClientsEditController.save();
+                    if (id == 9) AdminClientsAddController.add();
                     if (id == 10) AdminClientsController.delete();
 //                    if (id == 11) ClientEdit.save();
 //                    if (id == 12) EditClientCar.save();
