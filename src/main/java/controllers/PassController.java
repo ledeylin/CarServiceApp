@@ -41,17 +41,17 @@ public class PassController {
                 button_save.getScene().getWindow().hide();
 
                 try {
-//                    if (id == 0) EditAdminEmployees.save();
+                    if (id == 0) AdminEmployeesEditController.save();
 //                    if (id == 1) EditAdminServices.save();
-//                    if (id == 2) AddAdminEmployee.add();
+                    if (id == 2) AdminEmployeesAddController.add();
 //                    if (id == 3) AddAdminService.add();
-//                    if (id == 4) AdminEmployees.delete();
+                    if (id == 4) AdminEmployeesController.delete();
 //                    if (id == 5) AdminServices.delete();
                     if (id == 6) AdminEditController.save();
 //                    if (id == 7) EmployeeEdit.save();
 //                    if (id == 8) EditAdminClients.save();
 //                    if (id == 9) AddAdminClients.add();
-//                    if (id == 10) AdminClients.delete();
+                    if (id == 10) AdminClientsController.delete();
 //                    if (id == 11) ClientEdit.save();
 //                    if (id == 12) EditClientCar.save();
 //                    if (id == 13) AddClientCar.add();

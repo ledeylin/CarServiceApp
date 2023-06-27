@@ -18,7 +18,7 @@
                   <Button fx:id="button_menu1" mnemonicParsing="false" prefHeight="220.0" prefWidth="60.0" style="-fx-background-color: transparent;" />
                </children>
             </Pane>
-            <Pane prefHeight="70.0" prefWidth="60.0">
+            <Pane prefHeight="70.0" prefWidth="60.0" style="-fx-background-color: #5e7536;">
                <children>
                   <Button fx:id="personal_acc1" mnemonicParsing="false" prefHeight="70.0" prefWidth="60.0" style="-fx-background-color: transparent;" />
                   <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="10.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
@@ -110,10 +110,15 @@
             <Font name="Monospaced Regular" size="27.0" />
          </font>
       </Text>
+      <Button fx:id="button_edit" layoutX="142.0" layoutY="524.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="194.0" style="-fx-background-color: #556B2F;" text="РЕДАКТИРОВАТЬ" textFill="#1e290b" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="535.0">
+         <font>
+            <Font name="Rostov" size="20.0" />
+         </font>
+      </Button>
       <VBox fx:id="pane_menu" layoutX="44.0" layoutY="200.0" prefHeight="200.0" prefWidth="230.0" style="-fx-background-color: #637a3a;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="0.0">
          <children>
             <Pane prefHeight="220.0" prefWidth="230.0" />
-            <Button fx:id="personal_acc2" alignment="TOP_CENTER" mnemonicParsing="false" prefHeight="70.0" prefWidth="230.0" style="-fx-background-color: #637a3a;" text="ПОЛЬЗОВАТЕЛЬ" textFill="#1e290b">
+            <Button fx:id="personal_acc2" alignment="TOP_CENTER" mnemonicParsing="false" prefHeight="70.0" prefWidth="230.0" style="-fx-background-color: #5e7536;" text="ПОЛЬЗОВАТЕЛЬ" textFill="#1e290b">
                <font>
                   <Font name="RussianPunk" size="28.0" />
                </font>
@@ -135,10 +140,5 @@
             </Button>
          </children>
       </VBox>
-      <Button fx:id="button_edit" layoutX="142.0" layoutY="524.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="194.0" style="-fx-background-color: #556B2F;" text="РЕДАКТИРОВАТЬ" textFill="#1e290b" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="535.0">
-         <font>
-            <Font name="Rostov" size="20.0" />
-         </font>
-      </Button>
    </children>
 </AnchorPane>

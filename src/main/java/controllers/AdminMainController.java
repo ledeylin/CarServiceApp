@@ -32,12 +32,6 @@ public class AdminMainController {
     private VBox pane_menu;
 
     @FXML
-    private Button personal_acc1;
-
-    @FXML
-    private Button personal_acc2;
-
-    @FXML
     private Button personal_clients1;
 
     @FXML
@@ -184,6 +178,40 @@ public class AdminMainController {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_employees.fxml"));
             Scene scene = null;
 
+            try {
+                scene = new Scene(fxmlLoader.load(), 800, 600);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            stage.setScene(scene);
+            stage.show();
+
+        });
+
+        // переход на окно клиентов 1
+        personal_clients1.setOnAction(actionEvent -> {
+
+            personal_clients1.getScene().getWindow().hide();
+            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_clients.fxml"));
+            Scene scene = null;
+            try {
+                scene = new Scene(fxmlLoader.load(), 800, 600);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            stage.setScene(scene);
+            stage.show();
+
+        });
+
+        // переход на окно клиентов 2
+        personal_clients2.setOnAction(actionEvent -> {
+
+            personal_clients2.getScene().getWindow().hide();
+            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_clients.fxml"));
+            Scene scene = null;
             try {
                 scene = new Scene(fxmlLoader.load(), 800, 600);
             } catch (IOException e) {

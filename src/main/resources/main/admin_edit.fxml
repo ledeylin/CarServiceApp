@@ -8,7 +8,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="400.0" style="-fx-background-color: #556B2F;" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminEditController">
     <children>
-        <AnchorPane layoutY="31.0" prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: #889c65;" AnchorPane.bottomAnchor="25.0" AnchorPane.topAnchor="25.0">
+        <AnchorPane layoutY="31.0" prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: #889c65;" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
             <children>
             <TextField fx:id="text_login" layoutX="111.0" layoutY="41.0" prefHeight="25.0" prefWidth="216.0" style="-fx-background-color: #556B2F;" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="40.0">
                <font>
@@ -20,7 +20,7 @@
                   <Font name="Monospaced Regular" size="13.0" />
                </font>
             </TextField>
-            <Button fx:id="button_save" layoutX="123.0" layoutY="146.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="154.0" style="-fx-background-color: #556B2F;" text="СОХРАНИТЬ" textFill="#1e290b" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="123.0" AnchorPane.rightAnchor="123.0" AnchorPane.topAnchor="146.0">
+            <Button fx:id="button_save" layoutX="123.0" layoutY="146.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="154.0" style="-fx-background-color: #556B2F;" text="СОХРАНИТЬ" textFill="#1e290b" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="150.0">
                <font>
                   <Font name="Rostov" size="21.0" />
                </font>
