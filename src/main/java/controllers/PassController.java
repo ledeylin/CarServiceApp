@@ -26,6 +26,8 @@ public class PassController {
                            // 6 - edit
                            // employee:
                            // 7 - edit
+                           // 15 - add detail
+                           // 16 - delete detail
                            // client:
                            // 11 - edit
                            // 12 - edit car
@@ -48,7 +50,7 @@ public class PassController {
                     if (id == 4) AdminEmployeesController.delete();
                     if (id == 5) AdminServicesController.delete();
                     if (id == 6) AdminEditController.save();
-//                    if (id == 7) EmployeeEdit.save();
+                    if (id == 7) EmployeeEditController.save();
                     if (id == 8) AdminClientsEditController.save();
                     if (id == 9) AdminClientsAddController.add();
                     if (id == 10) AdminClientsController.delete();
@@ -56,6 +58,8 @@ public class PassController {
 //                    if (id == 12) EditClientCar.save();
 //                    if (id == 13) AddClientCar.add();
 //                    if (id == 14) ClientGarage.delete();
+                    if (id == 15) EmployeeWorkController.add();
+                    if (id == 16) EmployeeWorkController.delete();
 
                 } catch (SQLException | ClassNotFoundException e) {
                     throw new RuntimeException(e);

@@ -12,7 +12,7 @@
             <children>
             <TextField fx:id="text_login" layoutX="111.0" layoutY="41.0" prefHeight="25.0" prefWidth="216.0" style="-fx-background-color: #556B2F;" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="40.0">
                <font>
-                  <Font name="Monospaced Regular" size="13.0" />
+                  <Font name="Rostov" size="13.0" />
                </font>
             </TextField>
             <TextField fx:id="text_pass" layoutX="138.0" layoutY="75.0" prefHeight="25.0" prefWidth="216.0" style="-fx-background-color: #556B2F;" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="90.0">

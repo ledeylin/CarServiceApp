@@ -185,8 +185,6 @@ public class AdminClientsAddController extends Constants {
                 CLIENTS_LOGIN + ", " + CLIENTS_PASSWORD + ", " + CLIENTS_PHONE_NUMBER + ", status" +
                 ") VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
-        System.out.println(insertNew);
-
         PreparedStatement preparedStatement = databaseHandler.getDbConnection().prepareStatement(insertNew);
         preparedStatement.setString(1, last_name);
         preparedStatement.setString(2, first_name);
