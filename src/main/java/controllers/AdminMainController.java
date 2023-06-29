@@ -134,7 +134,7 @@ public class AdminMainController {
                 "    SUM(s.work_time) AS total_work_time,\n" +
                 "    SUM(d.price) * 0.2 AS total_salary\n" +
                 "FROM employees e\n" +
-                "JOIN service s ON e.login = s.id_employee\n" +
+                "JOIN services s ON e.login = s.id_employee\n" +
                 "JOIN details d ON s.detail_serial_number = d.serial_number\n" +
                 "GROUP BY e.login\n" +
                 "HAVING e.login = '" + login + "';";

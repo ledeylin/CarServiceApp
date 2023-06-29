@@ -54,10 +54,10 @@ public class PassController {
                     if (id == 8) AdminClientsEditController.save();
                     if (id == 9) AdminClientsAddController.add();
                     if (id == 10) AdminClientsController.delete();
-//                    if (id == 11) ClientEdit.save();
-//                    if (id == 12) EditClientCar.save();
-//                    if (id == 13) AddClientCar.add();
-//                    if (id == 14) ClientGarage.delete();
+                    if (id == 11) ClientEditController.save();
+                    if (id == 12) ClientGarageEditCarController.save();
+                    if (id == 13) ClientGarageController.add();
+                    if (id == 14) ClientGarageController.delete();
                     if (id == 15) EmployeeWorkController.add();
                     if (id == 16) EmployeeWorkController.delete();
 

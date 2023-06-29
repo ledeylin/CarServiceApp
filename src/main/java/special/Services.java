@@ -20,6 +20,8 @@ public class Services {
 
     private String detail_serial_number;
 
+    private String detail;
+
     public Services(int id, String work_time, String mileage,
                     Date start_date, Date final_date,
                     String id_employee, String license_plate,
@@ -39,6 +41,13 @@ public class Services {
         this.start_date = start_date;
         this.final_date = final_date;
         this.detail_serial_number = detail_serial_number;
+    }
+
+    public Services(String mileage, Date start_date, Date final_date, String detail) {
+        this.mileage = mileage;
+        this.start_date = start_date;
+        this.final_date = final_date;
+        this.detail = detail;
     }
 
     public int getId() {
@@ -71,5 +80,9 @@ public class Services {
 
     public String getDetail_serial_number() {
         return detail_serial_number;
+    }
+
+    public String getDetail() {
+        return detail;
     }
 }

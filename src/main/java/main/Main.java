@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("employee_main.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("client_main.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
         stage.setScene(scene);
         stage.show();

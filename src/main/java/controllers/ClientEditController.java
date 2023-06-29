@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.Objects;
 
-public class EmployeeEditController extends Constants {
+public class ClientEditController extends Constants {
 
     @FXML
     private Button button_save;
@@ -31,9 +31,9 @@ public class EmployeeEditController extends Constants {
 
     private static String old_login;
 
-    private static String login;
+    private static String login = "";
 
-    private static String pass;
+    private static String pass = "";
 
     static DatabaseHandler databaseHandler = new DatabaseHandler();
 
@@ -42,21 +42,21 @@ public class EmployeeEditController extends Constants {
     @FXML
     void initialize() {
 
-        EmployeeEditController.old_login = EmployeeMainController.getLogin();
+        ClientEditController.old_login = ClientMainController.getLogin();
 
         // активация кнопки сохранения
         button_save.setOnAction(actionEvent -> {
 
-            EmployeeEditController.login = text_login.getText().trim();
-            EmployeeEditController.pass = text_pass.getText().trim();
+            ClientEditController.login = text_login.getText().trim();
+            ClientEditController.pass = text_pass.getText().trim();
 
             // логин
-            if (!Objects.equals(EmployeeEditController.login, "")) {
+            if (!Objects.equals(ClientEditController.login, "")) {
                 try {
 
                     String query = "SELECT * FROM " + CLIENTS_TABLE + " WHERE " + CLIENTS_LOGIN + " =?";
                     PreparedStatement preparedStatement = databaseHandler.getDbConnection().prepareStatement(query);
-                    preparedStatement.setString(1, EmployeeEditController.login);
+                    preparedStatement.setString(1, ClientEditController.login);
                     ResultSet result = preparedStatement.executeQuery();
                     if (result.next()) {
                         System.out.println("Error: login already exist.");
@@ -66,7 +66,7 @@ public class EmployeeEditController extends Constants {
 
                     query = "SELECT * FROM " + EMPLOYEE_TABLE + " WHERE " + EMPLOYEE_LOGIN + " =?";
                     preparedStatement = databaseHandler.getDbConnection().prepareStatement(query);
-                    preparedStatement.setString(1, EmployeeEditController.login);
+                    preparedStatement.setString(1, ClientEditController.login);
                     result = preparedStatement.executeQuery();
                     if (result.next()) {
                         System.out.println("Error: login already exist.");
@@ -82,7 +82,7 @@ public class EmployeeEditController extends Constants {
             }
 
             if (flag) {
-                PassController.setId(7);
+                PassController.setId(11);
                 Stage stage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pass.fxml"));
                 Scene scene = null;
@@ -102,20 +102,22 @@ public class EmployeeEditController extends Constants {
 
         // логин
         if (!Objects.equals(login, "")) {
-            String sqlAlterTable = "UPDATE " + EMPLOYEE_TABLE + " SET " + EMPLOYEE_LOGIN + " = '" + EmployeeEditController.login
-                    + "' WHERE " + EMPLOYEE_LOGIN + " = '" + EmployeeEditController.old_login + "';";
+            String sqlAlterTable = sqlAlterTable = "UPDATE " + CLIENTS_TABLE + " SET " +
+                    CLIENTS_LOGIN + " = '" + ClientEditController.login + "' WHERE " +
+                    CLIENTS_LOGIN + " = '" + ClientEditController.old_login + "';";
             Connection connection = databaseHandler.getDbConnection();
             System.out.println(sqlAlterTable);
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
-            EmployeeEditController.old_login = EmployeeEditController.login;
+            ClientEditController.old_login = ClientEditController.login;
         }
 
         // пароль
         if (!Objects.equals(pass, "")) {
-            String sqlAlterTable = "UPDATE " + EMPLOYEE_TABLE + " SET " + EMPLOYEE_PASSWORD + " = '" + EmployeeEditController.pass
-                    + "' WHERE " + EMPLOYEE_LOGIN + " = '" + EmployeeEditController.old_login + "';";
+            String sqlAlterTable = sqlAlterTable = "UPDATE " + CLIENTS_TABLE + " SET " +
+                    CLIENTS_PASSWORD + " = '" + ClientEditController.pass + "' WHERE " +
+                    CLIENTS_LOGIN + " = '" + ClientEditController.old_login + "';";
             Connection connection = databaseHandler.getDbConnection();
             Statement statement = connection.createStatement();
             System.out.println(sqlAlterTable);
@@ -126,4 +128,3 @@ public class EmployeeEditController extends Constants {
     }
 
 }
-
