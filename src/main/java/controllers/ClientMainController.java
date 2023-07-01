@@ -12,6 +12,7 @@ import javafx.util.Duration;
 import main.Constants;
 import main.DatabaseHandler;
 import main.Main;
+import special.User;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -68,37 +69,29 @@ public class ClientMainController extends Constants {
 
     private boolean pane_flag = false;
 
+    static User user;
+
+    public static void setUser(User user) {
+        ClientMainController.user = user;
+    }
+
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
 
-        ClientMainController.login = "4";
-        PassController.setPassword("4");
+        ClientMainController.login = user.getLogin();
+        PassController.setPassword(user.getPassword());
 
         // отображение информации о клиенте
 
-        String query = "SELECT c.*, \n" +
-                "       SUM(CASE WHEN cars.status = '1' THEN 1 ELSE 0 END) AS active_cars, \n" +
-                "       SUM(CASE WHEN cars.status = '0' THEN 1 ELSE 0 END) AS inactive_cars\n" +
-                "FROM clients AS c\n" +
-                "LEFT JOIN cars ON c.login = cars.id_owner\n" +
-                "WHERE c.login = '" + login + "'\n" +
-                "GROUP BY c.login\n" +
-                "\n";
-
-        PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
-        ResultSet result = statement.executeQuery(query);
-
-        if (result.next()) {
-            text_name.setText(result.getString(CLIENTS_LAST_NAME) + " " +
-                    result.getString(CLIENTS_FIRST_NAME) + " " +
-                    result.getString(CLIENTS_SECOND_NAME));
-            text_address.setText(result.getString(CLIENTS_ADDRESS));
-            text_login.setText(result.getString(CLIENTS_LOGIN));
-            text_phone.setText(result.getString(CLIENTS_PHONE_NUMBER));
-            text_car_now.setText(result.getString("active_cars"));
-            text_car_old.setText(result.getString("inactive_cars"));
-            text_pass.setText("*".repeat(result.getString(CLIENTS_PASSWORD).length()));
-        }
+        text_name.setText(user.getLast_name() + " " +
+                user.getFirst_name() + " " +
+                user.getSecond_name());
+        text_address.setText(user.getAddress());
+        text_login.setText(user.getLogin());
+        text_phone.setText(user.getPhone_number());
+        text_car_now.setText(user.getCar_now());
+        text_car_old.setText(user.getCar_old());
+        text_pass.setText("*".repeat(user.getPassword().length()));
 
         // меню
 
@@ -200,10 +193,6 @@ public class ClientMainController extends Constants {
 
     public static String getLogin() {
         return ClientMainController.login;
-    }
-
-    public static void setLogin(String login) {
-        ClientMainController.login = login;
     }
 
 }

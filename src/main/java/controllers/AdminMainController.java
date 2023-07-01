@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.DatabaseHandler;
 import main.Main;
+import special.User;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -68,14 +69,28 @@ public class AdminMainController {
 
     private final DatabaseHandler databaseHandler = new DatabaseHandler();
 
-
     private boolean pane_flag = false;
+
+    private static User user;
+
+    public static void setUser(User user) {
+        AdminMainController.user = user;
+    }
 
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
 
-        AdminMainController.login = "2";
-        PassController.setPassword("2");
+        AdminMainController.login = user.getLogin();
+        PassController.setPassword(user.getPassword());
+
+        // отображение информации о сотруднике
+
+        text_name.setText(user.getFirst_name() + " " +
+                user.getFirst_name() + " " +
+                user.getSecond_name());
+        text_address.setText(user.getAddress());
+        text_login.setText(user.getLogin());
+        text_pass.setText("*".repeat(user.getPassword().length()));
 
         // меню
 
@@ -121,35 +136,6 @@ public class AdminMainController {
             button_menu_close.setVisible(false);
 
         });
-
-        // отображение информации о сотруднике
-
-        String query = "SELECT e.last_name,\n" +
-                "    e.first_name,\n" +
-                "    e.second_name,\n" +
-                "    e.address,\n" +
-                "    e.login,\n" +
-                "    e.password,\n" +
-                "    e.permission,\n" +
-                "    SUM(s.work_time) AS total_work_time,\n" +
-                "    SUM(d.price) * 0.2 AS total_salary\n" +
-                "FROM employees e\n" +
-                "JOIN services s ON e.login = s.id_employee\n" +
-                "JOIN details d ON s.detail_serial_number = d.serial_number\n" +
-                "GROUP BY e.login\n" +
-                "HAVING e.login = '" + login + "';";
-
-        PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
-        ResultSet result = statement.executeQuery(query);
-
-        if (result.next()) {
-            text_name.setText(result.getString("last_name") + " " +
-                    result.getString("first_name") + " " +
-                    result.getString("second_name"));
-            text_address.setText(result.getString("address"));
-            text_login.setText(result.getString("login"));
-            text_pass.setText("*".repeat(result.getString("password").length()));
-        }
 
         // редактирование
         button_edit.setOnAction(actionEvent -> {

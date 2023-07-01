@@ -12,6 +12,7 @@ import javafx.util.Duration;
 import main.Constants;
 import main.DatabaseHandler;
 import main.Main;
+import special.User;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -71,42 +72,26 @@ public class EmployeeMainController extends Constants {
 
     private boolean pane_flag = false;
 
+    private static User user;
+
+    public static void setUser(User user) {
+        EmployeeMainController.user = user;
+    }
+
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
 
-        EmployeeMainController.login = "1";
-        PassController.setPassword("1");
+        EmployeeMainController.login = user.getLogin();
+        PassController.setPassword(user.getPassword());
 
-        // отображение информации о сотруднике
-
-        String query = "SELECT e.last_name,\n" +
-                "    e.first_name,\n" +
-                "    e.second_name,\n" +
-                "    e.address,\n" +
-                "    e.login,\n" +
-                "    e.password,\n" +
-                "    e.permission,\n" +
-                "    SUM(s.work_time) AS total_work_time,\n" +
-                "    SUM(d.price) * 0.2 AS total_salary\n" +
-                "FROM employees e\n" +
-                "JOIN services s ON e.login = s.id_employee\n" +
-                "JOIN details d ON s.detail_serial_number = d.serial_number\n" +
-                "GROUP BY e.login\n" +
-                "HAVING e.login = '" + login + "';";
-
-        PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
-        ResultSet result = statement.executeQuery(query);
-
-        if (result.next()) {
-            text_name.setText(result.getString("last_name") + " " +
-                    result.getString("first_name") + " " +
-                    result.getString("second_name"));
-            text_address.setText(result.getString("address"));
-            text_login.setText(result.getString("login"));
-            text_pass.setText("*".repeat(result.getString("password").length()));
-            text_work_time.setText(result.getString("total_work_time"));
-            text_salary.setText(result.getString("total_salary"));
-        }
+        text_name.setText(user.getLast_name() + " " +
+                user.getFirst_name() + " " +
+                user.getSecond_name());
+        text_address.setText(user.getAddress());
+        text_login.setText(user.getLogin());
+        text_pass.setText("*".repeat(user.getPassword().length()));
+        text_work_time.setText(user.getWork_time());
+        text_salary.setText(user.getSalary());
 
         // меню
 

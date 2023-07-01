@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" style="-fx-background-color: #849494;" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SignInController">
+   <children>
+      <AnchorPane layoutY="31.0" prefHeight="360.0" prefWidth="279.0" style="-fx-background-color: #a5b8b8;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+         <children>
+            <TextField fx:id="loginField" layoutX="87.0" layoutY="97.0" prefHeight="26.0" prefWidth="216.0" promptText="Логин" style="-fx-border-color: #91a3a3;" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="115.0">
+               <font>
+                  <Font name="Rostov" size="12.0" />
+               </font>
+            </TextField>
+            <PasswordField fx:id="passwordField" layoutX="89.0" layoutY="282.0" prefHeight="26.0" prefWidth="216.0" promptText="Пароль" style="-fx-border-color: #91a3a3;" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="160.0">
+               <font>
+                  <Font name="Rostov" size="12.0" />
+               </font>
+            </PasswordField>
+            <Button fx:id="signUpButton" layoutX="186.0" layoutY="335.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" style="-fx-background-color: #91a3a3;" text="ЗАРЕГЕСТРИРОВАТЬСЯ" textFill="#455454" AnchorPane.leftAnchor="186.0" AnchorPane.topAnchor="340.0">
+               <font>
+                  <Font name="Rostov" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="signInWindowButton" layoutX="151.0" layoutY="316.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #91a3a3;" text="ВОЙТИ" textFill="#455454" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="215.0">
+               <font>
+                  <Font name="Rostov" size="14.0" />
+               </font>
+            </Button>
+            <Text fill="#455454" layoutX="215.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Вас нет в системе?" AnchorPane.leftAnchor="215.0" AnchorPane.topAnchor="315.0">
+               <font>
+                  <Font name="Rostov" size="16.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="131.0" fitWidth="153.0" layoutX="17.0" layoutY="267.0" AnchorPane.topAnchor="270.0">
+               <image>
+                  <Image url="@../img/logo.png" />
+               </image>
+            </ImageView>
+            <Text fill="#455454" layoutX="10.0" layoutY="448.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Заходя в приложение, вы соглашаетесь с нашим лицензионным соглашением.">
+               <font>
+                  <Font name="Rostov" size="10.0" />
+               </font>
+            </Text>
+            <Text fx:id="text_mistake" fill="#8a2f1f" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="400.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="85.0">
+               <font>
+                  <Font name="Rostov" size="15.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+      <Text fill="#455454" layoutX="153.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="авторизация" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="35.0">
+         <font>
+            <Font name="RussianPunk" size="51.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

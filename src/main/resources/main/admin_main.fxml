@@ -65,7 +65,7 @@
             </Pane>
          </children>
       </VBox>
-      <Text fill="#1e290b" layoutX="105.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="администратор" AnchorPane.topAnchor="30.0">
+      <Text fill="#1e290b" layoutX="125.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="администратор" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="15.0">
          <font>
             <Font name="RussianPunk" size="78.0" />
          </font>

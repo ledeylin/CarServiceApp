@@ -3,19 +3,26 @@ package controllers;
 import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.Configs;
+import javafx.scene.control.TableColumn;
 import main.Constants;
 import main.DatabaseHandler;
 import main.Main;
+import special.EmployeesWork;
+import special.Services;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -36,7 +43,10 @@ public class EmployeeServicesController extends Constants {
     private Button button_menu_close;
 
     @FXML
-    private ListView<String> list_view;
+    private TableView<special.Services> list_view;
+
+    @FXML
+    private TableColumn<special.Services, String> table;
 
     @FXML
     private VBox pane_menu;
@@ -77,65 +87,46 @@ public class EmployeeServicesController extends Constants {
 
         // добавление информации об услугах
 
-        TreeMap<String, Integer> services = new TreeMap<>();
+        //TreeMap<String, Integer> services = new TreeMap<>();
 
-        String query = "SELECT * FROM services WHERE id_employee = '" + EmployeeMainController.getLogin() + "';";
+        String query = "SELECT " + CAR_TABLE + ".*, " + DETAILS_TABLE + ".*, " + SERVICE_TABLE + ".*" +
+                " FROM " + SERVICE_TABLE +
+                " INNER JOIN " + CAR_TABLE +
+                " ON " + SERVICE_TABLE + "." + SERVICE_LICENSE_PLATE + " = " + CAR_TABLE + "."
+                + CAR_LICENSE_PLATE +
+                " INNER JOIN " + DETAILS_TABLE +
+                " ON " + SERVICE_TABLE + "." + SERVICE_DETAIL_SERIAL_NUMBER +
+                " = " + DETAILS_TABLE + "." + DETAILS_SERIAL_NUMBER +
+                " WHERE " + SERVICE_TABLE + "." + SERVICE_ID_EMPLOYEE +
+                " = '" + EmployeeMainController.getLogin() + "';";
         PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
         ResultSet result = statement.executeQuery();
 
-        int i = 0;
+        table.setCellValueFactory(new PropertyValueFactory<special.Services, String>("date"));
+
+        ObservableList<special.Services> s = FXCollections.observableArrayList();
         while (result.next()) {
-            services.put(result.getDate("start_date") + " / " + result.getDate("final_date"), i);
-            i++;
+            String s_date = result.getDate("start_date") + " / " + result.getDate("final_date");
+            String s_work_time = result.getString(SERVICE_WORK_TIME) + " ч.";
+            String s_mileage = result.getString(SERVICE_MILEAGE) + " км.";
+            String s_model = result.getString(CAR_MODEL);
+            String s_detail = result.getString(DETAILS_CATEGORY);
+            int s_price = (result.getInt(DETAILS_PRICE)) * 2 / 10;
+            Services services = new Services(s_work_time, s_mileage, s_model, s_date, s_price, s_detail);
+            s.add(services);
         }
+        list_view.setItems(s);
 
-        ArrayList<String> all = new ArrayList<>();
-        statement = databaseHandler.getDbConnection().prepareStatement(query);
-        result = statement.executeQuery();
-        while (result.next()) {
-            all.add(result.getDate(SERVICE_START_DATE) + " / " + result.getDate(SERVICE_FINAL_DATE));
-        }
-        list_view.getItems().addAll(all);
-
-        // добавление в массивы для последующего вывода
-
-        TreeMap<Integer, String> work_time = new TreeMap<>();
-        TreeMap<Integer, String> mileage = new TreeMap<>();
-        TreeMap<Integer, String> model = new TreeMap<>();
-        TreeMap<Integer, String> detail = new TreeMap<>();
-        TreeMap<Integer, Integer> price = new TreeMap<>();
-
-        query = "SELECT " + CAR_TABLE + "." + CAR_MODEL + ", " + DETAILS_TABLE + "." + DETAILS_CATEGORY + ", " +
-                DETAILS_TABLE + "." + DETAILS_PRICE + ", " + SERVICE_TABLE + "." + SERVICE_WORK_TIME + ", " +
-                SERVICE_TABLE + "." + SERVICE_MILEAGE + " FROM " + SERVICE_TABLE + " INNER JOIN " + CAR_TABLE +
-                " ON " + SERVICE_TABLE + "." + SERVICE_LICENSE_PLATE + " = " + CAR_TABLE + "." + CAR_LICENSE_PLATE +
-                " INNER JOIN " + DETAILS_TABLE + " ON " + SERVICE_TABLE + "." + SERVICE_DETAIL_SERIAL_NUMBER +
-                " = " + DETAILS_TABLE + "." + DETAILS_SERIAL_NUMBER +  " WHERE " + SERVICE_TABLE + "." +
-                SERVICE_ID_EMPLOYEE + " = '" + EmployeeMainController.getLogin() + "';";
-        result = statement.executeQuery(query);
-
-        for (i = 0; i < services.size(); i++) {
-            if (result.next()) {
-                work_time.put(i, result.getString(SERVICE_WORK_TIME) + " ч.");
-                mileage.put(i, result.getString(SERVICE_MILEAGE) + " км.");
-                model.put(i, result.getString(CAR_MODEL));
-                detail.put(i, result.getString(DETAILS_CATEGORY));
-                price.put(i, (result.getInt(DETAILS_PRICE)) * 2 / 10);
-            }
-        }
-
-        // просмотр выбора
-        list_view.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-
+        TableView.TableViewSelectionModel<special.Services> selectionModel = list_view.getSelectionModel();
+        selectionModel.selectedItemProperty().addListener(new ChangeListener<special.Services>() {
             @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String s1) {
-                text_detail.setText(detail.get(services.get(list_view.getSelectionModel().getSelectedItem())));
-                text_mileage.setText(mileage.get(services.get(list_view.getSelectionModel().getSelectedItem())));
-                text_model.setText(model.get(services.get(list_view.getSelectionModel().getSelectedItem())));
-                text_price.setText(String.valueOf(price.get(services.get(list_view.getSelectionModel().getSelectedItem()))));
-                text_time.setText(work_time.get(services.get(list_view.getSelectionModel().getSelectedItem())));
+            public void changed(ObservableValue<? extends Services> observableValue, Services services, Services t1) {
+                text_detail.setText(list_view.getSelectionModel().getSelectedItem().getDetail());
+                text_mileage.setText(list_view.getSelectionModel().getSelectedItem().getMileage());
+                text_model.setText(list_view.getSelectionModel().getSelectedItem().getModel());
+                text_price.setText(String.valueOf(list_view.getSelectionModel().getSelectedItem().getPrice()));
+                text_time.setText(list_view.getSelectionModel().getSelectedItem().getWork_time());
             }
-
         });
 
         // меню

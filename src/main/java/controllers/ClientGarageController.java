@@ -21,6 +21,7 @@ import javafx.util.Duration;
 import main.Constants;
 import main.DatabaseHandler;
 import main.Main;
+import other.ServiceRecordCreator;
 import special.Cars;
 import special.Services;
 
@@ -134,6 +135,10 @@ public class ClientGarageController extends Constants {
     private static String model = "";
 
     private String now_detail = "";
+
+    private boolean car_status = true;
+
+    private boolean flag_service = false;
 
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
@@ -288,40 +293,57 @@ public class ClientGarageController extends Constants {
 
         // добавление машины
         button_add_car.setOnMouseClicked(mouseEvent -> {
-            boolean flag = true;
-            licensePlate = text_license_plate.getText();
-            make = text_make.getText();
-            model = text_model.getText();
-            // проверка на пустоту данных
-            if (Objects.equals(make, "")) {
-                flag = false;
-                text_mistake.setText("Вы не выбрали марку машины!");
+
+            if (car_status) {
+                boolean flag = true;
+                licensePlate = text_license_plate.getText();
+                make = text_make.getText();
+                model = text_model.getText();
+                // проверка на пустоту данных
+                if (Objects.equals(make, "")) {
+                    flag = false;
+                    text_mistake.setText("Вы не выбрали марку машины!");
+                }
+                if (Objects.equals(model, "")) {
+                    flag = false;
+                    text_mistake.setText("Вы не выбрали модель машины!");
+                }
+                if (Objects.equals(licensePlate, "")) {
+                    flag = false;
+                    text_mistake.setText("Вы не ввели гос.номер машины!");
+                }
+                // проверка пароля пользователя
+                if (flag) {
+                    PassController.setId(13);
+                    Stage stage = new Stage();
+                    FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pass.fxml"));
+                    Scene scene = null;
+                    try {
+                        scene = new Scene(fxmlLoader.load(), 400, 250);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    stage.setScene(scene);
+                    stage.show();
+                }
             }
-            if (Objects.equals(model, "")) {
-                flag = false;
-                text_mistake.setText("Вы не выбрали модель машины!");
-            }
-            if (Objects.equals(licensePlate, "")) {
-                flag = false;
-                text_mistake.setText("Вы не ввели гос.номер машины!");
-            }
-            // проверка пароля пользователя
-            if (flag) {
-                PassController.setId(13);
-                Stage stage = new Stage();
-                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pass.fxml"));
-                Scene scene = null;
+
+
+            else if (!Objects.equals(now_license_plate, "")) {
                 try {
-                    scene = new Scene(fxmlLoader.load(), 400, 250);
-                } catch (IOException e) {
+                    Connection connection = databaseHandler.getDbConnection();
+                    Statement statement1 = connection.createStatement();
+                    statement1.executeUpdate("UPDATE " + CAR_TABLE +
+                            " SET status = '1' WHERE " +
+                            CAR_LICENSE_PLATE + " = '" + now_license_plate + "';");
+                } catch (SQLException | ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
-                stage.setScene(scene);
-                stage.show();
             }
+
         });
 
-        // удаление детали
+        // удаление машины
         button_delete.setOnMouseClicked(mouseEvent -> {
             boolean flag = true;
             // проверка на пустоту данных
@@ -367,6 +389,59 @@ public class ClientGarageController extends Constants {
 
         });
 
+        // добавление услуги
+        button_add_service.setOnMouseClicked(mouseEvent -> {
+
+            String mileage = text_mileage.getText();
+            String detail = choice_box_detail.getValue();
+
+            if (!flag_service) {
+
+                boolean flag = true;
+                String price = "";
+
+                try {
+                    String query1 = "SELECT d.price" +
+                            " FROM details AS d" +
+                            " INNER JOIN details_compatibilities AS ds" +
+                            " ON ds.detail_serial_number = d.serial_number" +
+                            " INNER JOIN cars AS c" +
+                            " ON c.model = ds.model" +
+                            " WHERE c.license_plate = '" + now_license_plate + "';";
+                    PreparedStatement statement1 = databaseHandler.getDbConnection().prepareStatement(query1);
+                    ResultSet result1 = statement1.executeQuery();
+                    if (result1.next()) {
+                        price = result1.getString("price");
+                    } else {
+                        flag = false;
+                        text_mistake.setText("К сожалению, детали закончились.");
+                    }
+                } catch (SQLException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+
+                if (mileage.equals("")) {
+                    flag = false;
+                    text_mistake.setText("Вы не ввели пробег машины!");
+                }
+                if (detail.equals("")) {
+                    flag = false;
+                    text_mistake.setText("Вы не выбрали деталь!");
+                }
+                if (flag) {
+                    text_mistake.setText("Цена выбранной детали равна " + price + ". Если согласны - повторно нажмите кнопку.");
+                    flag_service = true;
+                }
+            }
+
+            else {
+                int mileage1 = Integer.parseInt(mileage);
+                ServiceRecordCreator.createServiceRecord(mileage1, detail, now_license_plate);
+                flag_service = false;
+            }
+
+        });
+
         // новые машины
         button_now.setOnAction(actionEvent -> {
 
@@ -377,6 +452,8 @@ public class ClientGarageController extends Constants {
             car_model.setText("");
             view_table_services.getItems().clear();
             choice_box_detail.getItems().clear();
+            now_license_plate = "";
+            car_status = true;
 
         });
 
@@ -390,6 +467,8 @@ public class ClientGarageController extends Constants {
             car_model.setText("");
             view_table_services.getItems().clear();
             choice_box_detail.getItems().clear();
+            now_license_plate = "";
+            car_status = false;
 
         });
 
