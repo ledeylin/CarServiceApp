@@ -17,7 +17,7 @@ public class Constants {
     protected static final String EMPLOYEE_LOGIN = "login";
     protected static final String EMPLOYEE_PASSWORD = "password";
     protected static final String EMPLOYEE_ACCESS_RIGHTS = "permission";
-    protected static final String SERVICE_TABLE = "service";
+    protected static final String SERVICE_TABLE = "services";
     protected static final String SERVICE_ID = "id_service";
     protected static final String SERVICE_WORK_TIME = "work_time";
     protected static final String SERVICE_MILEAGE = "mileage";
@@ -26,7 +26,7 @@ public class Constants {
     protected static final String SERVICE_ID_EMPLOYEE = "id_employee";
     protected static final String SERVICE_LICENSE_PLATE = "license_plate";
     protected static final String SERVICE_DETAIL_SERIAL_NUMBER = "detail_serial_number";
-    protected static final String CAR_TABLE = "car";
+    protected static final String CAR_TABLE = "cars";
     protected static final String CAR_ID_OWNER = "id_owner";
     protected static final String CAR_LICENSE_PLATE = "license_plate";
     protected static final String CAR_MODEL = "model";
@@ -35,7 +35,7 @@ public class Constants {
     protected static final String DETAILS_CATEGORY = "category";
     protected static final String DETAILS_SERIAL_NUMBER = "serial_number";
     protected static final String DETAILS_PRICE = "price";
-    protected static final String COMPATIBILITY_TABLE = "details_compatibility";
+    protected static final String COMPATIBILITY_TABLE = "details_compatibilities";
     protected static final String COMPATIBILITY_MODEL = "model";
     protected static final String COMPATIBILITY_DETAIL_SERIAL_NUMBER = "detail_serial_number";
 }

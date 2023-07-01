@@ -8,4 +8,6 @@ module sample.d {
     opens main to javafx.fxml;
     exports controllers;
     opens controllers to javafx.fxml;
+    exports special;
+    opens special to javafx.fxml;
 }
