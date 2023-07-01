@@ -60,42 +60,42 @@
             <Font name="RussianPunk" size="78.0" />
          </font>
       </Text>
-      <Text fill="#0b2422" layoutX="254.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ФИО" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="160.0">
+      <Text fill="#0b2422" layoutX="254.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ФИО" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="160.0">
          <font>
             <Font name="Rostov" size="30.0" />
          </font>
       </Text>
-      <Text fill="#0b2422" layoutX="120.0" layoutY="382.0" strokeType="OUTSIDE" strokeWidth="0.0" text="АДРЕС" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="220.0">
+      <Text fill="#0b2422" layoutX="120.0" layoutY="382.0" strokeType="OUTSIDE" strokeWidth="0.0" text="АДРЕС" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="220.0">
          <font>
             <Font name="Rostov" size="30.0" />
          </font>
       </Text>
-      <Text fill="#0b2422" layoutX="128.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ЛОГИН" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="280.0">
+      <Text fill="#0b2422" layoutX="128.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ЛОГИН" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="280.0">
          <font>
             <Font name="Rostov" size="30.0" />
          </font>
       </Text>
-      <Text fill="#0b2422" layoutX="122.0" layoutY="495.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ПАРОЛЬ" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="340.0">
+      <Text fill="#0b2422" layoutX="122.0" layoutY="495.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ПАРОЛЬ" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="340.0">
          <font>
             <Font name="Rostov" size="30.0" />
          </font>
       </Text>
-      <Text fx:id="text_name" fill="#0b2422" layoutX="299.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="160.0">
+      <Text fx:id="text_name" fill="#0b2422" layoutX="299.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="160.0">
          <font>
             <Font name="Monospaced Regular" size="27.0" />
          </font>
       </Text>
-      <Text fx:id="text_address" fill="#0b2422" layoutX="300.0" layoutY="322.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="220.0">
+      <Text fx:id="text_address" fill="#0b2422" layoutX="300.0" layoutY="322.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="220.0">
          <font>
             <Font name="Monospaced Regular" size="27.0" />
          </font>
       </Text>
-      <Text fx:id="text_login" fill="#0b2422" layoutX="300.0" layoutY="392.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="280.0">
+      <Text fx:id="text_login" fill="#0b2422" layoutX="300.0" layoutY="392.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="280.0">
          <font>
             <Font name="Monospaced Regular" size="27.0" />
          </font>
       </Text>
-      <Text fx:id="text_pass" fill="#0b2422" layoutX="299.0" layoutY="462.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="340.0">
+      <Text fx:id="text_pass" fill="#0b2422" layoutX="299.0" layoutY="462.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="340.0">
          <font>
             <Font name="Monospaced Regular" size="27.0" />
          </font>
@@ -105,22 +105,22 @@
             <Font name="Rostov" size="20.0" />
          </font>
       </Button>
-      <Text fill="#0b2422" layoutX="132.0" layoutY="505.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ЗАРПЛАТА" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="460.0">
+      <Text fill="#0b2422" layoutX="132.0" layoutY="505.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ЗАРПЛАТА" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="460.0">
          <font>
             <Font name="Rostov" size="30.0" />
          </font>
       </Text>
-      <Text fill="#0b2422" layoutX="136.0" layoutY="469.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ВРЕМЯ РАБОТЫ" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="400.0">
+      <Text fill="#0b2422" layoutX="136.0" layoutY="469.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ВРЕМЯ РАБОТЫ" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="400.0">
          <font>
             <Font name="Rostov" size="30.0" />
          </font>
       </Text>
-      <Text fx:id="text_salary" fill="#0b2422" layoutX="309.0" layoutY="472.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="460.0">
+      <Text fx:id="text_salary" fill="#0b2422" layoutX="309.0" layoutY="472.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="460.0">
          <font>
             <Font name="Monospaced Regular" size="27.0" />
          </font>
       </Text>
-      <Text fx:id="text_work_time" fill="#0b2422" layoutX="316.0" layoutY="472.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="400.0">
+      <Text fx:id="text_work_time" fill="#0b2422" layoutX="316.0" layoutY="472.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="400.0">
          <font>
             <Font name="Monospaced Regular" size="27.0" />
          </font>

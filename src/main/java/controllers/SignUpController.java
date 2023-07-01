@@ -55,18 +55,7 @@ public class SignUpController extends Constants {
     void initialize()  {
 
         // переход на окно авторизации
-        signInWindowButton.setOnAction(actionEvent -> {
-
-            signInWindowButton.getScene().getWindow().hide();
-            Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("sign_in.fxml"));
-            Scene scene = null;
-            try { scene = new Scene(fxmlLoader.load(), 400, 500); }
-            catch (IOException e) { throw new RuntimeException(e); }
-            stage.setScene(scene);
-            stage.show();
-
-        });
+        signInWindowButton.setOnAction(actionEvent -> { Main.changeScene("sign_in.fxml"); });
 
         // регистрация
         signUpButton.setOnAction(actionEvent -> {
@@ -195,14 +184,7 @@ public class SignUpController extends Constants {
                     System.out.println("Registration successful.");
 
                     // смена окна на авторизацию
-                    signInWindowButton.getScene().getWindow().hide();
-                    Stage stage = new Stage();
-                    FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("sign_in.fxml"));
-                    Scene scene = null;
-                    try { scene = new Scene(fxmlLoader.load(), 400, 500); }
-                    catch (IOException e) { throw new RuntimeException(e); }
-                    stage.setScene(scene);
-                    stage.show();
+                    Main.changeScene("sign_in.fxml");
 
                 } catch (SQLException | ClassNotFoundException e) {
                     throw new RuntimeException(e);

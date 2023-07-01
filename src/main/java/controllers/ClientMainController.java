@@ -65,8 +65,6 @@ public class ClientMainController extends Constants {
 
     private static String login;
 
-    private final DatabaseHandler databaseHandler = new DatabaseHandler();
-
     private boolean pane_flag = false;
 
     static User user;
@@ -158,40 +156,10 @@ public class ClientMainController extends Constants {
         });
 
         // переход на окно гаража 1
-        personal_garage1.setOnAction(actionEvent -> {
-
-            personal_garage1.getScene().getWindow().hide();
-            Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("client_garage.fxml"));
-            Scene scene = null;
-
-            try {
-                scene = new Scene(fxmlLoader.load(), 800, 600);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            stage.setScene(scene);
-            stage.show();
-
-        });
+        personal_garage1.setOnAction(actionEvent -> { Main.changeScene("client_garage.fxml"); });
 
         // переход на окно гаража 2
-        personal_garage2.setOnAction(actionEvent -> {
-
-            personal_garage2.getScene().getWindow().hide();
-            Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("client_garage.fxml"));
-            Scene scene = null;
-
-            try {
-                scene = new Scene(fxmlLoader.load(), 800, 600);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            stage.setScene(scene);
-            stage.show();
-
-        });
+        personal_garage2.setOnAction(actionEvent -> { Main.changeScene("client_garage.fxml"); });
 
     }
 

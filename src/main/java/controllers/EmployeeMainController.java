@@ -157,72 +157,16 @@ public class EmployeeMainController extends Constants {
         });
 
         // переход на окно просмотра услуг 1
-        personal_service1.setOnAction(actionEvent -> {
-
-            personal_service1.getScene().getWindow().hide();
-            Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("employee_services.fxml"));
-            Scene scene = null;
-            try {
-                scene = new Scene(fxmlLoader.load(), 800, 600);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            stage.setScene(scene);
-            stage.show();
-
-        });
+        personal_service1.setOnAction(actionEvent -> { Main.changeScene("employee_services.fxml"); });
 
         // переход на окно просмотра услуг 2
-        personal_service2.setOnAction(actionEvent -> {
-
-            personal_service2.getScene().getWindow().hide();
-            Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("employee_services.fxml"));
-            Scene scene = null;
-            try {
-                scene = new Scene(fxmlLoader.load(), 800, 600);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            stage.setScene(scene);
-            stage.show();
-
-        });
+        personal_service2.setOnAction(actionEvent -> { Main.changeScene("employee_services.fxml"); });
 
         // переход на окно работы 1
-        personal_work_time1.setOnAction(actionEvent -> {
-
-            personal_work_time1.getScene().getWindow().hide();
-            Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("employee_work_time.fxml"));
-            Scene scene = null;
-            try {
-                scene = new Scene(fxmlLoader.load(), 800, 600);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            stage.setScene(scene);
-            stage.show();
-
-        });
+        personal_work_time1.setOnAction(actionEvent -> { Main.changeScene("employee_work_time.fxml"); });
 
         // переход на окно работы 2
-        personal_work_time2.setOnAction(actionEvent -> {
-
-            personal_work_time2.getScene().getWindow().hide();
-            Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("employee_work_time.fxml"));
-            Scene scene = null;
-            try {
-                scene = new Scene(fxmlLoader.load(), 800, 600);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            stage.setScene(scene);
-            stage.show();
-
-        });
+        personal_work_time2.setOnAction(actionEvent -> { Main.changeScene("employee_work_time.fxml"); });
     }
 
     public static String getLogin() {

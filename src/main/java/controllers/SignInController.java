@@ -42,21 +42,7 @@ public class SignInController extends Constants {
     void initialize() {
 
         // переход на окно регистрации
-        signUpButton.setOnAction(actionEvent -> {
-
-            signUpButton.getScene().getWindow().hide();
-            Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("sign_up.fxml"));
-            Scene scene = null;
-            try {
-                scene = new Scene(fxmlLoader.load(), 400, 500);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            stage.setScene(scene);
-            stage.show();
-
-        });
+        signUpButton.setOnAction(actionEvent -> { Main.changeScene("sign_up.fxml"); });
 
         // авторизация
         signInWindowButton.setOnAction(actionEvent -> {
@@ -143,11 +129,18 @@ public class SignInController extends Constants {
                                 phone_number, login,
                                 password, "0", car_now, car_old);
                         ClientMainController.setUser(user);
-                        signUpButton.getScene().getWindow().hide();
+
+                        signInWindowButton.getScene().getWindow().hide();
                         Stage stage = new Stage();
                         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("client_main.fxml"));
-                        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+                        Scene scene = null;
+                        try {
+                            scene = new Scene(fxmlLoader.load(), 800, 600);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                         stage.setScene(scene);
+                        Main.setStage(stage);
                         stage.show();
                     }
                     break;
@@ -176,11 +169,18 @@ public class SignInController extends Constants {
                                 second_name, address, login,
                                 password, "1", work_time, salary);
                         EmployeeMainController.setUser(user);
-                        signUpButton.getScene().getWindow().hide();
+
+                        signInWindowButton.getScene().getWindow().hide();
                         Stage stage = new Stage();
                         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("employee_main.fxml"));
-                        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+                        Scene scene = null;
+                        try {
+                            scene = new Scene(fxmlLoader.load(), 800, 600);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                         stage.setScene(scene);
+                        Main.setStage(stage);
                         stage.show();
                         break;
                     }
@@ -208,11 +208,18 @@ public class SignInController extends Constants {
                                 second_name, address, login,
                                 password, "2", work_time, salary);
                         AdminMainController.setUser(user);
-                        signUpButton.getScene().getWindow().hide();
+
+                        signInWindowButton.getScene().getWindow().hide();
                         Stage stage = new Stage();
                         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_main.fxml"));
-                        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+                        Scene scene = null;
+                        try {
+                            scene = new Scene(fxmlLoader.load(), 800, 600);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                         stage.setScene(scene);
+                        Main.setStage(stage);
                         stage.show();
                     }
                     break;
@@ -229,7 +236,7 @@ public class SignInController extends Constants {
                     break;
                 }
 
-            } catch (SQLException | IOException | ClassNotFoundException ex) {
+            } catch (SQLException | ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
             }
         }

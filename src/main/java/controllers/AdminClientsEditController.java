@@ -152,7 +152,6 @@ public class AdminClientsEditController extends Constants {
                     CLIENTS_LOGIN + " = '" + old_login + "';";
 
             Connection connection = databaseHandler.getDbConnection();
-            System.out.println(sqlAlterTable);
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
@@ -166,7 +165,6 @@ public class AdminClientsEditController extends Constants {
                     "' WHERE " + CLIENTS_LOGIN + " = '" + old_login + "';";
             Connection connection = databaseHandler.getDbConnection();
             Statement statement = connection.createStatement();
-            System.out.println(sqlAlterTable);
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
         }
@@ -178,7 +176,6 @@ public class AdminClientsEditController extends Constants {
                     "' WHERE " + CLIENTS_LOGIN + " = '" + old_login + "';";
             Connection connection = databaseHandler.getDbConnection();
             Statement statement = connection.createStatement();
-            System.out.println(sqlAlterTable);
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
         }
@@ -190,7 +187,6 @@ public class AdminClientsEditController extends Constants {
                     "' WHERE " + CLIENTS_LOGIN + " = '" + old_login + "';";
             Connection connection = databaseHandler.getDbConnection();
             Statement statement = connection.createStatement();
-            System.out.println(sqlAlterTable);
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
         }
@@ -203,7 +199,6 @@ public class AdminClientsEditController extends Constants {
                     " = '" + old_login + "';";
             Connection connection = databaseHandler.getDbConnection();
             Statement statement = connection.createStatement();
-            System.out.println(sqlAlterTable);
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
         }
@@ -215,7 +210,6 @@ public class AdminClientsEditController extends Constants {
                     "' WHERE " + CLIENTS_LOGIN + " = '" + old_login + "';";
             Connection connection = databaseHandler.getDbConnection();
             Statement statement = connection.createStatement();
-            System.out.println(sqlAlterTable);
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
         }
@@ -227,7 +221,6 @@ public class AdminClientsEditController extends Constants {
                     "' WHERE " + CLIENTS_LOGIN + " = '" + old_login + "';";
             Connection connection = databaseHandler.getDbConnection();
             Statement statement = connection.createStatement();
-            System.out.println(sqlAlterTable);
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
         }

@@ -108,8 +108,8 @@ public class AdminEmployeesEditController extends Constants {
             } catch (SQLException | ClassNotFoundException e) { throw new RuntimeException(e); }
 
             if (flag) {
-                Stage stage = new Stage();
                 PassController.setId(0);
+                Stage stage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pass.fxml"));
                 Scene scene = null;
                 try {

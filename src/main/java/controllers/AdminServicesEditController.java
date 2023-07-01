@@ -105,10 +105,10 @@ public class AdminServicesEditController extends Constants {
                 text_mistake.setText("Дата начала работы не может быть позже конца");
             }
 
+            // проверка пароля
             if (flag) {
-                // проверка пароля
-                Stage stage = new Stage();
                 PassController.setId(1);
+                Stage stage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pass.fxml"));
                 Scene scene = null;
                 try {
@@ -136,7 +136,6 @@ public class AdminServicesEditController extends Constants {
                 Connection connection = null;
                 connection = databaseHandler.getDbConnection();
                 Statement statement = connection.createStatement();
-                System.out.println(sqlAlterTable);
                 statement.executeUpdate(sqlAlterTable);
                 System.out.println("Success!");
             } catch (ClassNotFoundException | SQLException e) {
@@ -156,7 +155,6 @@ public class AdminServicesEditController extends Constants {
                 Connection connection = null;
                 connection = databaseHandler.getDbConnection();
                 Statement statement = connection.createStatement();
-                System.out.println(sqlAlterTable);
                 statement.executeUpdate(sqlAlterTable);
                 System.out.println("Success!");
             } catch (ClassNotFoundException | SQLException e) {
@@ -176,7 +174,6 @@ public class AdminServicesEditController extends Constants {
                 Connection connection = null;
                 connection = databaseHandler.getDbConnection();
                 Statement statement = connection.createStatement();
-                System.out.println(sqlAlterTable);
                 statement.executeUpdate(sqlAlterTable);
                 System.out.println("Success!");
             } catch (ClassNotFoundException | SQLException e) {
@@ -199,7 +196,6 @@ public class AdminServicesEditController extends Constants {
                     Connection connection = null;
                     connection = databaseHandler.getDbConnection();
                     Statement statement = connection.createStatement();
-                    System.out.println(sqlAlterTable);
                     statement.executeUpdate(sqlAlterTable);
                     System.out.println("Success!");
                 } catch (ClassNotFoundException | SQLException e) {
@@ -225,7 +221,6 @@ public class AdminServicesEditController extends Constants {
                     Connection connection = null;
                     connection = databaseHandler.getDbConnection();
                     Statement statement = connection.createStatement();
-                    System.out.println(sqlAlterTable);
                     statement.executeUpdate(sqlAlterTable);
                     System.out.println("Success!");
                 } catch (ClassNotFoundException | SQLException e) {
@@ -248,7 +243,6 @@ public class AdminServicesEditController extends Constants {
                 Connection connection = null;
                 connection = databaseHandler.getDbConnection();
                 Statement statement = connection.createStatement();
-                System.out.println(sqlAlterTable);
                 statement.executeUpdate(sqlAlterTable);
                 System.out.println("Success!");
             } catch (ClassNotFoundException | SQLException e) {
@@ -261,7 +255,6 @@ public class AdminServicesEditController extends Constants {
             try {
                 Connection connection = databaseHandler.getDbConnection();
                 Statement statement = connection.createStatement();
-                System.out.println(sqlAlterTable);
                 statement.executeUpdate(sqlAlterTable);
                 System.out.println("Success!");
             } catch (ClassNotFoundException | SQLException e) {

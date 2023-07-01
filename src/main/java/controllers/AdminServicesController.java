@@ -210,108 +210,22 @@ public class AdminServicesController extends Constants {
         });
 
         // переход на окно личного кабинета 1
-        personal_acc1.setOnAction(actionEvent -> {
-
-            personal_acc1.getScene().getWindow().hide();
-            Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_main.fxml"));
-            Scene scene = null;
-            try {
-                scene = new Scene(fxmlLoader.load(), 800, 600);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            stage.setScene(scene);
-            stage.show();
-
-        });
+        personal_acc1.setOnAction(actionEvent -> { Main.changeScene("admin_main.fxml"); });
 
         // переход на окно личного кабинета 2
-        personal_acc2.setOnAction(actionEvent -> {
-
-            personal_acc2.getScene().getWindow().hide();
-            Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_main.fxml"));
-            Scene scene = null;
-            try {
-                scene = new Scene(fxmlLoader.load(), 800, 600);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            stage.setScene(scene);
-            stage.show();
-
-        });
+        personal_acc2.setOnAction(actionEvent -> { Main.changeScene("admin_main.fxml"); });
 
         // переход на окно работников 1
-        personal_employees1.setOnAction(actionEvent -> {
-
-            personal_employees1.getScene().getWindow().hide();
-            Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_employees.fxml"));
-            Scene scene = null;
-
-            try {
-                scene = new Scene(fxmlLoader.load(), 800, 600);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            stage.setScene(scene);
-            stage.show();
-
-        });
+        personal_employees1.setOnAction(actionEvent -> { Main.changeScene("admin_employees.fxml"); });
 
         // переход на окно работников 2
-        personal_employees2.setOnAction(actionEvent -> {
-
-            personal_employees2.getScene().getWindow().hide();
-            Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_employees.fxml"));
-            Scene scene = null;
-
-            try {
-                scene = new Scene(fxmlLoader.load(), 800, 600);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            stage.setScene(scene);
-            stage.show();
-
-        });
+        personal_employees2.setOnAction(actionEvent -> { Main.changeScene("admin_employees.fxml"); });
 
         // переход на окно клиентов 1
-        personal_clients1.setOnAction(actionEvent -> {
-
-            personal_clients1.getScene().getWindow().hide();
-            Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_clients.fxml"));
-            Scene scene = null;
-            try {
-                scene = new Scene(fxmlLoader.load(), 800, 600);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            stage.setScene(scene);
-            stage.show();
-
-        });
+        personal_clients1.setOnAction(actionEvent -> { Main.changeScene("admin_clients.fxml"); });
 
         // переход на окно клиентов 2
-        personal_clients2.setOnAction(actionEvent -> {
-
-            personal_clients2.getScene().getWindow().hide();
-            Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_clients.fxml"));
-            Scene scene = null;
-            try {
-                scene = new Scene(fxmlLoader.load(), 800, 600);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            stage.setScene(scene);
-            stage.show();
-
-        });
+        personal_clients2.setOnAction(actionEvent -> { Main.changeScene("admin_clients.fxml"); });
 
         // редактирование информации об услуге
         button_edit.setOnAction(actionEvent -> {
@@ -336,7 +250,6 @@ public class AdminServicesController extends Constants {
 
         // добавление новой услуги
         button_add.setOnAction(actionEvent -> {
-
             Stage stage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_services_add.fxml"));
             Scene scene = null;
@@ -349,7 +262,6 @@ public class AdminServicesController extends Constants {
 
             stage.setScene(scene);
             stage.show();
-
         });
 
         // удаление услуги

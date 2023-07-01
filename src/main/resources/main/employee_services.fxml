@@ -112,6 +112,11 @@
             <Font name="Rostov" size="20.0" />
          </font>
       </Text>
+      <TableView fx:id="list_view" layoutX="95.0" layoutY="141.0" prefHeight="416.0" prefWidth="176.0" style="-fx-background-color: #42574b; -fx-background-radius: 1; -fx-border-color: #1e290b;" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="150.0">
+        <columns>
+          <TableColumn fx:id="table" minWidth="175.00003051757812" prefWidth="175.00003051757812" text="ВАШИ УСЛУГИ" />
+        </columns>
+      </TableView>
       <Button fx:id="button_menu_close" layoutX="299.0" layoutY="11.0" mnemonicParsing="false" prefHeight="598.0" prefWidth="513.0" style="-fx-background-color: transparency;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="290.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <VBox fx:id="pane_menu" layoutX="54.0" layoutY="210.0" prefHeight="200.0" prefWidth="230.0" style="-fx-background-color: #42574b;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -133,10 +138,5 @@
             </Button>
          </children>
       </VBox>
-      <TableView fx:id="list_view" layoutX="95.0" layoutY="141.0" prefHeight="416.0" prefWidth="176.0" style="-fx-background-color: #42574b; -fx-background-radius: 1; -fx-border-color: #1e290b;" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="150.0">
-        <columns>
-          <TableColumn fx:id="table" minWidth="175.00003051757812" prefWidth="175.00003051757812" text="ВАШИ УСЛУГИ" />
-        </columns>
-      </TableView>
    </children>
 </AnchorPane>

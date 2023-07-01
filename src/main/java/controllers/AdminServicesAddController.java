@@ -126,11 +126,11 @@ public class AdminServicesAddController extends Constants {
                 flag = false;
             }
 
+            // проверка пароля
             if (flag) {
-                // проверка пароля
-                Stage stage = new Stage();
                 PassController.setId(3);
-                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main_pass.fxml"));
+                Stage stage = new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pass.fxml"));
                 Scene scene = null;
                 try {
                     scene = new Scene(fxmlLoader.load(), 400, 250);

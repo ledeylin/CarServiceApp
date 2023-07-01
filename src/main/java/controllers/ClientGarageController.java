@@ -519,40 +519,10 @@ public class ClientGarageController extends Constants {
         });
 
         // переход на main 1
-        personal_acc1.setOnAction(actionEvent -> {
-
-            personal_acc1.getScene().getWindow().hide();
-            Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("client_main.fxml"));
-            Scene scene = null;
-
-            try {
-                scene = new Scene(fxmlLoader.load(), 800, 600);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            stage.setScene(scene);
-            stage.show();
-
-        });
+        personal_acc1.setOnAction(actionEvent -> { Main.changeScene("client_main.fxml"); });
 
         // переход на main 2
-        personal_acc2.setOnAction(actionEvent -> {
-
-            personal_acc2.getScene().getWindow().hide();
-            Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("client_main.fxml"));
-            Scene scene = null;
-
-            try {
-                scene = new Scene(fxmlLoader.load(), 800, 600);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            stage.setScene(scene);
-            stage.show();
-
-        });
+        personal_acc2.setOnAction(actionEvent -> { Main.changeScene("client_main.fxml"); });
 
     }
 

@@ -108,7 +108,6 @@ public class AdminEditController extends Constants {
                     EMPLOYEES_LOGIN + " = '" + AdminEditController.login + "' WHERE " +
                     EMPLOYEES_LOGIN + " = '" + AdminEditController.old_login + "';";
             Connection connection = databaseHandler.getDbConnection();
-            System.out.println(sqlAlterTable);
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
@@ -123,7 +122,6 @@ public class AdminEditController extends Constants {
                     EMPLOYEES_LOGIN + " = '" + AdminEditController.old_login + "';";
             Connection connection = databaseHandler.getDbConnection();
             Statement statement = connection.createStatement();
-            statement.executeUpdate(sqlAlterTable);
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
             AdminMainController.getUser().setPassword(pass);

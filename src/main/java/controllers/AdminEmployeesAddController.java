@@ -134,8 +134,8 @@ public class AdminEmployeesAddController extends Constants {
 
             // проверка пароля админа
             if (flag) {
-                Stage stage = new Stage();
                 PassController.setId(2);
+                Stage stage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pass.fxml"));
                 Scene scene = null;
                 try {

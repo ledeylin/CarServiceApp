@@ -105,7 +105,6 @@ public class EmployeeEditController extends Constants {
             String sqlAlterTable = "UPDATE " + EMPLOYEES_TABLE + " SET " + EMPLOYEES_LOGIN + " = '" + EmployeeEditController.login
                     + "' WHERE " + EMPLOYEES_LOGIN + " = '" + EmployeeEditController.old_login + "';";
             Connection connection = databaseHandler.getDbConnection();
-            System.out.println(sqlAlterTable);
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
@@ -119,7 +118,6 @@ public class EmployeeEditController extends Constants {
                     + "' WHERE " + EMPLOYEES_LOGIN + " = '" + EmployeeEditController.old_login + "';";
             Connection connection = databaseHandler.getDbConnection();
             Statement statement = connection.createStatement();
-            System.out.println(sqlAlterTable);
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
             EmployeeMainController.getUser().setPassword(pass);
