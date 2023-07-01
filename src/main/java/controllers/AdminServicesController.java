@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -24,9 +23,6 @@ import special.Services;
 
 import java.io.IOException;
 import java.sql.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.TreeMap;
 
 public class AdminServicesController extends Constants {
 
@@ -117,29 +113,31 @@ public class AdminServicesController extends Constants {
 
         // добавление информации об услугах
 
-        String query = "SELECT services.*, \n" +
-                "       cars.*, \n" +
-                "       details.* \n" +
-                "FROM services\n" +
-                "JOIN cars ON services.license_plate = cars.license_plate \n" +
-                "JOIN details ON services.detail_serial_number = details.serial_number;";
+        String query = "SELECT " + SERVICES_TABLE + ".*, \n" +
+                "       " + CARS_TABLE + ".*, \n" +
+                "       " + DETAILS_TABLE + ".* \n" +
+                "FROM " + SERVICES_TABLE + "\n" +
+                "JOIN " + CARS_TABLE + " ON " + SERVICES_TABLE + "." + SERVICES_LICENSE_PLATE +
+                " = " + CARS_TABLE + "." + CARS_LICENSE_PLATE + " \n" +
+                "JOIN " + DETAILS_TABLE + " ON " + SERVICES_TABLE + "." + DETAILS_SERIAL_NUMBER +
+                        " = " + DETAILS_TABLE + "." + DETAILS_SERIAL_NUMBER + ";";
         PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
         ResultSet result = statement.executeQuery();
 
         table.setCellValueFactory(new PropertyValueFactory<Services, String>("date"));
         ObservableList<Services> s = FXCollections.observableArrayList();
         while (result.next()) {
-            int id = result.getInt(SERVICE_ID);
-            String model = result.getString(CAR_MODEL);
+            int id = result.getInt(SERVICES_ID);
+            String model = result.getString(CARS_MODEL);
             int price = (result.getInt(DETAILS_PRICE));
-            Date start_date = result.getDate(SERVICE_START_DATE);
-            Date final_date = result.getDate(SERVICE_START_DATE);
-            String license_plate = result.getString(CAR_LICENSE_PLATE);
-            String detail_serial_number = result.getString(SERVICE_DETAIL_SERIAL_NUMBER);
+            Date start_date = result.getDate(SERVICES_START_DATE);
+            Date final_date = result.getDate(SERVICES_START_DATE);
+            String license_plate = result.getString(CARS_LICENSE_PLATE);
+            String detail_serial_number = result.getString(SERVICES_DETAIL_SERIAL_NUMBER);
             String detail = result.getString(DETAILS_CATEGORY);
-            String id_employee = result.getString(SERVICE_ID_EMPLOYEE);
-            String id_client = result.getString(CAR_ID_OWNER);
-            String date = result.getDate("start_date") + " / " + result.getDate("final_date");
+            String id_employee = result.getString(SERVICES_ID_EMPLOYEE);
+            String id_client = result.getString(CARS_ID_OWNER);
+            String date = result.getDate(SERVICES_START_DATE) + " / " + result.getDate(SERVICES_FINAL_DATE);
             Services services = new Services(id, model, price,
                     start_date, final_date, id_employee, id_client, license_plate,
                     detail_serial_number, detail, date);
@@ -375,7 +373,7 @@ public class AdminServicesController extends Constants {
     public static void delete() throws SQLException, ClassNotFoundException {
         Connection connection = databaseHandler.getDbConnection();
         Statement statement = connection.createStatement();
-        statement.executeUpdate("DELETE FROM " + SERVICE_TABLE + " WHERE " + SERVICE_ID + " = '" + id + "'");
+        statement.executeUpdate("DELETE FROM " + SERVICES_TABLE + " WHERE " + SERVICES_ID + " = '" + id + "'");
 
     }
 

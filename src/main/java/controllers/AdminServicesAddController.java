@@ -148,9 +148,9 @@ public class AdminServicesAddController extends Constants {
     public static void add()
             throws SQLException, ClassNotFoundException {
 
-        String insertNew = "INSERT INTO " + SERVICE_TABLE + " (" + SERVICE_ID_EMPLOYEE + ", " +
-                SERVICE_MILEAGE + ", " + SERVICE_WORK_TIME + ", " + SERVICE_DETAIL_SERIAL_NUMBER + ", " +
-                SERVICE_START_DATE + ", " + SERVICE_FINAL_DATE + ", " + SERVICE_LICENSE_PLATE +
+        String insertNew = "INSERT INTO " + SERVICES_TABLE + " (" + SERVICES_ID_EMPLOYEE + ", " +
+                SERVICES_MILEAGE + ", " + SERVICES_WORK_TIME + ", " + SERVICES_DETAIL_SERIAL_NUMBER + ", " +
+                SERVICES_START_DATE + ", " + SERVICES_FINAL_DATE + ", " + SERVICES_LICENSE_PLATE +
                 ") VALUES(?, ?, ?, ?, ?, ?, ?)";
 
         System.out.println(insertNew);

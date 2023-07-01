@@ -19,7 +19,6 @@ import javafx.util.Duration;
 import main.Constants;
 import main.DatabaseHandler;
 import main.Main;
-import special.Services;
 import special.User;
 
 import java.io.IOException;
@@ -119,12 +118,12 @@ public class AdminClientsController extends Constants {
 
         // добавление информации о клиентах
         String query = "SELECT c.*" +
-                ", COUNT(DISTINCT " + CAR_TABLE + "." + CAR_LICENSE_PLATE + ") AS car_count, COUNT(DISTINCT " +
-                SERVICE_TABLE + "." + SERVICE_ID + ") as service_count, c.status" +
+                ", COUNT(DISTINCT " + CARS_TABLE + "." + CARS_LICENSE_PLATE + ") AS car_count, COUNT(DISTINCT " +
+                SERVICES_TABLE + "." + SERVICES_ID + ") as service_count, c.status" +
                 " FROM " + CLIENTS_TABLE + " c" +
-                " LEFT JOIN " + CAR_TABLE + " ON " + CAR_TABLE + "." + CAR_ID_OWNER + " = c." + CLIENTS_LOGIN +
-                " LEFT JOIN " + SERVICE_TABLE + " ON " + SERVICE_TABLE + "." + SERVICE_LICENSE_PLATE + " = " +
-                CAR_TABLE + "." + CAR_LICENSE_PLATE +
+                " LEFT JOIN " + CARS_TABLE + " ON " + CARS_TABLE + "." + CARS_ID_OWNER + " = c." + CLIENTS_LOGIN +
+                " LEFT JOIN " + SERVICES_TABLE + " ON " + SERVICES_TABLE + "." + SERVICES_LICENSE_PLATE + " = " +
+                CARS_TABLE + "." + CARS_LICENSE_PLATE +
                 " GROUP BY c." + CLIENTS_LAST_NAME + ", c." + CLIENTS_FIRST_NAME + ", c." + CLIENTS_SECOND_NAME +
                 ", c." + CLIENTS_ADDRESS + ", c." + CLIENTS_PHONE_NUMBER + ", c." + CLIENTS_LOGIN +
                 " ORDER BY c." + CLIENTS_LAST_NAME + " ASC, c." +
@@ -146,10 +145,10 @@ public class AdminClientsController extends Constants {
             String cars = result.getString("car_count");
             String services = result.getString("service_count");
             String post = result.getString("status");
-            String first_name1 = " " + result.getString(EMPLOYEE_FIRST_NAME).charAt(0) + ".";
+            String first_name1 = " " + result.getString(EMPLOYEES_FIRST_NAME).charAt(0) + ".";
             String second_name1 = "";
-            if (!Objects.equals(result.getString(EMPLOYEE_SECOND_NAME), "")) {
-                second_name1 = " " + result.getString(EMPLOYEE_SECOND_NAME).charAt(0) + ".";
+            if (!Objects.equals(result.getString(EMPLOYEES_SECOND_NAME), "")) {
+                second_name1 = " " + result.getString(EMPLOYEES_SECOND_NAME).charAt(0) + ".";
             }
             String name = last_name + " " + first_name1 + " " + second_name1;
             User user = new User(last_name, first_name, second_name,

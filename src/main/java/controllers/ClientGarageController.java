@@ -182,20 +182,21 @@ public class ClientGarageController extends Constants {
                 try {
                     view_table_services.getItems().clear();
 
-                    String query = "SELECT services.*, details.category" +
-                            " FROM services" +
-                            " INNER JOIN details ON services.detail_serial_number = details.serial_number" +
-                            " WHERE license_plate = '" + now_license_plate + "';";
+                    String query = "SELECT " + SERVICES_TABLE + ".*," + DETAILS_TABLE + ".*" +
+                            " FROM " + SERVICES_TABLE +
+                            " INNER JOIN " + DETAILS_TABLE + " ON " + SERVICES_TABLE + "." + DETAILS_SERIAL_NUMBER +
+                            " = " + DETAILS_TABLE + "." + DETAILS_SERIAL_NUMBER +
+                            " WHERE " + SERVICES_LICENSE_PLATE + " = '" + now_license_plate + "';";
                     PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
                     ResultSet result = statement.executeQuery();
 
                     s.clear();
 
                     while (result.next()) {
-                        String mileage = result.getString("mileage");
-                        String detail = result.getString("category");
-                        Date start_date = result.getDate("start_date");
-                        Date final_date = result.getDate("final_date");
+                        String mileage = result.getString(SERVICES_MILEAGE);
+                        String detail = result.getString(DETAILS_CATEGORY);
+                        Date start_date = result.getDate(SERVICES_START_DATE);
+                        Date final_date = result.getDate(SERVICES_FINAL_DATE);
                         Services service = new Services(mileage, start_date, final_date, detail);
                         s.add(service);
                     }
@@ -209,12 +210,12 @@ public class ClientGarageController extends Constants {
                 choice_box_detail.getItems().clear();
                 try {
                     String query = "SELECT d.*" +
-                            " FROM details AS d" +
-                            " INNER JOIN details_compatibilities AS ds" +
-                            " ON ds.detail_serial_number = d.serial_number" +
-                            " INNER JOIN cars AS c" +
-                            " ON c.model = ds.model" +
-                            " WHERE c.license_plate = '" + now_license_plate + "';";
+                            " FROM " + DETAILS_TABLE + " AS d" +
+                            " INNER JOIN " + DETAILS_COMPATIBILITY_TABLE + " AS ds" +
+                            " ON ds." + DETAILS_COMPATIBILITY_DETAIL_SERIAL_NUMBER + " = d." + DETAILS_SERIAL_NUMBER +
+                            " INNER JOIN " + CARS_TABLE + " AS c" +
+                            " ON c." + CARS_MODEL + " = ds." + DETAILS_COMPATIBILITY_MODEL +
+                            " WHERE c." + CARS_LICENSE_PLATE + " = '" + now_license_plate + "';";
                     PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
                     ResultSet result = statement.executeQuery();
                     HashSet<String> hs = new HashSet<>();
@@ -237,7 +238,8 @@ public class ClientGarageController extends Constants {
 
         // таблица с машинами старыми
 
-        query = "SELECT * FROM cars WHERE id_owner = '" + ClientMainController.getLogin() + "' AND status = '0';";
+        query = "SELECT * FROM " + CARS_TABLE + " WHERE " + CARS_ID_OWNER +
+                " = '" + ClientMainController.getLogin() + "' AND " + CARS_STATUS + " = '0';";
         statement = databaseHandler.getDbConnection().prepareStatement(query);
         result = statement.executeQuery();
 
@@ -245,9 +247,9 @@ public class ClientGarageController extends Constants {
         cars_old.setCellValueFactory(new PropertyValueFactory<special.Cars, String>("license_plate"));
 
         while(result.next()) {
-            String license_plate = result.getString("license_plate");
-            String model = result.getString("model");
-            String make = result.getString("car_make");
+            String license_plate = result.getString(CARS_LICENSE_PLATE);
+            String model = result.getString(CARS_MODEL);
+            String make = result.getString(CARS_MAKE);
             Cars car = new Cars(license_plate, model, make);
             c2.add(car);
         }
@@ -267,20 +269,21 @@ public class ClientGarageController extends Constants {
                 try {
                     view_table_services.getItems().clear();
 
-                    String query = "SELECT services.*, details.category" +
-                            " FROM services" +
-                            " INNER JOIN details ON services.detail_serial_number = details.serial_number" +
-                            " WHERE license_plate = '" + now_license_plate + "';";
+                    String query = "SELECT " + SERVICES_TABLE + ".*, " + DETAILS_TABLE + "." + DETAILS_CATEGORY +
+                            " FROM " + SERVICES_TABLE +
+                            " INNER JOIN " + DETAILS_TABLE + " ON " + SERVICES_TABLE + "." +
+                            SERVICES_DETAIL_SERIAL_NUMBER + " = " + DETAILS_TABLE + "." + DETAILS_SERIAL_NUMBER +
+                            " WHERE " + SERVICES_LICENSE_PLATE + " = '" + now_license_plate + "';";
                     PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
                     ResultSet result = statement.executeQuery();
 
                     s.clear();
 
                     while (result.next()) {
-                        String mileage = result.getString("mileage");
-                        String detail = result.getString("category");
-                        Date start_date = result.getDate("start_date");
-                        Date final_date = result.getDate("final_date");
+                        String mileage = result.getString(SERVICES_MILEAGE);
+                        String detail = result.getString(DETAILS_CATEGORY);
+                        Date start_date = result.getDate(SERVICES_START_DATE);
+                        Date final_date = result.getDate(SERVICES_FINAL_DATE);
                         Services service = new Services(mileage, start_date, final_date, detail);
                         s.add(service);
                     }
@@ -333,9 +336,9 @@ public class ClientGarageController extends Constants {
                 try {
                     Connection connection = databaseHandler.getDbConnection();
                     Statement statement1 = connection.createStatement();
-                    statement1.executeUpdate("UPDATE " + CAR_TABLE +
+                    statement1.executeUpdate("UPDATE " + CARS_TABLE +
                             " SET status = '1' WHERE " +
-                            CAR_LICENSE_PLATE + " = '" + now_license_plate + "';");
+                            CARS_LICENSE_PLATE + " = '" + now_license_plate + "';");
                 } catch (SQLException | ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
@@ -401,17 +404,17 @@ public class ClientGarageController extends Constants {
                 String price = "";
 
                 try {
-                    String query1 = "SELECT d.price" +
-                            " FROM details AS d" +
-                            " INNER JOIN details_compatibilities AS ds" +
-                            " ON ds.detail_serial_number = d.serial_number" +
-                            " INNER JOIN cars AS c" +
-                            " ON c.model = ds.model" +
-                            " WHERE c.license_plate = '" + now_license_plate + "';";
+                    String query1 = "SELECT d." + DETAILS_PRICE +
+                            " FROM " + DETAILS_TABLE + " AS d" +
+                            " INNER JOIN " + DETAILS_COMPATIBILITY_TABLE + " AS ds" +
+                            " ON ds." + DETAILS_COMPATIBILITY_DETAIL_SERIAL_NUMBER + " = d." + DETAILS_SERIAL_NUMBER +
+                            " INNER JOIN " + CARS_TABLE + " AS c" +
+                            " ON c." + CARS_MODEL + " = ds." + DETAILS_COMPATIBILITY_MODEL +
+                            " WHERE c." + CARS_LICENSE_PLATE + " = '" + now_license_plate + "';";
                     PreparedStatement statement1 = databaseHandler.getDbConnection().prepareStatement(query1);
                     ResultSet result1 = statement1.executeQuery();
                     if (result1.next()) {
-                        price = result1.getString("price");
+                        price = result1.getString(DETAILS_PRICE);
                     } else {
                         flag = false;
                         text_mistake.setText("К сожалению, детали закончились.");
@@ -555,8 +558,8 @@ public class ClientGarageController extends Constants {
 
     public static void add() throws SQLException, ClassNotFoundException {
 
-            String insertNew = "INSERT INTO " + CAR_TABLE + " (" + CAR_ID_OWNER + ", " +
-                    CAR_LICENSE_PLATE + ", " + CAR_MODEL + ", " + CAR_MAKE + ", status" +
+            String insertNew = "INSERT INTO " + CARS_TABLE + " (" + CARS_ID_OWNER + ", " +
+                    CARS_LICENSE_PLATE + ", " + CARS_MODEL + ", " + CARS_MAKE + ", status" +
                     ") VALUES(?, ?, ?, ?, ?)";
 
             PreparedStatement preparedStatement = databaseHandler.getDbConnection().prepareStatement(insertNew);
@@ -571,9 +574,9 @@ public class ClientGarageController extends Constants {
     public static void delete() throws SQLException, ClassNotFoundException {
         Connection connection = databaseHandler.getDbConnection();
         Statement statement = connection.createStatement();
-        statement.executeUpdate("UPDATE " + CAR_TABLE +
+        statement.executeUpdate("UPDATE " + CARS_TABLE +
                 " SET status = '0' WHERE " +
-                CAR_LICENSE_PLATE + " = '" + now_license_plate + "';");
+                CARS_LICENSE_PLATE + " = '" + now_license_plate + "';");
     }
 
 }

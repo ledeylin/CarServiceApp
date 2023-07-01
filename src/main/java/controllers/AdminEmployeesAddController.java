@@ -110,7 +110,7 @@ public class AdminEmployeesAddController extends Constants {
             // проверка логина на повторение
             try {
                 String query_clients = "SELECT * FROM " + CLIENTS_TABLE + " WHERE " + CLIENTS_LOGIN + " =?";
-                String query_employees = "SELECT * FROM " + EMPLOYEE_TABLE + " WHERE " + EMPLOYEE_LOGIN + " =?";
+                String query_employees = "SELECT * FROM " + EMPLOYEES_TABLE + " WHERE " + EMPLOYEES_LOGIN + " =?";
 
                 PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query_clients);
                 statement.setString(1, login);
@@ -155,9 +155,9 @@ public class AdminEmployeesAddController extends Constants {
             throws SQLException, ClassNotFoundException {
 
 
-        String insertNew = "INSERT INTO " + EMPLOYEE_TABLE + " (" + EMPLOYEE_LAST_NAME + ", " +
-                EMPLOYEE_FIRST_NAME + ", " + EMPLOYEE_SECOND_NAME + ", " + EMPLOYEE_ADDRESS + ", " +
-                EMPLOYEE_LOGIN + ", " + EMPLOYEE_PASSWORD + ", " + EMPLOYEE_ACCESS_RIGHTS +
+        String insertNew = "INSERT INTO " + EMPLOYEES_TABLE + " (" + EMPLOYEES_LAST_NAME + ", " +
+                EMPLOYEES_FIRST_NAME + ", " + EMPLOYEES_SECOND_NAME + ", " + EMPLOYEES_ADDRESS + ", " +
+                EMPLOYEES_LOGIN + ", " + EMPLOYEES_PASSWORD + ", " + EMPLOYEES_ACCESS_RIGHTS +
                 ") VALUES(?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement preparedStatement = databaseHandler.getDbConnection().prepareStatement(insertNew);

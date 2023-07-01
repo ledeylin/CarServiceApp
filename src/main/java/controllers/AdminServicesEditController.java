@@ -129,8 +129,8 @@ public class AdminServicesEditController extends Constants {
         if (!Objects.equals(employeeLogin, "")) {
 
             String sqlAlterTable = null;
-            sqlAlterTable = "UPDATE " + SERVICE_TABLE + " SET " + SERVICE_ID_EMPLOYEE + " = '" + employeeLogin
-                    + "' WHERE " + SERVICE_ID + " = '" + id + "';";
+            sqlAlterTable = "UPDATE " + SERVICES_TABLE + " SET " + SERVICES_ID_EMPLOYEE + " = '" + employeeLogin
+                    + "' WHERE " + SERVICES_ID + " = '" + id + "';";
 
             try {
                 Connection connection = null;
@@ -149,8 +149,8 @@ public class AdminServicesEditController extends Constants {
         if (!Objects.equals(detailSerialNumber, "")) {
 
             String sqlAlterTable = null;
-            sqlAlterTable = "UPDATE " + SERVICE_TABLE + " SET " + SERVICE_DETAIL_SERIAL_NUMBER + " = '" + detailSerialNumber
-                    + "' WHERE " + SERVICE_ID + " = '" + id + "';";
+            sqlAlterTable = "UPDATE " + SERVICES_TABLE + " SET " + SERVICES_DETAIL_SERIAL_NUMBER + " = '" + detailSerialNumber
+                    + "' WHERE " + SERVICES_ID + " = '" + id + "';";
 
             try {
                 Connection connection = null;
@@ -169,8 +169,8 @@ public class AdminServicesEditController extends Constants {
         if (!Objects.equals(licensePlate, "")) {
 
             String sqlAlterTable = null;
-            sqlAlterTable = "UPDATE " + SERVICE_TABLE + " SET " + SERVICE_LICENSE_PLATE + " = '" + licensePlate
-                    + "' WHERE " + SERVICE_ID + " = '" + id + "';";
+            sqlAlterTable = "UPDATE " + SERVICES_TABLE + " SET " + SERVICES_LICENSE_PLATE + " = '" + licensePlate
+                    + "' WHERE " + SERVICES_ID + " = '" + id + "';";
 
             try {
                 Connection connection = null;
@@ -192,8 +192,8 @@ public class AdminServicesEditController extends Constants {
             int end_mileage = 0;
             try {
                 end_mileage = Integer.parseInt(mileage);
-                sqlAlterTable = "UPDATE " + SERVICE_TABLE + " SET " + SERVICE_MILEAGE + " = '" + end_mileage
-                        + "' WHERE " + SERVICE_ID + " = '" + id + "';";
+                sqlAlterTable = "UPDATE " + SERVICES_TABLE + " SET " + SERVICES_MILEAGE + " = '" + end_mileage
+                        + "' WHERE " + SERVICES_ID + " = '" + id + "';";
 
                 try {
                     Connection connection = null;
@@ -218,8 +218,8 @@ public class AdminServicesEditController extends Constants {
             int end_workTime = 0;
             try {
                 end_workTime = Integer.parseInt(workTime);
-                sqlAlterTable = "UPDATE " + SERVICE_TABLE + " SET " + SERVICE_WORK_TIME + " = '" + end_workTime
-                        + "' WHERE " + SERVICE_ID + " = '" + id + "';";
+                sqlAlterTable = "UPDATE " + SERVICES_TABLE + " SET " + SERVICES_WORK_TIME + " = '" + end_workTime
+                        + "' WHERE " + SERVICES_ID + " = '" + id + "';";
 
                 try {
                     Connection connection = null;
@@ -241,8 +241,8 @@ public class AdminServicesEditController extends Constants {
         if (startDate.isBefore(finalDate)) {
 
             String sqlAlterTable = null;
-            sqlAlterTable = "UPDATE " + SERVICE_TABLE + " SET " + SERVICE_START_DATE + " = '" + startDate
-                    + "' WHERE " + SERVICE_ID + " = '" + id + "';";
+            sqlAlterTable = "UPDATE " + SERVICES_TABLE + " SET " + SERVICES_START_DATE + " = '" + startDate
+                    + "' WHERE " + SERVICES_ID + " = '" + id + "';";
 
             try {
                 Connection connection = null;
@@ -255,8 +255,8 @@ public class AdminServicesEditController extends Constants {
                 throw new RuntimeException(e);
             }
 
-            sqlAlterTable = "UPDATE " + SERVICE_TABLE + " SET " + SERVICE_FINAL_DATE + " = '" + finalDate
-                    + "' WHERE " + SERVICE_ID + " = '" + id + "';";
+            sqlAlterTable = "UPDATE " + SERVICES_TABLE + " SET " + SERVICES_FINAL_DATE + " = '" + finalDate
+                    + "' WHERE " + SERVICES_ID + " = '" + id + "';";
 
             try {
                 Connection connection = databaseHandler.getDbConnection();

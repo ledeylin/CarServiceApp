@@ -85,7 +85,7 @@ public class AdminEmployeesEditController extends Constants {
             // проверка логина на повторение
             try {
                 String query_clients = "SELECT * FROM " + CLIENTS_TABLE + " WHERE " + CLIENTS_LOGIN + " =?";
-                String query_employees = "SELECT * FROM " + EMPLOYEE_TABLE + " WHERE " + EMPLOYEE_LOGIN + " =?";
+                String query_employees = "SELECT * FROM " + EMPLOYEES_TABLE + " WHERE " + EMPLOYEES_LOGIN + " =?";
 
                 PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query_clients);
                 statement.setString(1, login);
@@ -129,9 +129,9 @@ public class AdminEmployeesEditController extends Constants {
 
         // пароль
         if (!Objects.equals(pass, "")) {
-            String sqlAlterTable = "UPDATE " + EMPLOYEE_TABLE +
-                    " SET " + EMPLOYEE_PASSWORD + " = '" + pass +
-                    "' WHERE " + EMPLOYEE_LOGIN + " = '" + old_login + "';";
+            String sqlAlterTable = "UPDATE " + EMPLOYEES_TABLE +
+                    " SET " + EMPLOYEES_PASSWORD + " = '" + pass +
+                    "' WHERE " + EMPLOYEES_LOGIN + " = '" + old_login + "';";
             Connection connection = databaseHandler.getDbConnection();
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);
@@ -140,9 +140,9 @@ public class AdminEmployeesEditController extends Constants {
 
         // фамилия
         if (!Objects.equals(last_name, "")) {
-            String sqlAlterTable = "UPDATE " + EMPLOYEE_TABLE +
-                    " SET " + EMPLOYEE_LAST_NAME + " = '" + last_name +
-                    "' WHERE " + EMPLOYEE_LOGIN + " = '" + old_login + "';";
+            String sqlAlterTable = "UPDATE " + EMPLOYEES_TABLE +
+                    " SET " + EMPLOYEES_LAST_NAME + " = '" + last_name +
+                    "' WHERE " + EMPLOYEES_LOGIN + " = '" + old_login + "';";
             Connection connection = databaseHandler.getDbConnection();
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);
@@ -151,9 +151,9 @@ public class AdminEmployeesEditController extends Constants {
 
         // имя
         if (!Objects.equals(first_name, "")) {
-            String sqlAlterTable = "UPDATE " + EMPLOYEE_TABLE +
-                    " SET " + EMPLOYEE_FIRST_NAME + " = '" + first_name +
-                    "' WHERE " + EMPLOYEE_LOGIN + " = '" + old_login + "';";
+            String sqlAlterTable = "UPDATE " + EMPLOYEES_TABLE +
+                    " SET " + EMPLOYEES_FIRST_NAME + " = '" + first_name +
+                    "' WHERE " + EMPLOYEES_LOGIN + " = '" + old_login + "';";
             Connection connection = databaseHandler.getDbConnection();
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);
@@ -162,9 +162,9 @@ public class AdminEmployeesEditController extends Constants {
 
         // отчество
         if (!Objects.equals(second_name, "")) {
-            String sqlAlterTable = "UPDATE " + EMPLOYEE_TABLE +
-                    " SET " + EMPLOYEE_SECOND_NAME + " = '" +
-                    second_name + "' WHERE " + EMPLOYEE_LOGIN +
+            String sqlAlterTable = "UPDATE " + EMPLOYEES_TABLE +
+                    " SET " + EMPLOYEES_SECOND_NAME + " = '" +
+                    second_name + "' WHERE " + EMPLOYEES_LOGIN +
                     " = '" + old_login + "';";
             Connection connection = databaseHandler.getDbConnection();
             Statement statement = connection.createStatement();
@@ -174,9 +174,9 @@ public class AdminEmployeesEditController extends Constants {
 
         // адрес
         if (!Objects.equals(address, "")) {
-            String sqlAlterTable = "UPDATE " + EMPLOYEE_TABLE +
-                    " SET " + EMPLOYEE_ADDRESS + " = '" + address +
-                    "' WHERE " + EMPLOYEE_LOGIN + " = '" + old_login + "';";
+            String sqlAlterTable = "UPDATE " + EMPLOYEES_TABLE +
+                    " SET " + EMPLOYEES_ADDRESS + " = '" + address +
+                    "' WHERE " + EMPLOYEES_LOGIN + " = '" + old_login + "';";
             Connection connection = databaseHandler.getDbConnection();
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);
@@ -185,8 +185,8 @@ public class AdminEmployeesEditController extends Constants {
 
         // права
         if (permissions != 0) {
-            String sqlAlterTable = "UPDATE " + EMPLOYEE_TABLE +
-                    " SET " + EMPLOYEE_ACCESS_RIGHTS + " = " +
+            String sqlAlterTable = "UPDATE " + EMPLOYEES_TABLE +
+                    " SET " + EMPLOYEES_ACCESS_RIGHTS + " = " +
                     permissions + " WHERE " + CLIENTS_LOGIN +
                     " = '" + old_login + "';";
             Connection connection = databaseHandler.getDbConnection();

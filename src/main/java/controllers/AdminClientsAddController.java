@@ -103,7 +103,7 @@ public class AdminClientsAddController extends Constants {
             if (!Objects.equals(login, "")) {
                 try {
                     String query_clients = "SELECT * FROM " + CLIENTS_TABLE + " WHERE " + CLIENTS_LOGIN + " =?";
-                    String query_employees = "SELECT * FROM " + EMPLOYEE_TABLE + " WHERE " + EMPLOYEE_LOGIN + " =?";
+                    String query_employees = "SELECT * FROM " + EMPLOYEES_TABLE + " WHERE " + EMPLOYEES_LOGIN + " =?";
 
                     PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query_clients);
                     statement.setString(1, login);

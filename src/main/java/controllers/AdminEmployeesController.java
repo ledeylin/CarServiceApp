@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -25,8 +24,6 @@ import special.User;
 import java.io.IOException;
 import java.sql.*;
 import java.util.Objects;
-import java.util.Set;
-import java.util.TreeMap;
 
 public class AdminEmployeesController extends Constants {
 
@@ -111,20 +108,20 @@ public class AdminEmployeesController extends Constants {
     void initialize() throws SQLException, ClassNotFoundException {
 
         // добавление информации о клиентах
-        String query = "SELECT " + EMPLOYEE_TABLE + ".*, COUNT(" +
-                SERVICE_TABLE + "." + SERVICE_ID + ") AS services_count, SUM(DATEDIFF(" +
-                SERVICE_TABLE + "." + SERVICE_FINAL_DATE + ", " + SERVICE_TABLE + "." +
-                SERVICE_START_DATE + ")) AS days_worked, SUM(" +
+        String query = "SELECT " + EMPLOYEES_TABLE + ".*, COUNT(" +
+                SERVICES_TABLE + "." + SERVICES_ID + ") AS services_count, SUM(DATEDIFF(" +
+                SERVICES_TABLE + "." + SERVICES_FINAL_DATE + ", " + SERVICES_TABLE + "." +
+                SERVICES_START_DATE + ")) AS days_worked, SUM(" +
                 DETAILS_TABLE + "." + DETAILS_PRICE + " * 0.2) AS total_salary FROM " +
-                EMPLOYEE_TABLE + " LEFT JOIN " + SERVICE_TABLE +
-                " ON " + EMPLOYEE_TABLE + "." + EMPLOYEE_LOGIN + " = " + SERVICE_TABLE +
-                "." + SERVICE_ID_EMPLOYEE + " LEFT JOIN " +
-                DETAILS_TABLE + " ON " + SERVICE_TABLE + "." + SERVICE_DETAIL_SERIAL_NUMBER +
+                EMPLOYEES_TABLE + " LEFT JOIN " + SERVICES_TABLE +
+                " ON " + EMPLOYEES_TABLE + "." + EMPLOYEES_LOGIN + " = " + SERVICES_TABLE +
+                "." + SERVICES_ID_EMPLOYEE + " LEFT JOIN " +
+                DETAILS_TABLE + " ON " + SERVICES_TABLE + "." + SERVICES_DETAIL_SERIAL_NUMBER +
                 " = " + DETAILS_TABLE + "." +
-                DETAILS_SERIAL_NUMBER + " GROUP BY " + EMPLOYEE_TABLE + "." + EMPLOYEE_LOGIN +
-                " ORDER BY " + EMPLOYEE_TABLE + "." + EMPLOYEE_LAST_NAME + " ASC, " +
-                EMPLOYEE_TABLE + "." + EMPLOYEE_FIRST_NAME + " ASC, " + EMPLOYEE_TABLE + "." +
-                EMPLOYEE_SECOND_NAME + " ASC";
+                DETAILS_SERIAL_NUMBER + " GROUP BY " + EMPLOYEES_TABLE + "." + EMPLOYEES_LOGIN +
+                " ORDER BY " + EMPLOYEES_TABLE + "." + EMPLOYEES_LAST_NAME + " ASC, " +
+                EMPLOYEES_TABLE + "." + EMPLOYEES_FIRST_NAME + " ASC, " + EMPLOYEES_TABLE + "." +
+                EMPLOYEES_SECOND_NAME + " ASC";
 
         PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
         ResultSet result = statement.executeQuery();
@@ -141,11 +138,11 @@ public class AdminEmployeesController extends Constants {
             String work_time = result.getString("days_worked");
             String salary = result.getString("total_salary");
             String services = result.getString("services_count");
-            String post = result.getString(EMPLOYEE_ACCESS_RIGHTS);
-            String first_name1 = " " + result.getString(EMPLOYEE_FIRST_NAME).charAt(0) + ".";
+            String post = result.getString(EMPLOYEES_ACCESS_RIGHTS);
+            String first_name1 = " " + result.getString(EMPLOYEES_FIRST_NAME).charAt(0) + ".";
             String second_name1 = "";
-            if (!Objects.equals(result.getString(EMPLOYEE_SECOND_NAME), "")) {
-                second_name1 = " " + result.getString(EMPLOYEE_SECOND_NAME).charAt(0) + ".";
+            if (!Objects.equals(result.getString(EMPLOYEES_SECOND_NAME), "")) {
+                second_name1 = " " + result.getString(EMPLOYEES_SECOND_NAME).charAt(0) + ".";
             }
             String name = last_name + " " + first_name1 + " " + second_name1;
             User user = new User(last_name, first_name,
@@ -360,9 +357,9 @@ public class AdminEmployeesController extends Constants {
                 try {
                     Connection connection = databaseHandler.getDbConnection();
                     Statement statement1 = connection.createStatement();
-                    statement1.executeUpdate("UPDATE " + EMPLOYEE_TABLE +
-                            " SET " + EMPLOYEE_ACCESS_RIGHTS + " = '1' WHERE " +
-                            EMPLOYEE_LOGIN + " = '" + text_old_login + "';");
+                    statement1.executeUpdate("UPDATE " + EMPLOYEES_TABLE +
+                            " SET " + EMPLOYEES_ACCESS_RIGHTS + " = '1' WHERE " +
+                            EMPLOYEES_LOGIN + " = '" + text_old_login + "';");
                     System.out.println(statement1);
                 } catch (SQLException | ClassNotFoundException ignored) {}
 
@@ -407,9 +404,9 @@ public class AdminEmployeesController extends Constants {
     public static void delete() throws SQLException, ClassNotFoundException {
         Connection connection = databaseHandler.getDbConnection();
         Statement statement = connection.createStatement();
-        statement.executeUpdate("UPDATE " + EMPLOYEE_TABLE +
-                " SET " + EMPLOYEE_ACCESS_RIGHTS + " = '0' WHERE " +
-                EMPLOYEE_LOGIN + " = '" + text_old_login + "';");
+        statement.executeUpdate("UPDATE " + EMPLOYEES_TABLE +
+                " SET " + EMPLOYEES_ACCESS_RIGHTS + " = '0' WHERE " +
+                EMPLOYEES_LOGIN + " = '" + text_old_login + "';");
         System.out.println("Success!");
 
     }

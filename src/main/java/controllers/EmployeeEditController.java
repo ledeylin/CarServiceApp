@@ -64,7 +64,7 @@ public class EmployeeEditController extends Constants {
                         flag = false;
                     }
 
-                    query = "SELECT * FROM " + EMPLOYEE_TABLE + " WHERE " + EMPLOYEE_LOGIN + " =?";
+                    query = "SELECT * FROM " + EMPLOYEES_TABLE + " WHERE " + EMPLOYEES_LOGIN + " =?";
                     preparedStatement = databaseHandler.getDbConnection().prepareStatement(query);
                     preparedStatement.setString(1, EmployeeEditController.login);
                     result = preparedStatement.executeQuery();
@@ -102,8 +102,8 @@ public class EmployeeEditController extends Constants {
 
         // логин
         if (!Objects.equals(login, "")) {
-            String sqlAlterTable = "UPDATE " + EMPLOYEE_TABLE + " SET " + EMPLOYEE_LOGIN + " = '" + EmployeeEditController.login
-                    + "' WHERE " + EMPLOYEE_LOGIN + " = '" + EmployeeEditController.old_login + "';";
+            String sqlAlterTable = "UPDATE " + EMPLOYEES_TABLE + " SET " + EMPLOYEES_LOGIN + " = '" + EmployeeEditController.login
+                    + "' WHERE " + EMPLOYEES_LOGIN + " = '" + EmployeeEditController.old_login + "';";
             Connection connection = databaseHandler.getDbConnection();
             System.out.println(sqlAlterTable);
             Statement statement = connection.createStatement();
@@ -114,8 +114,8 @@ public class EmployeeEditController extends Constants {
 
         // пароль
         if (!Objects.equals(pass, "")) {
-            String sqlAlterTable = "UPDATE " + EMPLOYEE_TABLE + " SET " + EMPLOYEE_PASSWORD + " = '" + EmployeeEditController.pass
-                    + "' WHERE " + EMPLOYEE_LOGIN + " = '" + EmployeeEditController.old_login + "';";
+            String sqlAlterTable = "UPDATE " + EMPLOYEES_TABLE + " SET " + EMPLOYEES_PASSWORD + " = '" + EmployeeEditController.pass
+                    + "' WHERE " + EMPLOYEES_LOGIN + " = '" + EmployeeEditController.old_login + "';";
             Connection connection = databaseHandler.getDbConnection();
             Statement statement = connection.createStatement();
             System.out.println(sqlAlterTable);

@@ -89,33 +89,37 @@ public class SignInController extends Constants {
             try {
 
                 String query_client = "SELECT c.*, \n" +
-                        "       SUM(CASE WHEN cars.status = '1' THEN 1 ELSE 0 END) AS active_cars, \n" +
-                        "       SUM(CASE WHEN cars.status = '0' THEN 1 ELSE 0 END) AS inactive_cars\n" +
-                        "FROM clients AS c\n" +
-                        "LEFT JOIN cars ON c.login = cars.id_owner\n" +
-                        "WHERE c.login = '" + login + "' AND c.password = '" +
+                        "       SUM(CASE WHEN " + CARS_TABLE + "." + CARS_STATUS + " = '1' THEN 1 ELSE 0 END) AS active_cars, \n" +
+                        "       SUM(CASE WHEN " + CARS_TABLE + "." + CARS_STATUS + " = '0' THEN 1 ELSE 0 END) AS inactive_cars\n" +
+                        "FROM " + CLIENTS_TABLE + " AS c\n" +
+                        "LEFT JOIN " + CARS_TABLE + " ON c." + CLIENTS_LOGIN + " = " + CARS_TABLE + "." + CARS_ID_OWNER + "\n" +
+                        "WHERE c." + CLIENTS_LOGIN + " = '" + login + "' AND c." + CLIENTS_PASSWORD  + " = '" +
                         password + "'\n" +
                         "GROUP BY c.login;";
 
                 String query_employee = "SELECT e.*,\n" +
-                        "    SUM(s.work_time) AS total_work_time,\n" +
-                        "    SUM(d.price) * 0.2 AS total_salary\n" +
-                        "FROM employees e\n" +
-                        "JOIN services s ON e.login = s.id_employee\n" +
-                        "JOIN details d ON s.detail_serial_number = d.serial_number\n" +
-                        "GROUP BY e.login\n" +
-                        "HAVING e.login = '" + login + "' AND e.password = '" +
+                        "    SUM(s." + SERVICES_WORK_TIME + ") AS total_work_time,\n" +
+                        "    SUM(d." + DETAILS_PRICE + ") * 0.2 AS total_salary\n" +
+                        "FROM " + EMPLOYEES_TABLE + " e\n" +
+                        "JOIN " + SERVICES_TABLE + " s ON e." + EMPLOYEES_LOGIN + " = s." +
+                        SERVICES_ID_EMPLOYEE + "\n" +
+                        "JOIN " + DETAILS_TABLE + " d ON s." + SERVICES_DETAIL_SERIAL_NUMBER +
+                        " = d." + SERVICES_DETAIL_SERIAL_NUMBER + "\n" +
+                        "GROUP BY e." + EMPLOYEES_LOGIN + "\n" +
+                        "HAVING e." + EMPLOYEES_LOGIN + " = '" + login + "' AND e." + EMPLOYEES_PASSWORD + " = '" +
                         password + "';";
 
                 String query_admin = "SELECT e.*,\n" +
-                        "    SUM(s.work_time) AS total_work_time,\n" +
-                        "    SUM(d.price) * 0.2 AS total_salary\n" +
-                        "FROM employees e\n" +
-                        "JOIN services s ON e.login = s.id_employee\n" +
-                        "JOIN details d ON s.detail_serial_number = d.serial_number\n" +
-                        "GROUP BY e.login\n" +
-                        "HAVING e.login = '" + login + "' AND e.password = '" +
-                        password + "';";
+                        "    SUM(s." + SERVICES_WORK_TIME + ") AS total_work_time,\n" +
+                        "    SUM(d." + DETAILS_PRICE + ") * 0.2 AS total_salary\n" +
+                        "FROM " + EMPLOYEES_TABLE + " e\n" +
+                        "JOIN " + SERVICES_TABLE + " s ON e." + EMPLOYEES_LOGIN +
+                        " = s." + SERVICES_ID_EMPLOYEE + "\n" +
+                        "JOIN " + DETAILS_TABLE + " d ON s." + SERVICES_DETAIL_SERIAL_NUMBER +
+                        " = d." + DETAILS_SERIAL_NUMBER + "\n" +
+                        "GROUP BY e." + EMPLOYEES_LOGIN + "\n" +
+                        "HAVING e." + EMPLOYEES_LOGIN + " = '" + login + "' AND e." +
+                        EMPLOYEES_PASSWORD + " = '" + password + "';";
 
                 PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query_client);
                 ResultSet result = statement.executeQuery(query_client);
@@ -155,16 +159,16 @@ public class SignInController extends Constants {
 
                 if (result.next()) {
 
-                    if (result.getInt(EMPLOYEE_ACCESS_RIGHTS) == 0) {
+                    if (result.getInt(EMPLOYEES_ACCESS_RIGHTS) == 0) {
                         System.out.println("Error:blocked");
                         text_mistake.setText("Вы заблокированны.");
                     }
 
-                    else  if (result.getInt(EMPLOYEE_ACCESS_RIGHTS) == 1) {
-                        String last_name = result.getString(EMPLOYEE_LAST_NAME);
-                        String first_name = result.getString(EMPLOYEE_FIRST_NAME);
-                        String second_name = result.getString(EMPLOYEE_SECOND_NAME);
-                        String address = result.getString(EMPLOYEE_ADDRESS);
+                    else  if (result.getInt(EMPLOYEES_ACCESS_RIGHTS) == 1) {
+                        String last_name = result.getString(EMPLOYEES_LAST_NAME);
+                        String first_name = result.getString(EMPLOYEES_FIRST_NAME);
+                        String second_name = result.getString(EMPLOYEES_SECOND_NAME);
+                        String address = result.getString(EMPLOYEES_ADDRESS);
                         String work_time = result.getString("total_work_time");
                         String salary = result.getString("total_salary");
 
@@ -187,16 +191,16 @@ public class SignInController extends Constants {
 
                 if (result.next()) {
 
-                    if (result.getInt(EMPLOYEE_ACCESS_RIGHTS) == 0) {
+                    if (result.getInt(EMPLOYEES_ACCESS_RIGHTS) == 0) {
                         System.out.println("Error:blocked");
                         text_mistake.setText("Вы заблокированны.");
                     }
 
-                    else if (result.getInt(EMPLOYEE_ACCESS_RIGHTS) == 2) {
-                        String last_name = result.getString(EMPLOYEE_LAST_NAME);
-                        String first_name = result.getString(EMPLOYEE_FIRST_NAME);
-                        String second_name = result.getString(EMPLOYEE_SECOND_NAME);
-                        String address = result.getString(EMPLOYEE_ADDRESS);
+                    else if (result.getInt(EMPLOYEES_ACCESS_RIGHTS) == 2) {
+                        String last_name = result.getString(EMPLOYEES_LAST_NAME);
+                        String first_name = result.getString(EMPLOYEES_FIRST_NAME);
+                        String second_name = result.getString(EMPLOYEES_SECOND_NAME);
+                        String address = result.getString(EMPLOYEES_ADDRESS);
                         String work_time = result.getString("total_work_time");
                         String salary = result.getString("total_salary");
 

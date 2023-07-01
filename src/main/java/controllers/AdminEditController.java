@@ -65,7 +65,7 @@ public class AdminEditController extends Constants {
                         flag = false;
                     }
 
-                    query = "SELECT * FROM " + EMPLOYEE_TABLE + " WHERE " + EMPLOYEE_LOGIN + " =?";
+                    query = "SELECT * FROM " + EMPLOYEES_TABLE + " WHERE " + EMPLOYEES_LOGIN + " =?";
                     preparedStatement = databaseHandler.getDbConnection().prepareStatement(query);
                     preparedStatement.setString(1, AdminEditController.login);
                     result = preparedStatement.executeQuery();
@@ -104,9 +104,9 @@ public class AdminEditController extends Constants {
 
         // логин
         if (!Objects.equals(login, "")) {
-            String sqlAlterTable = "UPDATE " + EMPLOYEE_TABLE + " SET " +
-                    EMPLOYEE_LOGIN + " = '" + AdminEditController.login + "' WHERE " +
-                    EMPLOYEE_LOGIN + " = '" + AdminEditController.old_login + "';";
+            String sqlAlterTable = "UPDATE " + EMPLOYEES_TABLE + " SET " +
+                    EMPLOYEES_LOGIN + " = '" + AdminEditController.login + "' WHERE " +
+                    EMPLOYEES_LOGIN + " = '" + AdminEditController.old_login + "';";
             Connection connection = databaseHandler.getDbConnection();
             System.out.println(sqlAlterTable);
             Statement statement = connection.createStatement();
@@ -116,9 +116,9 @@ public class AdminEditController extends Constants {
 
         // пароль
         if (!Objects.equals(pass, "")) {
-            String sqlAlterTable = "UPDATE " + EMPLOYEE_TABLE + " SET " +
-                    EMPLOYEE_PASSWORD + " = '" + AdminEditController.pass + "' WHERE " +
-                    EMPLOYEE_LOGIN + " = '" + AdminEditController.old_login + "';";
+            String sqlAlterTable = "UPDATE " + EMPLOYEES_TABLE + " SET " +
+                    EMPLOYEES_PASSWORD + " = '" + AdminEditController.pass + "' WHERE " +
+                    EMPLOYEES_LOGIN + " = '" + AdminEditController.old_login + "';";
             Connection connection = databaseHandler.getDbConnection();
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);

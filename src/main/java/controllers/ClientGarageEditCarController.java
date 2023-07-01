@@ -98,9 +98,9 @@ public class ClientGarageEditCarController extends Constants {
         // гос.номер
         if (!Objects.equals(license_plate, "")) {
 
-            String sqlAlterTable = "UPDATE " + CAR_TABLE + " SET " +
-                    CAR_LICENSE_PLATE + " = '" +
-                    license_plate + "' WHERE " + CAR_LICENSE_PLATE +
+            String sqlAlterTable = "UPDATE " + CARS_TABLE + " SET " +
+                    CARS_LICENSE_PLATE + " = '" +
+                    license_plate + "' WHERE " + CARS_LICENSE_PLATE +
                     " = '" + old_license_plate + "';";
 
             old_license_plate = license_plate;
@@ -119,9 +119,9 @@ public class ClientGarageEditCarController extends Constants {
         // марка
         if (!Objects.equals(make, "")) {
 
-            String sqlAlterTable = "UPDATE " + CAR_TABLE + " SET " +
-                    CAR_MAKE + " = '" +
-                    make + "' WHERE " + CAR_LICENSE_PLATE +
+            String sqlAlterTable = "UPDATE " + CARS_TABLE + " SET " +
+                    CARS_MAKE + " = '" +
+                    make + "' WHERE " + CARS_LICENSE_PLATE +
                     " = '" + old_license_plate + "';";
 
             try {
@@ -138,9 +138,9 @@ public class ClientGarageEditCarController extends Constants {
         // модель
         if (!Objects.equals(model, "")) {
 
-            String sqlAlterTable = "UPDATE " + CAR_TABLE + " SET " +
-                    CAR_MODEL + " = '" +
-                    model + "' WHERE " + CAR_LICENSE_PLATE +
+            String sqlAlterTable = "UPDATE " + CARS_TABLE + " SET " +
+                    CARS_MODEL + " = '" +
+                    model + "' WHERE " + CARS_LICENSE_PLATE +
                     " = '" + old_license_plate + "';";
 
             try {

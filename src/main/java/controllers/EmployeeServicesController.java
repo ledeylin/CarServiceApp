@@ -9,27 +9,22 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import main.Configs;
 import javafx.scene.control.TableColumn;
 import main.Constants;
 import main.DatabaseHandler;
 import main.Main;
-import special.EmployeesWork;
 import special.Services;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.TreeMap;
 
 public class EmployeeServicesController extends Constants {
 
@@ -89,15 +84,15 @@ public class EmployeeServicesController extends Constants {
 
         //TreeMap<String, Integer> services = new TreeMap<>();
 
-        String query = "SELECT " + CAR_TABLE + ".*, " + DETAILS_TABLE + ".*, " + SERVICE_TABLE + ".*" +
-                " FROM " + SERVICE_TABLE +
-                " INNER JOIN " + CAR_TABLE +
-                " ON " + SERVICE_TABLE + "." + SERVICE_LICENSE_PLATE + " = " + CAR_TABLE + "."
-                + CAR_LICENSE_PLATE +
+        String query = "SELECT " + CARS_TABLE + ".*, " + DETAILS_TABLE + ".*, " + SERVICES_TABLE + ".*" +
+                " FROM " + SERVICES_TABLE +
+                " INNER JOIN " + CARS_TABLE +
+                " ON " + SERVICES_TABLE + "." + SERVICES_LICENSE_PLATE + " = " + CARS_TABLE + "."
+                + CARS_LICENSE_PLATE +
                 " INNER JOIN " + DETAILS_TABLE +
-                " ON " + SERVICE_TABLE + "." + SERVICE_DETAIL_SERIAL_NUMBER +
+                " ON " + SERVICES_TABLE + "." + SERVICES_DETAIL_SERIAL_NUMBER +
                 " = " + DETAILS_TABLE + "." + DETAILS_SERIAL_NUMBER +
-                " WHERE " + SERVICE_TABLE + "." + SERVICE_ID_EMPLOYEE +
+                " WHERE " + SERVICES_TABLE + "." + SERVICES_ID_EMPLOYEE +
                 " = '" + EmployeeMainController.getLogin() + "';";
         PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
         ResultSet result = statement.executeQuery();
@@ -107,9 +102,9 @@ public class EmployeeServicesController extends Constants {
         ObservableList<special.Services> s = FXCollections.observableArrayList();
         while (result.next()) {
             String s_date = result.getDate("start_date") + " / " + result.getDate("final_date");
-            String s_work_time = result.getString(SERVICE_WORK_TIME) + " ч.";
-            String s_mileage = result.getString(SERVICE_MILEAGE) + " км.";
-            String s_model = result.getString(CAR_MODEL);
+            String s_work_time = result.getString(SERVICES_WORK_TIME) + " ч.";
+            String s_mileage = result.getString(SERVICES_MILEAGE) + " км.";
+            String s_model = result.getString(CARS_MODEL);
             String s_detail = result.getString(DETAILS_CATEGORY);
             int s_price = (result.getInt(DETAILS_PRICE)) * 2 / 10;
             Services services = new Services(s_work_time, s_mileage, s_model, s_date, s_price, s_detail);

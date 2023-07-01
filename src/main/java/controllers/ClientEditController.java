@@ -64,7 +64,7 @@ public class ClientEditController extends Constants {
                         flag = false;
                     }
 
-                    query = "SELECT * FROM " + EMPLOYEE_TABLE + " WHERE " + EMPLOYEE_LOGIN + " =?";
+                    query = "SELECT * FROM " + EMPLOYEES_TABLE + " WHERE " + EMPLOYEES_LOGIN + " =?";
                     preparedStatement = databaseHandler.getDbConnection().prepareStatement(query);
                     preparedStatement.setString(1, ClientEditController.login);
                     result = preparedStatement.executeQuery();

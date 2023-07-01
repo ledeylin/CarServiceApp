@@ -104,7 +104,8 @@ public class EmployeeWorkController extends Constants {
     void initialize() throws SQLException, ClassNotFoundException {
 
         // таблица с деталями
-        String query = "SELECT * FROM employees_work WHERE login = '" + EmployeeMainController.getLogin() + "';";
+        String query = "SELECT * FROM " + EMPLOYEES_WORK_TABLE + " WHERE " + EMPLOYEES_WORK_LOGIN +
+                " = '" + EmployeeMainController.getLogin() + "';";
         PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
         ResultSet result = statement.executeQuery();
 
@@ -113,8 +114,8 @@ public class EmployeeWorkController extends Constants {
         details_time.setCellValueFactory(new PropertyValueFactory<special.EmployeesWork, String>("work_time"));
 
         while(result.next()) {
-            String detail_category = result.getString("detail_category");
-            String work_time = result.getString("work_time_in_day");
+            String detail_category = result.getString(EMPLOYEES_WORK_DETAIL_CATEGORY);
+            String work_time = result.getString(EMPLOYEES_WORK_WORK_TIME);
             ew1.add(new EmployeesWork(detail_category, work_time));
         }
         table_work.setItems(ew1);
@@ -128,36 +129,37 @@ public class EmployeeWorkController extends Constants {
         });
 
         // таблица с услугами
-        query = "SELECT * FROM services WHERE id_employee = '" + EmployeeMainController.getLogin() +
-                "' AND final_date > CURDATE();";
+        query = "SELECT * FROM " + SERVICES_TABLE + " WHERE " + SERVICES_ID_EMPLOYEE +
+                " = '" + EmployeeMainController.getLogin() +
+                "' AND " + SERVICES_FINAL_DATE + " > CURDATE();";
         statement = databaseHandler.getDbConnection().prepareStatement(query);
         result = statement.executeQuery();
 
         ObservableList<Services> ew2 = FXCollections.observableArrayList();
         services_detail.setCellValueFactory(
-                new PropertyValueFactory<special.Services, String>("detail_serial_number"));
+                new PropertyValueFactory<special.Services, String>(SERVICES_DETAIL_SERIAL_NUMBER));
         services_start.setCellValueFactory(
-                new PropertyValueFactory<special.Services, Date>("start_date"));
+                new PropertyValueFactory<special.Services, Date>(SERVICES_START_DATE));
         services_final.setCellValueFactory(
-                new PropertyValueFactory<special.Services, Date>("final_date"));
+                new PropertyValueFactory<special.Services, Date>(SERVICES_FINAL_DATE));
 
         while(result.next()) {
-            String detail_serial_number = result.getString("detail_serial_number");
-            Date start_date = result.getDate("start_date");
-            Date final_date = result.getDate("final_date");
+            String detail_serial_number = result.getString(SERVICES_DETAIL_SERIAL_NUMBER);
+            Date start_date = result.getDate(SERVICES_START_DATE);
+            Date final_date = result.getDate(SERVICES_FINAL_DATE);
             ew2.add(new Services(start_date, final_date, detail_serial_number));
         }
         table_services.setItems(ew2);
 
 
         // choice box
-        query = "SELECT * FROM details;";
+        query = "SELECT * FROM " + DETAILS_TABLE;
         statement = databaseHandler.getDbConnection().prepareStatement(query);
         result = statement.executeQuery();
         HashSet<String> hs = new HashSet<>();
 
         while(result.next()) {
-            String n = result.getString("category");
+            String n = result.getString(DETAILS_CATEGORY);
             hs.add(n);
         }
         choice_box_detail.getItems().setAll(hs);
@@ -332,7 +334,9 @@ public class EmployeeWorkController extends Constants {
     }
 
     public static void add() throws SQLException, ClassNotFoundException {
-        String insertNew = "INSERT INTO employees_work (login, detail_category, work_time_in_day) " +
+        String insertNew = "INSERT INTO " + EMPLOYEES_WORK_TABLE + " (" + EMPLOYEES_WORK_LOGIN + ", " +
+                EMPLOYEES_WORK_DETAIL_CATEGORY + ", " +
+                EMPLOYEES_WORK_WORK_TIME + ") " +
                 "VALUES(?, ?, ?)";
 
         PreparedStatement preparedStatement = databaseHandler.getDbConnection().prepareStatement(insertNew);
@@ -346,8 +350,9 @@ public class EmployeeWorkController extends Constants {
     public static void delete() throws SQLException, ClassNotFoundException {
         Connection connection = databaseHandler.getDbConnection();
         Statement statement = connection.createStatement();
-        statement.executeUpdate("DELETE FROM employees_work WHERE login = '" + EmployeeMainController.getLogin() +
-                "' AND detail_category = '" + detail_service + "';");
+        statement.executeUpdate("DELETE FROM " + EMPLOYEES_WORK_TABLE + " WHERE " +
+                EMPLOYEES_WORK_LOGIN + " = '" + EmployeeMainController.getLogin() +
+                "' AND " + EMPLOYEES_WORK_DETAIL_CATEGORY + " = '" + detail_service + "';");
 
     }
 
