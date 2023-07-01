@@ -170,14 +170,15 @@ public class AdminClientsController extends Constants {
                     text_pass.setText(list_view.getSelectionModel().getSelectedItem().getPassword());
                     text_cars.setText(list_view.getSelectionModel().getSelectedItem().getCars());
                     text_services.setText(String.valueOf(list_view.getSelectionModel().getSelectedItem().getService_count()));
-                    if (Objects.equals(list_view.getSelectionModel().getSelectedItem().getStatus(), "0")) {
+                    if (Objects.equals(list_view.getSelectionModel().getSelectedItem().getPost(), "0")) {
                         text_post.setText("Заблокирован");
+                        old_post = "Заблокирован";
                     }
-                    else {
+                    else if (Objects.equals(list_view.getSelectionModel().getSelectedItem().getPost(), "1")) {
                         text_post.setText("Активен");
+                        old_post = "Активен";
                     }
                     old_login = list_view.getSelectionModel().getSelectedItem().getLogin();
-                    old_post = list_view.getSelectionModel().getSelectedItem().getStatus();
                 }
             });
 
@@ -391,6 +392,7 @@ public class AdminClientsController extends Constants {
             try {
                 Connection connection = databaseHandler.getDbConnection();
                 Statement statement1 = connection.createStatement();
+                System.out.println(old_post);
 
                 if (Objects.equals(old_post, "Заблокирован")) {
                     statement1.executeUpdate("UPDATE " + CLIENTS_TABLE +
@@ -399,20 +401,20 @@ public class AdminClientsController extends Constants {
                     posts.put(key, "Активен");
                 }
 
-            else {
-                Stage stage = new Stage();
-                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_clients_add.fxml"));
-                Scene scene = null;
+                else {
+                    Stage stage = new Stage();
+                    FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_clients_add.fxml"));
+                    Scene scene = null;
 
-                try {
-                    scene = new Scene(fxmlLoader.load(), 529, 267);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    try {
+                        scene = new Scene(fxmlLoader.load(), 529, 267);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    stage.setScene(scene);
+                    stage.show();
                 }
-
-                stage.setScene(scene);
-                stage.show();
-            }
 
             } catch (ClassNotFoundException | SQLException e) { throw new RuntimeException(e); }
 
@@ -445,7 +447,6 @@ public class AdminClientsController extends Constants {
         statement.executeUpdate("UPDATE " + CLIENTS_TABLE +
                 " SET status = '0' WHERE " +
                 CLIENTS_LOGIN + " = '" + old_login + "';");
-        posts.put(key, "Заблокирован");
     }
 
 }

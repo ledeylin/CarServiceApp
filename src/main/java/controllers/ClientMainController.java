@@ -75,6 +75,10 @@ public class ClientMainController extends Constants {
         ClientMainController.user = user;
     }
 
+    public static User getUser() {
+        return user;
+    }
+
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
 

@@ -61,20 +61,20 @@ public class ClientGarageEditCarController extends Constants {
             }
             catch (Exception ignored) { }
 
-            if (Objects.equals(license_plate, "")) {
-                flag = false;
-                text_mistake.setText("Вы не ввели гос.номер!");
-            }
-
-            if (Objects.equals(make, "")) {
-                flag = false;
-                text_mistake.setText("Вы не ввели марку машины!");
-            }
-
-            if (Objects.equals(model, "")) {
-                flag = false;
-                text_mistake.setText("Вы не ввели модель машины!");
-            }
+//            if (Objects.equals(license_plate, "")) {
+//                flag = false;
+//                text_mistake.setText("Вы не ввели гос.номер!");
+//            }
+//
+//            if (Objects.equals(make, "")) {
+//                flag = false;
+//                text_mistake.setText("Вы не ввели марку машины!");
+//            }
+//
+//            if (Objects.equals(model, "")) {
+//                flag = false;
+//                text_mistake.setText("Вы не ввели модель машины!");
+//            }
 
             // проверка пароля
             if (flag) {

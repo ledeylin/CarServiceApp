@@ -110,7 +110,9 @@ public class AdminEditController extends Constants {
             Connection connection = databaseHandler.getDbConnection();
             System.out.println(sqlAlterTable);
             Statement statement = connection.createStatement();
+            statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
+            AdminMainController.getUser().setLogin(login);
             AdminEditController.old_login = AdminEditController.login;
         }
 
@@ -122,7 +124,10 @@ public class AdminEditController extends Constants {
             Connection connection = databaseHandler.getDbConnection();
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);
+            statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
+            AdminMainController.getUser().setPassword(pass);
+            PassController.setPassword(pass);
         }
 
     }

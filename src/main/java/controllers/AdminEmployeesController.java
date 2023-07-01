@@ -165,15 +165,15 @@ public class AdminEmployeesController extends Constants {
                 text_address.setText(list_view.getSelectionModel().getSelectedItem().getAddress());
                 text_login.setText(list_view.getSelectionModel().getSelectedItem().getLogin());
                 text_pass.setText(list_view.getSelectionModel().getSelectedItem().getPassword());
-                if (Objects.equals(list_view.getSelectionModel().getSelectedItem().getStatus(), "0")) {
+                if (Objects.equals(list_view.getSelectionModel().getSelectedItem().getPost(), "0")) {
                     text_post.setText("Уволен");
                     post = "Уволен";
                 }
-                else if (Objects.equals(list_view.getSelectionModel().getSelectedItem().getStatus(), "1")){
+                else if (Objects.equals(list_view.getSelectionModel().getSelectedItem().getPost(), "1")){
                     text_post.setText("Работник");
                     post = "Работник";
                 }
-                else {
+                else if (Objects.equals(list_view.getSelectionModel().getSelectedItem().getPost(), "2")){
                     text_post.setText("Администратор");
                     post = "Администратор";
                 }

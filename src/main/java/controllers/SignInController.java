@@ -104,7 +104,7 @@ public class SignInController extends Constants {
                         "JOIN " + SERVICES_TABLE + " s ON e." + EMPLOYEES_LOGIN + " = s." +
                         SERVICES_ID_EMPLOYEE + "\n" +
                         "JOIN " + DETAILS_TABLE + " d ON s." + SERVICES_DETAIL_SERIAL_NUMBER +
-                        " = d." + SERVICES_DETAIL_SERIAL_NUMBER + "\n" +
+                        " = d." + DETAILS_SERIAL_NUMBER + "\n" +
                         "GROUP BY e." + EMPLOYEES_LOGIN + "\n" +
                         "HAVING e." + EMPLOYEES_LOGIN + " = '" + login + "' AND e." + EMPLOYEES_PASSWORD + " = '" +
                         password + "';";

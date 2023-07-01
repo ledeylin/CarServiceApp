@@ -193,7 +193,7 @@ public class AdminClientsAddController extends Constants {
         preparedStatement.setString(5, login);
         preparedStatement.setString(6, pass);
         preparedStatement.setString(7, phone);
-        preparedStatement.setInt(8, 0);
+        preparedStatement.setInt(8, 1);
         preparedStatement.executeUpdate();
 
     }

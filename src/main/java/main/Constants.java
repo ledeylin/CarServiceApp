@@ -31,6 +31,7 @@ public class Constants {
     protected static final String DETAILS_COMPATIBILITY_MODEL = "model";
     protected static final String DETAILS_COMPATIBILITY_DETAIL_SERIAL_NUMBER = "detail_serial_number";
 
+
     protected static final String EMPLOYEES_TABLE = "employees";
     protected static final String EMPLOYEES_LAST_NAME = "last_name";
     protected static final String EMPLOYEES_FIRST_NAME = "first_name";

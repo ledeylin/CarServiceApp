@@ -119,7 +119,7 @@ public class AdminServicesController extends Constants {
                 "FROM " + SERVICES_TABLE + "\n" +
                 "JOIN " + CARS_TABLE + " ON " + SERVICES_TABLE + "." + SERVICES_LICENSE_PLATE +
                 " = " + CARS_TABLE + "." + CARS_LICENSE_PLATE + " \n" +
-                "JOIN " + DETAILS_TABLE + " ON " + SERVICES_TABLE + "." + DETAILS_SERIAL_NUMBER +
+                "JOIN " + DETAILS_TABLE + " ON " + SERVICES_TABLE + "." + SERVICES_DETAIL_SERIAL_NUMBER +
                         " = " + DETAILS_TABLE + "." + DETAILS_SERIAL_NUMBER + ";";
         PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
         ResultSet result = statement.executeQuery();

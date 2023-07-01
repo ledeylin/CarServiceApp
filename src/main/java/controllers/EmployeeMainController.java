@@ -78,6 +78,10 @@ public class EmployeeMainController extends Constants {
         EmployeeMainController.user = user;
     }
 
+    public static User getUser() {
+        return user;
+    }
+
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
 

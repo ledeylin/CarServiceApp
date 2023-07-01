@@ -110,6 +110,7 @@ public class EmployeeEditController extends Constants {
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
             EmployeeEditController.old_login = EmployeeEditController.login;
+            EmployeeMainController.getUser().setLogin(login);
         }
 
         // пароль
@@ -121,6 +122,8 @@ public class EmployeeEditController extends Constants {
             System.out.println(sqlAlterTable);
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
+            EmployeeMainController.getUser().setPassword(pass);
+            PassController.setPassword(pass);
         }
 
     }

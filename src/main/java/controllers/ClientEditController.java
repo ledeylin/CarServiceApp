@@ -110,6 +110,7 @@ public class ClientEditController extends Constants {
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
+            ClientMainController.getUser().setLogin(login);
             ClientEditController.old_login = ClientEditController.login;
         }
 
@@ -123,6 +124,8 @@ public class ClientEditController extends Constants {
             System.out.println(sqlAlterTable);
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
+            ClientMainController.getUser().setPassword(pass);
+            PassController.setPassword(pass);
         }
 
     }

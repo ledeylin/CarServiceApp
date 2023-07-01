@@ -77,6 +77,10 @@ public class AdminMainController {
         AdminMainController.user = user;
     }
 
+    public static User getUser() {
+        return user;
+    }
+
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
 
