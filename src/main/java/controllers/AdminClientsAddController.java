@@ -62,8 +62,6 @@ public class AdminClientsAddController extends Constants {
 
     private boolean flag = true;
 
-    private static final DatabaseHandler databaseHandler = new DatabaseHandler();
-
     @FXML
     void initialize() {
 
@@ -97,12 +95,12 @@ public class AdminClientsAddController extends Constants {
                 flag = false;
             }
             else {
-                lowerCase = text_first_name.getText().trim().toLowerCase();;
+                lowerCase = text_first_name.getText().trim().toLowerCase();
                 first_name = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
             }
 
             try {
-                lowerCase = text_second_name.getText().trim().toLowerCase();;
+                lowerCase = text_second_name.getText().trim().toLowerCase();
                 second_name = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
             } catch (Exception ignored) {}
 
@@ -119,7 +117,7 @@ public class AdminClientsAddController extends Constants {
                     String query_clients = "SELECT * FROM " + CLIENTS_TABLE + " WHERE " + CLIENTS_LOGIN + " =?";
                     String query_employees = "SELECT * FROM " + EMPLOYEES_TABLE + " WHERE " + EMPLOYEES_LOGIN + " =?";
 
-                    PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query_clients);
+                    PreparedStatement statement = DatabaseHandler.getInstance().prepareStatement(query_clients);
                     statement.setString(1, login);
                     ResultSet result = statement.executeQuery();
                     if (result.next()) {
@@ -128,7 +126,7 @@ public class AdminClientsAddController extends Constants {
                         flag = false;
                     }
 
-                    statement = databaseHandler.getDbConnection().prepareStatement(query_employees);
+                    statement = DatabaseHandler.getInstance().prepareStatement(query_employees);
                     statement.setString(1, login);
                     result = statement.executeQuery();
                     if (result.next()) {
@@ -150,7 +148,7 @@ public class AdminClientsAddController extends Constants {
             // проверка номера телефона на корректность
             if (!Objects.equals(phone, "")) {
                 try {
-                    String regex = "(?:\\+[\\d]{1,3}|8)(?:[\\s-]?)\\(?(?:[\\d]{3})\\)?[\\s-]?[\\d]{3}[\\s-]?[\\d]{2}[\\s-]?[\\d]{2}";
+                    String regex = "(?:\\+\\d{1,3}|8)[\\s-]?\\(?\\d{3}\\)?[\\s-]?\\d{3}[\\s-]?\\d{2}[\\s-]?\\d{2}";
                     if (!phone.matches(regex)) {
                         System.out.println("Error: incorrect phone number");
                         text_mistake.setText("Некорректный номер телефона!");
@@ -176,7 +174,7 @@ public class AdminClientsAddController extends Constants {
                 PassController.setId(9);
                 Stage stage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pass.fxml"));
-                Scene scene = null;
+                Scene scene;
                 try {
                     scene = new Scene(fxmlLoader.load(), 400, 250);
                 } catch (IOException e) {
@@ -199,7 +197,7 @@ public class AdminClientsAddController extends Constants {
                 CLIENTS_LOGIN + ", " + CLIENTS_PASSWORD + ", " + CLIENTS_PHONE_NUMBER + ", status" +
                 ") VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
-        PreparedStatement preparedStatement = databaseHandler.getDbConnection().prepareStatement(insertNew);
+        PreparedStatement preparedStatement = DatabaseHandler.getInstance().prepareStatement(insertNew);
         preparedStatement.setString(1, last_name);
         preparedStatement.setString(2, first_name);
         preparedStatement.setString(3, second_name);

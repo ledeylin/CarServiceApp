@@ -1,8 +1,6 @@
 package controllers;
 
 import javafx.animation.TranslateTransition;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -24,7 +22,6 @@ import special.User;
 import java.io.IOException;
 import java.sql.*;
 import java.util.Objects;
-import java.util.TreeMap;
 
 public class AdminClientsController extends Constants {
 
@@ -103,8 +100,6 @@ public class AdminClientsController extends Constants {
 
     private boolean pane_flag = false;
 
-    private static final DatabaseHandler databaseHandler = new DatabaseHandler();
-
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
 
@@ -121,10 +116,10 @@ public class AdminClientsController extends Constants {
                 " ORDER BY c." + CLIENTS_LAST_NAME + " ASC, c." +
                 CLIENTS_FIRST_NAME + " ASC, c." + CLIENTS_SECOND_NAME + " ASC";
 
-        PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
+        PreparedStatement statement = DatabaseHandler.getInstance().prepareStatement(query);
         ResultSet result = statement.executeQuery();
 
-        table.setCellValueFactory(new PropertyValueFactory<special.User, String>("name"));
+        table.setCellValueFactory(new PropertyValueFactory<>("name"));
         ObservableList<special.User> u = FXCollections.observableArrayList();
         while (result.next()) {
             String last_name = result.getString(CLIENTS_LAST_NAME);
@@ -150,28 +145,24 @@ public class AdminClientsController extends Constants {
         list_view.setItems(u);
 
         TableView.TableViewSelectionModel<special.User> selectionModel = list_view.getSelectionModel();
-            selectionModel.selectedItemProperty().addListener(new ChangeListener<special.User>() {
-                @Override
-                public void changed(ObservableValue<? extends User> observableValue, User user, User t1) {
-                    text_name.setText(list_view.getSelectionModel().getSelectedItem().getFirst_name() + " " +
-                            list_view.getSelectionModel().getSelectedItem().getFirst_name() + " " +
-                            list_view.getSelectionModel().getSelectedItem().getSecond_name());
-                    text_address.setText(list_view.getSelectionModel().getSelectedItem().getAddress());
-                    text_phone.setText(list_view.getSelectionModel().getSelectedItem().getPhone_number());
-                    text_login.setText(list_view.getSelectionModel().getSelectedItem().getLogin());
-                    text_pass.setText(list_view.getSelectionModel().getSelectedItem().getPassword());
-                    text_cars.setText(list_view.getSelectionModel().getSelectedItem().getCars());
-                    text_services.setText(String.valueOf(list_view.getSelectionModel().getSelectedItem().getService_count()));
-                    if (Objects.equals(list_view.getSelectionModel().getSelectedItem().getPost(), "0")) {
-                        text_post.setText("Заблокирован");
-                        old_post = "Заблокирован";
-                    }
-                    else if (Objects.equals(list_view.getSelectionModel().getSelectedItem().getPost(), "1")) {
-                        text_post.setText("Активен");
-                        old_post = "Активен";
-                    }
-                    old_login = list_view.getSelectionModel().getSelectedItem().getLogin();
+            selectionModel.selectedItemProperty().addListener((observableValue, user, t1) -> {
+                text_name.setText(list_view.getSelectionModel().getSelectedItem().getFirst_name() + " " +
+                        list_view.getSelectionModel().getSelectedItem().getFirst_name() + " " +
+                        list_view.getSelectionModel().getSelectedItem().getSecond_name());
+                text_address.setText(list_view.getSelectionModel().getSelectedItem().getAddress());
+                text_phone.setText(list_view.getSelectionModel().getSelectedItem().getPhone_number());
+                text_login.setText(list_view.getSelectionModel().getSelectedItem().getLogin());
+                text_pass.setText(list_view.getSelectionModel().getSelectedItem().getPassword());
+                text_cars.setText(list_view.getSelectionModel().getSelectedItem().getCars());
+                text_services.setText(String.valueOf(list_view.getSelectionModel().getSelectedItem().getService_count()));
+                if (Objects.equals(list_view.getSelectionModel().getSelectedItem().getPost(), "0")) {
+                    text_post.setText("Заблокирован");
+                    old_post = "Заблокирован";
+                } else if (Objects.equals(list_view.getSelectionModel().getSelectedItem().getPost(), "1")) {
+                    text_post.setText("Активен");
+                    old_post = "Активен";
                 }
+                old_login = list_view.getSelectionModel().getSelectedItem().getLogin();
             });
 
         // меню
@@ -220,29 +211,29 @@ public class AdminClientsController extends Constants {
         });
 
         // переход на окно личного кабинета
-        personal_acc1.setOnAction(actionEvent -> { Main.changeScene("admin_main.fxml"); });
+        personal_acc1.setOnAction(actionEvent -> Main.changeScene("admin_main.fxml"));
 
         // переход на окно личного кабинета
-        personal_acc2.setOnAction(actionEvent -> { Main.changeScene("admin_main.fxml"); });
+        personal_acc2.setOnAction(actionEvent -> Main.changeScene("admin_main.fxml"));
 
         // переход на окно работников 1
-        personal_employees1.setOnAction(actionEvent -> { Main.changeScene("admin_employees.fxml"); });
+        personal_employees1.setOnAction(actionEvent -> Main.changeScene("admin_employees.fxml"));
 
         // переход на окно работников 2
-        personal_employees2.setOnAction(actionEvent -> { Main.changeScene("admin_employees.fxml"); });
+        personal_employees2.setOnAction(actionEvent -> Main.changeScene("admin_employees.fxml"));
 
         // переход на окно услуг 1
-        personal_service1.setOnAction(actionEvent -> { Main.changeScene("admin_services.fxml"); });
+        personal_service1.setOnAction(actionEvent -> Main.changeScene("admin_services.fxml"));
 
         // переход на окно услуг 2
-        personal_service2.setOnAction(actionEvent -> { Main.changeScene("admin_services.fxml"); });
+        personal_service2.setOnAction(actionEvent -> Main.changeScene("admin_services.fxml"));
 
         // редактирование информации о клиенте
         button_edit.setOnAction(actionEvent -> {
             AdminClientsEditController.setOld_login(old_login);
             Stage stage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_clients_edit.fxml"));
-            Scene scene = null;
+            Scene scene;
 
             try {
                 scene = new Scene(fxmlLoader.load(), 529, 267);
@@ -259,7 +250,7 @@ public class AdminClientsController extends Constants {
         button_add.setOnAction(actionEvent -> {
 
             try {
-                Connection connection = databaseHandler.getDbConnection();
+                Connection connection = DatabaseHandler.getInstance();
                 Statement statement1 = connection.createStatement();
 
                 if (Objects.equals(old_post, "Заблокирован")) {
@@ -271,7 +262,7 @@ public class AdminClientsController extends Constants {
                 else {
                     Stage stage = new Stage();
                     FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_clients_add.fxml"));
-                    Scene scene = null;
+                    Scene scene;
 
                     try {
                         scene = new Scene(fxmlLoader.load(), 529, 267);
@@ -292,7 +283,7 @@ public class AdminClientsController extends Constants {
             PassController.setId(10);
             Stage stage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pass.fxml"));
-            Scene scene = null;
+            Scene scene;
             try {
                 scene = new Scene(fxmlLoader.load(), 400, 250);
             } catch (IOException e) {
@@ -304,7 +295,7 @@ public class AdminClientsController extends Constants {
     }
 
     public static void delete() throws SQLException, ClassNotFoundException {
-        Connection connection = databaseHandler.getDbConnection();
+        Connection connection = DatabaseHandler.getInstance();
         Statement statement = connection.createStatement();
         statement.executeUpdate("UPDATE " + CLIENTS_TABLE +
                 " SET status = '0' WHERE " +

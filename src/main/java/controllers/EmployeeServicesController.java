@@ -1,27 +1,21 @@
 package controllers;
 
 import javafx.animation.TranslateTransition;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.scene.control.TableColumn;
 import main.Constants;
 import main.DatabaseHandler;
 import main.Main;
 import special.Services;
 
-import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -73,8 +67,6 @@ public class EmployeeServicesController extends Constants {
     @FXML
     private Text text_time;
 
-    private final DatabaseHandler databaseHandler = new DatabaseHandler();
-
     private boolean pane_flag = false;
 
     @FXML
@@ -92,10 +84,10 @@ public class EmployeeServicesController extends Constants {
                 " = " + DETAILS_TABLE + "." + DETAILS_SERIAL_NUMBER +
                 " WHERE " + SERVICES_TABLE + "." + SERVICES_ID_EMPLOYEE +
                 " = '" + EmployeeMainController.getLogin() + "';";
-        PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
+        PreparedStatement statement = DatabaseHandler.getInstance().prepareStatement(query);
         ResultSet result = statement.executeQuery();
 
-        table.setCellValueFactory(new PropertyValueFactory<special.Services, String>("date"));
+        table.setCellValueFactory(new PropertyValueFactory<>("date"));
 
         ObservableList<special.Services> s = FXCollections.observableArrayList();
         while (result.next()) {
@@ -111,15 +103,12 @@ public class EmployeeServicesController extends Constants {
         list_view.setItems(s);
 
         TableView.TableViewSelectionModel<special.Services> selectionModel = list_view.getSelectionModel();
-        selectionModel.selectedItemProperty().addListener(new ChangeListener<special.Services>() {
-            @Override
-            public void changed(ObservableValue<? extends Services> observableValue, Services services, Services t1) {
-                text_detail.setText(list_view.getSelectionModel().getSelectedItem().getDetail());
-                text_mileage.setText(list_view.getSelectionModel().getSelectedItem().getMileage());
-                text_model.setText(list_view.getSelectionModel().getSelectedItem().getModel());
-                text_price.setText(String.valueOf(list_view.getSelectionModel().getSelectedItem().getPrice()));
-                text_time.setText(list_view.getSelectionModel().getSelectedItem().getWork_time());
-            }
+        selectionModel.selectedItemProperty().addListener((observableValue, services, t1) -> {
+            text_detail.setText(list_view.getSelectionModel().getSelectedItem().getDetail());
+            text_mileage.setText(list_view.getSelectionModel().getSelectedItem().getMileage());
+            text_model.setText(list_view.getSelectionModel().getSelectedItem().getModel());
+            text_price.setText(String.valueOf(list_view.getSelectionModel().getSelectedItem().getPrice()));
+            text_time.setText(list_view.getSelectionModel().getSelectedItem().getWork_time());
         });
 
         // меню
@@ -166,16 +155,16 @@ public class EmployeeServicesController extends Constants {
         });
 
         // переход на окно работы 1
-        personal_work_time1.setOnAction(actionEvent -> { Main.changeScene("employee_work_time.fxml"); });
+        personal_work_time1.setOnAction(actionEvent -> Main.changeScene("employee_work_time.fxml"));
 
         // переход на окно работы 2
-        personal_work_time2.setOnAction(actionEvent -> { Main.changeScene("employee_work_time.fxml"); });
+        personal_work_time2.setOnAction(actionEvent -> Main.changeScene("employee_work_time.fxml"));
 
         // переход на main 1
-        personal_acc1.setOnAction(actionEvent -> { Main.changeScene("employee_main.fxml"); });
+        personal_acc1.setOnAction(actionEvent -> Main.changeScene("employee_main.fxml"));
 
         // переход на main 2
-        personal_acc2.setOnAction(actionEvent -> { Main.changeScene("employee_main.fxml"); });
+        personal_acc2.setOnAction(actionEvent -> Main.changeScene("employee_main.fxml"));
     }
 
 }

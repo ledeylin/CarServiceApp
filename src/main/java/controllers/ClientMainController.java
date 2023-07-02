@@ -10,13 +10,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.Constants;
-import main.DatabaseHandler;
 import main.Main;
 import special.User;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ClientMainController extends Constants {
@@ -143,7 +140,7 @@ public class ClientMainController extends Constants {
 
             Stage stage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("client_edit.fxml"));
-            Scene scene = null;
+            Scene scene;
 
             try {
                 scene = new Scene(fxmlLoader.load(), 400, 250);
@@ -156,10 +153,10 @@ public class ClientMainController extends Constants {
         });
 
         // переход на окно гаража 1
-        personal_garage1.setOnAction(actionEvent -> { Main.changeScene("client_garage.fxml"); });
+        personal_garage1.setOnAction(actionEvent -> Main.changeScene("client_garage.fxml"));
 
         // переход на окно гаража 2
-        personal_garage2.setOnAction(actionEvent -> { Main.changeScene("client_garage.fxml"); });
+        personal_garage2.setOnAction(actionEvent -> Main.changeScene("client_garage.fxml"));
 
     }
 

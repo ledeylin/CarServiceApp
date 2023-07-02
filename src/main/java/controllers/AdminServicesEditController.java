@@ -54,8 +54,6 @@ public class AdminServicesEditController extends Constants {
 
     private static int id;
 
-    static DatabaseHandler databaseHandler = new DatabaseHandler();
-
     private static String detailSerialNumber = "";
 
     private static String employeeLogin = "";
@@ -110,7 +108,7 @@ public class AdminServicesEditController extends Constants {
                 PassController.setId(1);
                 Stage stage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pass.fxml"));
-                Scene scene = null;
+                Scene scene;
                 try {
                     scene = new Scene(fxmlLoader.load(), 400, 250);
                 } catch (IOException e) {
@@ -128,13 +126,13 @@ public class AdminServicesEditController extends Constants {
         // логин сотрудников
         if (!Objects.equals(employeeLogin, "")) {
 
-            String sqlAlterTable = null;
+            String sqlAlterTable;
             sqlAlterTable = "UPDATE " + SERVICES_TABLE + " SET " + SERVICES_ID_EMPLOYEE + " = '" + employeeLogin
                     + "' WHERE " + SERVICES_ID + " = '" + id + "';";
 
             try {
-                Connection connection = null;
-                connection = databaseHandler.getDbConnection();
+                Connection connection;
+                connection = DatabaseHandler.getInstance();
                 Statement statement = connection.createStatement();
                 statement.executeUpdate(sqlAlterTable);
                 System.out.println("Success!");
@@ -147,13 +145,13 @@ public class AdminServicesEditController extends Constants {
         // серийный номер детали
         if (!Objects.equals(detailSerialNumber, "")) {
 
-            String sqlAlterTable = null;
+            String sqlAlterTable;
             sqlAlterTable = "UPDATE " + SERVICES_TABLE + " SET " + SERVICES_DETAIL_SERIAL_NUMBER + " = '" + detailSerialNumber
                     + "' WHERE " + SERVICES_ID + " = '" + id + "';";
 
             try {
-                Connection connection = null;
-                connection = databaseHandler.getDbConnection();
+                Connection connection;
+                connection = DatabaseHandler.getInstance();
                 Statement statement = connection.createStatement();
                 statement.executeUpdate(sqlAlterTable);
                 System.out.println("Success!");
@@ -166,13 +164,13 @@ public class AdminServicesEditController extends Constants {
         // номер машины
         if (!Objects.equals(licensePlate, "")) {
 
-            String sqlAlterTable = null;
+            String sqlAlterTable;
             sqlAlterTable = "UPDATE " + SERVICES_TABLE + " SET " + SERVICES_LICENSE_PLATE + " = '" + licensePlate
                     + "' WHERE " + SERVICES_ID + " = '" + id + "';";
 
             try {
-                Connection connection = null;
-                connection = databaseHandler.getDbConnection();
+                Connection connection;
+                connection = DatabaseHandler.getInstance();
                 Statement statement = connection.createStatement();
                 statement.executeUpdate(sqlAlterTable);
                 System.out.println("Success!");
@@ -185,16 +183,16 @@ public class AdminServicesEditController extends Constants {
         // пробег машины
         if (!Objects.equals(mileage, "")) {
 
-            String sqlAlterTable = null;
-            int end_mileage = 0;
+            String sqlAlterTable;
+            int end_mileage;
             try {
                 end_mileage = Integer.parseInt(mileage);
                 sqlAlterTable = "UPDATE " + SERVICES_TABLE + " SET " + SERVICES_MILEAGE + " = '" + end_mileage
                         + "' WHERE " + SERVICES_ID + " = '" + id + "';";
 
                 try {
-                    Connection connection = null;
-                    connection = databaseHandler.getDbConnection();
+                    Connection connection;
+                    connection = DatabaseHandler.getInstance();
                     Statement statement = connection.createStatement();
                     statement.executeUpdate(sqlAlterTable);
                     System.out.println("Success!");
@@ -210,16 +208,16 @@ public class AdminServicesEditController extends Constants {
         // номер машины
         if (!Objects.equals(workTime, "")) {
 
-            String sqlAlterTable = null;
-            int end_workTime = 0;
+            String sqlAlterTable;
+            int end_workTime;
             try {
                 end_workTime = Integer.parseInt(workTime);
                 sqlAlterTable = "UPDATE " + SERVICES_TABLE + " SET " + SERVICES_WORK_TIME + " = '" + end_workTime
                         + "' WHERE " + SERVICES_ID + " = '" + id + "';";
 
                 try {
-                    Connection connection = null;
-                    connection = databaseHandler.getDbConnection();
+                    Connection connection;
+                    connection = DatabaseHandler.getInstance();
                     Statement statement = connection.createStatement();
                     statement.executeUpdate(sqlAlterTable);
                     System.out.println("Success!");
@@ -235,13 +233,13 @@ public class AdminServicesEditController extends Constants {
         // дата
         if (startDate.isBefore(finalDate)) {
 
-            String sqlAlterTable = null;
+            String sqlAlterTable;
             sqlAlterTable = "UPDATE " + SERVICES_TABLE + " SET " + SERVICES_START_DATE + " = '" + startDate
                     + "' WHERE " + SERVICES_ID + " = '" + id + "';";
 
             try {
-                Connection connection = null;
-                connection = databaseHandler.getDbConnection();
+                Connection connection;
+                connection = DatabaseHandler.getInstance();
                 Statement statement = connection.createStatement();
                 statement.executeUpdate(sqlAlterTable);
                 System.out.println("Success!");
@@ -253,7 +251,7 @@ public class AdminServicesEditController extends Constants {
                     + "' WHERE " + SERVICES_ID + " = '" + id + "';";
 
             try {
-                Connection connection = databaseHandler.getDbConnection();
+                Connection connection = DatabaseHandler.getInstance();
                 Statement statement = connection.createStatement();
                 statement.executeUpdate(sqlAlterTable);
                 System.out.println("Success!");

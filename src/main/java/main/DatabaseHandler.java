@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class DatabaseHandler extends Configs{
     private static Connection dbConnection;
 
-    public Connection getDbConnection()
+    public static Connection getDbConnection()
             throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver" );
         dbConnection = DriverManager.getConnection(
@@ -15,4 +15,12 @@ public class DatabaseHandler extends Configs{
                 DB_USER, DB_PASS);
         return dbConnection;
     }
+
+    public static synchronized Connection getInstance() throws SQLException, ClassNotFoundException {
+        if (dbConnection == null) {
+            dbConnection = getDbConnection();
+        }
+        return dbConnection;
+    }
+
 }

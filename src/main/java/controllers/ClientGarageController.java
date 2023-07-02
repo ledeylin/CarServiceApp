@@ -1,18 +1,12 @@
 package controllers;
 
 import javafx.animation.TranslateTransition;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -123,8 +117,6 @@ public class ClientGarageController extends Constants {
     @FXML
     private TableView<special.Services> view_table_services;
 
-    private static final DatabaseHandler databaseHandler = new DatabaseHandler();
-
     private boolean pane_flag = false;
 
     private static String now_license_plate = "";
@@ -134,8 +126,6 @@ public class ClientGarageController extends Constants {
     private static String make = "";
 
     private static String model = "";
-
-    private String now_detail = "";
 
     private String old_detail = "";
 
@@ -149,20 +139,20 @@ public class ClientGarageController extends Constants {
     void initialize() throws SQLException, ClassNotFoundException {
 
         ObservableList<special.Services> s = FXCollections.observableArrayList();
-        services_details.setCellValueFactory(new PropertyValueFactory<special.Services, String>("detail"));
-        services_mileage.setCellValueFactory(new PropertyValueFactory<special.Services, String>("mileage"));
-        services_start_date.setCellValueFactory(new PropertyValueFactory<special.Services, Date>("start_date"));
-        services_final_date.setCellValueFactory(new PropertyValueFactory<special.Services, Date>("final_date"));
+        services_details.setCellValueFactory(new PropertyValueFactory<>("detail"));
+        services_mileage.setCellValueFactory(new PropertyValueFactory<>("mileage"));
+        services_start_date.setCellValueFactory(new PropertyValueFactory<>("start_date"));
+        services_final_date.setCellValueFactory(new PropertyValueFactory<>("final_date"));
 
 
         // таблица с машинами нынешними
 
         String query = "SELECT * FROM cars WHERE id_owner = '" + ClientMainController.getLogin() + "' AND status = '1';";
-        PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
+        PreparedStatement statement = DatabaseHandler.getInstance().prepareStatement(query);
         ResultSet result = statement.executeQuery();
 
         ObservableList<special.Cars> c1 = FXCollections.observableArrayList();
-        cars_now.setCellValueFactory(new PropertyValueFactory<special.Cars, String>("license_plate"));
+        cars_now.setCellValueFactory(new PropertyValueFactory<>("license_plate"));
 
         while(result.next()) {
             String license_plate = result.getString("license_plate");
@@ -174,83 +164,79 @@ public class ClientGarageController extends Constants {
         view_table_now.setItems(c1);
 
         TableView.TableViewSelectionModel<special.Cars> selectionModel = view_table_now.getSelectionModel();
-        selectionModel.selectedItemProperty().addListener(new ChangeListener<Cars>() {
-            @Override
-            public void changed(ObservableValue<? extends Cars> observableValue, Cars cars, Cars t1) {
-                license_plate.setText(t1.getLicense_plate());
-                car_make.setText(t1.getMake());
-                car_model.setText(t1.getModel());
-                now_license_plate = t1.getLicense_plate();
-                text_mistake.setText("");
+        selectionModel.selectedItemProperty().addListener((observableValue, cars, t1) -> {
+            license_plate.setText(t1.getLicense_plate());
+            car_make.setText(t1.getMake());
+            car_model.setText(t1.getModel());
+            now_license_plate = t1.getLicense_plate();
+            text_mistake.setText("");
 
-                // таблица с услугами
+            // таблица с услугами
 
-                try {
-                    view_table_services.getItems().clear();
+            try {
+                view_table_services.getItems().clear();
 
-                    String query = "SELECT " + SERVICES_TABLE + ".*," + DETAILS_TABLE + ".*" +
-                            " FROM " + SERVICES_TABLE +
-                            " INNER JOIN " + DETAILS_TABLE + " ON " + SERVICES_TABLE + "." + SERVICES_DETAIL_SERIAL_NUMBER +
-                            " = " + DETAILS_TABLE + "." + DETAILS_SERIAL_NUMBER +
-                            " WHERE " + SERVICES_LICENSE_PLATE + " = '" + now_license_plate + "';";
-                    PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
-                    ResultSet result = statement.executeQuery();
+                String query12 = "SELECT " + SERVICES_TABLE + ".*," + DETAILS_TABLE + ".*" +
+                        " FROM " + SERVICES_TABLE +
+                        " INNER JOIN " + DETAILS_TABLE + " ON " + SERVICES_TABLE + "." + SERVICES_DETAIL_SERIAL_NUMBER +
+                        " = " + DETAILS_TABLE + "." + DETAILS_SERIAL_NUMBER +
+                        " WHERE " + SERVICES_LICENSE_PLATE + " = '" + now_license_plate + "';";
+                PreparedStatement statement12 = DatabaseHandler.getInstance().prepareStatement(query12);
+                ResultSet result12 = statement12.executeQuery();
 
-                    s.clear();
+                s.clear();
 
-                    while (result.next()) {
-                        String mileage = result.getString(SERVICES_MILEAGE);
-                        String detail = result.getString(DETAILS_CATEGORY);
-                        Date start_date = result.getDate(SERVICES_START_DATE);
-                        Date final_date = result.getDate(SERVICES_FINAL_DATE);
-                        Services service = new Services(mileage, start_date, final_date, detail);
-                        s.add(service);
-                    }
-                    view_table_services.setItems(s);
-                } catch (SQLException | ClassNotFoundException e) {
-                    throw new RuntimeException(e);
+                while (result12.next()) {
+                    String mileage = result12.getString(SERVICES_MILEAGE);
+                    String detail = result12.getString(DETAILS_CATEGORY);
+                    Date start_date = result12.getDate(SERVICES_START_DATE);
+                    Date final_date = result12.getDate(SERVICES_FINAL_DATE);
+                    Services service = new Services(mileage, start_date, final_date, detail);
+                    s.add(service);
                 }
-
-                // choice box
-
-                choice_box_detail.getItems().clear();
-                try {
-                    String query = "SELECT d.*" +
-                            " FROM " + DETAILS_TABLE + " AS d" +
-                            " INNER JOIN " + DETAILS_COMPATIBILITY_TABLE + " AS ds" +
-                            " ON ds." + DETAILS_COMPATIBILITY_DETAIL_SERIAL_NUMBER + " = d." + DETAILS_SERIAL_NUMBER +
-                            " INNER JOIN " + CARS_TABLE + " AS c" +
-                            " ON c." + CARS_MODEL + " = ds." + DETAILS_COMPATIBILITY_MODEL +
-                            " WHERE c." + CARS_LICENSE_PLATE + " = '" + now_license_plate + "';";
-                    PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
-                    ResultSet result = statement.executeQuery();
-                    HashSet<String> hs = new HashSet<>();
-
-                    while (result.next()) {
-                        String n = result.getString("category");
-                        hs.add(n);
-                    }
-                    choice_box_detail.getItems().setAll(hs);
-
-                    choice_box_detail.setOnAction(actionEvent -> {
-                        now_detail = choice_box_detail.getValue();
-                    });
-                } catch (SQLException | ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-
+                view_table_services.setItems(s);
+            } catch (SQLException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
+
+            // choice box
+
+            choice_box_detail.getItems().clear();
+            try {
+                String query12 = "SELECT d.*" +
+                        " FROM " + DETAILS_TABLE + " AS d" +
+                        " INNER JOIN " + DETAILS_COMPATIBILITY_TABLE + " AS ds" +
+                        " ON ds." + DETAILS_COMPATIBILITY_DETAIL_SERIAL_NUMBER + " = d." + DETAILS_SERIAL_NUMBER +
+                        " INNER JOIN " + CARS_TABLE + " AS c" +
+                        " ON c." + CARS_MODEL + " = ds." + DETAILS_COMPATIBILITY_MODEL +
+                        " WHERE c." + CARS_LICENSE_PLATE + " = '" + now_license_plate + "';";
+                PreparedStatement statement12 = DatabaseHandler.getInstance().prepareStatement(query12);
+                ResultSet result12 = statement12.executeQuery();
+                HashSet<String> hs = new HashSet<>();
+
+                while (result12.next()) {
+                    String n = result12.getString("category");
+                    hs.add(n);
+                }
+                choice_box_detail.getItems().setAll(hs);
+
+                choice_box_detail.setOnAction(actionEvent -> {
+                });
+            } catch (SQLException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
         });
 
         // таблица с машинами старыми
 
         query = "SELECT * FROM " + CARS_TABLE + " WHERE " + CARS_ID_OWNER +
                 " = '" + ClientMainController.getLogin() + "' AND " + CARS_STATUS + " = '0';";
-        statement = databaseHandler.getDbConnection().prepareStatement(query);
+        statement = DatabaseHandler.getInstance().prepareStatement(query);
         result = statement.executeQuery();
 
         ObservableList<special.Cars> c2 = FXCollections.observableArrayList();
-        cars_old.setCellValueFactory(new PropertyValueFactory<special.Cars, String>("license_plate"));
+        cars_old.setCellValueFactory(new PropertyValueFactory<>("license_plate"));
 
         while(result.next()) {
             String license_plate = result.getString(CARS_LICENSE_PLATE);
@@ -262,42 +248,39 @@ public class ClientGarageController extends Constants {
         view_table_old.setItems(c2);
 
         TableView.TableViewSelectionModel<special.Cars> selectionModel1 = view_table_old.getSelectionModel();
-        selectionModel1.selectedItemProperty().addListener(new ChangeListener<Cars>() {
-            @Override
-            public void changed(ObservableValue<? extends Cars> observableValue, Cars cars, Cars t1) {
-                license_plate.setText(t1.getLicense_plate());
-                car_make.setText(t1.getMake());
-                car_model.setText(t1.getModel());
-                now_license_plate = t1.getLicense_plate();
-                text_mistake.setText("");
+        selectionModel1.selectedItemProperty().addListener((observableValue, cars, t1) -> {
+            license_plate.setText(t1.getLicense_plate());
+            car_make.setText(t1.getMake());
+            car_model.setText(t1.getModel());
+            now_license_plate = t1.getLicense_plate();
+            text_mistake.setText("");
 
-                // таблица с услугами
+            // таблица с услугами
 
-                try {
-                    view_table_services.getItems().clear();
+            try {
+                view_table_services.getItems().clear();
 
-                    String query = "SELECT " + SERVICES_TABLE + ".*, " + DETAILS_TABLE + "." + DETAILS_CATEGORY +
-                            " FROM " + SERVICES_TABLE +
-                            " INNER JOIN " + DETAILS_TABLE + " ON " + SERVICES_TABLE + "." +
-                            SERVICES_DETAIL_SERIAL_NUMBER + " = " + DETAILS_TABLE + "." + DETAILS_SERIAL_NUMBER +
-                            " WHERE " + SERVICES_LICENSE_PLATE + " = '" + now_license_plate + "';";
-                    PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
-                    ResultSet result = statement.executeQuery();
+                String query13 = "SELECT " + SERVICES_TABLE + ".*, " + DETAILS_TABLE + "." + DETAILS_CATEGORY +
+                        " FROM " + SERVICES_TABLE +
+                        " INNER JOIN " + DETAILS_TABLE + " ON " + SERVICES_TABLE + "." +
+                        SERVICES_DETAIL_SERIAL_NUMBER + " = " + DETAILS_TABLE + "." + DETAILS_SERIAL_NUMBER +
+                        " WHERE " + SERVICES_LICENSE_PLATE + " = '" + now_license_plate + "';";
+                PreparedStatement statement13 = DatabaseHandler.getInstance().prepareStatement(query13);
+                ResultSet result13 = statement13.executeQuery();
 
-                    s.clear();
+                s.clear();
 
-                    while (result.next()) {
-                        String mileage = result.getString(SERVICES_MILEAGE);
-                        String detail = result.getString(DETAILS_CATEGORY);
-                        Date start_date = result.getDate(SERVICES_START_DATE);
-                        Date final_date = result.getDate(SERVICES_FINAL_DATE);
-                        Services service = new Services(mileage, start_date, final_date, detail);
-                        s.add(service);
-                    }
-                    view_table_services.setItems(s);
-                } catch (SQLException | ClassNotFoundException e) {
-                    throw new RuntimeException(e);
+                while (result13.next()) {
+                    String mileage = result13.getString(SERVICES_MILEAGE);
+                    String detail = result13.getString(DETAILS_CATEGORY);
+                    Date start_date = result13.getDate(SERVICES_START_DATE);
+                    Date final_date = result13.getDate(SERVICES_FINAL_DATE);
+                    Services service = new Services(mileage, start_date, final_date, detail);
+                    s.add(service);
                 }
+                view_table_services.setItems(s);
+            } catch (SQLException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         });
 
@@ -336,7 +319,7 @@ public class ClientGarageController extends Constants {
                 }
                 // проверка гос.номера
                 if (Objects.equals(licensePlate, "")) {
-                    String regex = "[АВЕКМНОРСТУХ]{1}\\d{3}[АВЕКМНОРСТУХ]{2}\\d{2,3}\\b|\\b[ABEKMHOPCTYX]{1}\\d{3}[ABEKMHOPCTYX]{2}\\d{2,3}";
+                    String regex = "[АВЕКМНОРСТУХ]\\d{3}[АВЕКМНОРСТУХ]{2}\\d{2,3}\\b|\\b[ABEKMHOPCTYX]\\d{3}[ABEKMHOPCTYX]{2}\\d{2,3}";
                     if (!licensePlate.matches(regex)) {
                         flag = false;
                         text_mistake.setText("Гос.номер введён некорректно!");
@@ -347,7 +330,7 @@ public class ClientGarageController extends Constants {
                     PassController.setId(13);
                     Stage stage = new Stage();
                     FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pass.fxml"));
-                    Scene scene = null;
+                    Scene scene;
                     try {
                         scene = new Scene(fxmlLoader.load(), 400, 250);
                     } catch (IOException e) {
@@ -362,7 +345,7 @@ public class ClientGarageController extends Constants {
 
             else if (!Objects.equals(now_license_plate, "")) {
                 try {
-                    Connection connection = databaseHandler.getDbConnection();
+                    Connection connection = DatabaseHandler.getInstance();
                     Statement statement1 = connection.createStatement();
                     statement1.executeUpdate("UPDATE " + CARS_TABLE +
                             " SET status = '1' WHERE " +
@@ -376,18 +359,15 @@ public class ClientGarageController extends Constants {
 
         // удаление машины
         button_delete.setOnMouseClicked(mouseEvent -> {
-            boolean flag = true;
+            boolean flag = !Objects.equals(now_license_plate, "");
             // проверка на пустоту данных
-            if (Objects.equals(now_license_plate, "")) {
-                flag = false;
-            }
 
             // проверка пароля пользователя
             if (flag) {
                 PassController.setId(14);
                 Stage stage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pass.fxml"));
-                Scene scene = null;
+                Scene scene;
                 try {
                     scene = new Scene(fxmlLoader.load(), 400, 250);
                 } catch (IOException e) {
@@ -409,7 +389,7 @@ public class ClientGarageController extends Constants {
                 ClientGarageEditCarController.setOld_license_plate(now_license_plate);
                 Stage stage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("client_garage_edit_car.fxml"));
-                Scene scene = null;
+                Scene scene;
                 try {
                     scene = new Scene(fxmlLoader.load(), 250, 250);
                 } catch (IOException e) {
@@ -457,7 +437,7 @@ public class ClientGarageController extends Constants {
 
             else if ((!flag_service) && (flag1)) {
 
-                String price = "";
+                String price;
 
                 try {
                     String query1 = "SELECT d." + DETAILS_PRICE +
@@ -467,7 +447,7 @@ public class ClientGarageController extends Constants {
                             " INNER JOIN " + CARS_TABLE + " AS c" +
                             " ON c." + CARS_MODEL + " = ds." + DETAILS_COMPATIBILITY_MODEL +
                             " WHERE c." + CARS_LICENSE_PLATE + " = '" + now_license_plate + "';";
-                    PreparedStatement statement1 = databaseHandler.getDbConnection().prepareStatement(query1);
+                    PreparedStatement statement1 = DatabaseHandler.getInstance().prepareStatement(query1);
                     ResultSet result1 = statement1.executeQuery();
                     if (result1.next()) {
                         price = result1.getString(DETAILS_PRICE);
@@ -559,10 +539,10 @@ public class ClientGarageController extends Constants {
         });
 
         // переход на main 1
-        personal_acc1.setOnAction(actionEvent -> { Main.changeScene("client_main.fxml"); });
+        personal_acc1.setOnAction(actionEvent -> Main.changeScene("client_main.fxml"));
 
         // переход на main 2
-        personal_acc2.setOnAction(actionEvent -> { Main.changeScene("client_main.fxml"); });
+        personal_acc2.setOnAction(actionEvent -> Main.changeScene("client_main.fxml"));
 
     }
 
@@ -572,7 +552,7 @@ public class ClientGarageController extends Constants {
                     CARS_LICENSE_PLATE + ", " + CARS_MODEL + ", " + CARS_MAKE + ", status" +
                     ") VALUES(?, ?, ?, ?, ?)";
 
-            PreparedStatement preparedStatement = databaseHandler.getDbConnection().prepareStatement(insertNew);
+            PreparedStatement preparedStatement = DatabaseHandler.getInstance().prepareStatement(insertNew);
             preparedStatement.setString(1, ClientMainController.getLogin());
             preparedStatement.setString(2, licensePlate);
             preparedStatement.setString(3, model);
@@ -582,7 +562,7 @@ public class ClientGarageController extends Constants {
     }
 
     public static void delete() throws SQLException, ClassNotFoundException {
-        Connection connection = databaseHandler.getDbConnection();
+        Connection connection = DatabaseHandler.getInstance();
         Statement statement = connection.createStatement();
         statement.executeUpdate("UPDATE " + CARS_TABLE +
                 " SET status = '0' WHERE " +

@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLOutput;
 
 public class SignInController extends Constants {
 
@@ -37,13 +36,11 @@ public class SignInController extends Constants {
     @FXML
     private Text text_mistake;
 
-    private final DatabaseHandler databaseHandler = new DatabaseHandler();
-
     @FXML
     void initialize() {
 
         // переход на окно регистрации
-        signUpButton.setOnAction(actionEvent -> { Main.changeScene("sign_up.fxml"); });
+        signUpButton.setOnAction(actionEvent -> Main.changeScene("sign_up.fxml"));
 
         // авторизация
         signInWindowButton.setOnAction(actionEvent -> {
@@ -52,12 +49,12 @@ public class SignInController extends Constants {
             String password = passwordField.getText().trim();
 
             if (login.equals("")) {
-                System.out.println("Error: login is epmty.");
+                System.out.println("Error: login is empty.");
                 text_mistake.setText("Вы не ввели логин!");
                 Shake loginAnim = new Shake(loginField);
                 loginAnim.playAnim();
             } else if (password.equals("")) {
-                System.out.println("Error: password is epmty.");
+                System.out.println("Error: password is empty.");
                 text_mistake.setText("Вы не ввели пароль!");
                 Shake passwordAnim = new Shake(passwordField);
                 passwordAnim.playAnim();
@@ -108,7 +105,7 @@ public class SignInController extends Constants {
                         "HAVING e." + EMPLOYEES_LOGIN + " = '" + login + "' AND e." +
                         EMPLOYEES_PASSWORD + " = '" + password + "';";
 
-                PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query_client);
+                PreparedStatement statement = DatabaseHandler.getInstance().prepareStatement(query_client);
                 ResultSet result = statement.executeQuery(query_client);
 
                 if (result.next()) {
@@ -150,7 +147,7 @@ public class SignInController extends Constants {
                         signInWindowButton.getScene().getWindow().hide();
                         Stage stage = new Stage();
                         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("client_main.fxml"));
-                        Scene scene = null;
+                        Scene scene;
                         try {
                             scene = new Scene(fxmlLoader.load(), 800, 600);
                         } catch (IOException e) {
@@ -164,7 +161,7 @@ public class SignInController extends Constants {
 
                 }
 
-                statement = databaseHandler.getDbConnection().prepareStatement(query_employee);
+                statement = DatabaseHandler.getInstance().prepareStatement(query_employee);
                 result = statement.executeQuery(query_employee);
 
                 if (result.next()) {
@@ -206,7 +203,7 @@ public class SignInController extends Constants {
                         signInWindowButton.getScene().getWindow().hide();
                         Stage stage = new Stage();
                         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("employee_main.fxml"));
-                        Scene scene = null;
+                        Scene scene;
                         try {
                             scene = new Scene(fxmlLoader.load(), 800, 600);
                         } catch (IOException e) {
@@ -219,7 +216,7 @@ public class SignInController extends Constants {
                     }
                 }
 
-                statement = databaseHandler.getDbConnection().prepareStatement(query_admin);
+                statement = DatabaseHandler.getInstance().prepareStatement(query_admin);
                 result = statement.executeQuery(query_admin);
 
                 if (result.next()) {
@@ -261,7 +258,7 @@ public class SignInController extends Constants {
                         signInWindowButton.getScene().getWindow().hide();
                         Stage stage = new Stage();
                         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_main.fxml"));
-                        Scene scene = null;
+                        Scene scene;
                         try {
                             scene = new Scene(fxmlLoader.load(), 800, 600);
                         } catch (IOException e) {
@@ -271,7 +268,6 @@ public class SignInController extends Constants {
                         Main.setStage(stage);
                         stage.show();
                     }
-                    break;
 
                 }
 
@@ -282,9 +278,8 @@ public class SignInController extends Constants {
                     Shake passwordAnim = new Shake(passwordField);
                     loginAnim.playAnim();
                     passwordAnim.playAnim();
-                    break;
                 }
-
+                break;
             } catch (SQLException | ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
             }

@@ -61,8 +61,6 @@ public class AdminClientsEditController extends Constants {
 
     private static String old_login;
 
-    static DatabaseHandler databaseHandler = new DatabaseHandler();
-
     private boolean flag = true;
 
     public static void setOld_login(String old_login) {
@@ -103,7 +101,7 @@ public class AdminClientsEditController extends Constants {
                     String query_clients = "SELECT * FROM " + CLIENTS_TABLE + " WHERE " + CLIENTS_LOGIN + " =?";
                     String query_employees = "SELECT * FROM " + EMPLOYEES_TABLE + " WHERE " + EMPLOYEES_LOGIN + " =?";
 
-                    PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query_clients);
+                    PreparedStatement statement = DatabaseHandler.getInstance().prepareStatement(query_clients);
                     statement.setString(1, login);
                     ResultSet result = statement.executeQuery();
                     if (result.next()) {
@@ -112,7 +110,7 @@ public class AdminClientsEditController extends Constants {
                         flag = false;
                     }
 
-                    statement = databaseHandler.getDbConnection().prepareStatement(query_employees);
+                    statement = DatabaseHandler.getInstance().prepareStatement(query_employees);
                     statement.setString(1, login);
                     result = statement.executeQuery();
                     if (result.next()) {
@@ -127,7 +125,7 @@ public class AdminClientsEditController extends Constants {
             // проверка номера телефона на корректность
             if (!Objects.equals(phone, "")) {
                 try {
-                    String regex = "(?:\\+[\\d]{1,3}|8)(?:[\\s-]?)\\(?(?:[\\d]{3})\\)?[\\s-]?[\\d]{3}[\\s-]?[\\d]{2}[\\s-]?[\\d]{2}";
+                    String regex = "(?:\\+\\d{1,3}|8)[\\s-]?\\(?\\d{3}\\)?[\\s-]?\\d{3}[\\s-]?\\d{2}[\\s-]?\\d{2}";
                     if (!phone.matches(regex)) {
                         System.out.println("Error: incorrect phone number");
                         text_mistake.setText("Некорректный номер телефона!");
@@ -145,7 +143,7 @@ public class AdminClientsEditController extends Constants {
                 PassController.setId(8);
                 Stage stage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pass.fxml"));
-                Scene scene = null;
+                Scene scene;
                 try {
                     scene = new Scene(fxmlLoader.load(), 400, 250);
                 } catch (IOException e) {
@@ -167,7 +165,7 @@ public class AdminClientsEditController extends Constants {
                     CLIENTS_LOGIN + " = '" + login + "' WHERE " +
                     CLIENTS_LOGIN + " = '" + old_login + "';";
 
-            Connection connection = databaseHandler.getDbConnection();
+            Connection connection = DatabaseHandler.getInstance();
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
@@ -179,7 +177,7 @@ public class AdminClientsEditController extends Constants {
             String sqlAlterTable = "UPDATE " +  CLIENTS_TABLE +
                     " SET " + CLIENTS_PASSWORD + " = '" + pass +
                     "' WHERE " + CLIENTS_LOGIN + " = '" + old_login + "';";
-            Connection connection = databaseHandler.getDbConnection();
+            Connection connection = DatabaseHandler.getInstance();
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
@@ -190,7 +188,7 @@ public class AdminClientsEditController extends Constants {
             String sqlAlterTable = "UPDATE " + CLIENTS_TABLE +
                     " SET " + CLIENTS_LAST_NAME + " = '" + last_name +
                     "' WHERE " + CLIENTS_LOGIN + " = '" + old_login + "';";
-            Connection connection = databaseHandler.getDbConnection();
+            Connection connection = DatabaseHandler.getInstance();
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
@@ -201,7 +199,7 @@ public class AdminClientsEditController extends Constants {
             String sqlAlterTable = "UPDATE " + CLIENTS_TABLE +
                     " SET " + CLIENTS_FIRST_NAME + " = '" + first_name +
                     "' WHERE " + CLIENTS_LOGIN + " = '" + old_login + "';";
-            Connection connection = databaseHandler.getDbConnection();
+            Connection connection = DatabaseHandler.getInstance();
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
@@ -213,7 +211,7 @@ public class AdminClientsEditController extends Constants {
                     " SET " + CLIENTS_SECOND_NAME + " = '" +
                     second_name + "' WHERE " + CLIENTS_LOGIN +
                     " = '" + old_login + "';";
-            Connection connection = databaseHandler.getDbConnection();
+            Connection connection = DatabaseHandler.getInstance();
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
@@ -224,7 +222,7 @@ public class AdminClientsEditController extends Constants {
             String sqlAlterTable = "UPDATE " + CLIENTS_TABLE +
                     " SET " + CLIENTS_ADDRESS + " = '" + address +
                     "' WHERE " + CLIENTS_LOGIN + " = '" + old_login + "';";
-            Connection connection = databaseHandler.getDbConnection();
+            Connection connection = DatabaseHandler.getInstance();
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
@@ -235,7 +233,7 @@ public class AdminClientsEditController extends Constants {
             String sqlAlterTable = "UPDATE " + CLIENTS_TABLE +
                     " SET " + CLIENTS_PHONE_NUMBER + " = '" + phone +
                     "' WHERE " + CLIENTS_LOGIN + " = '" + old_login + "';";
-            Connection connection = databaseHandler.getDbConnection();
+            Connection connection = DatabaseHandler.getInstance();
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");

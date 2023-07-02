@@ -62,8 +62,6 @@ public class AdminServicesAddController extends Constants {
 
     private boolean flag = true;
 
-    private static final DatabaseHandler databaseHandler = new DatabaseHandler();
-
     @FXML
     void initialize() {
 
@@ -131,7 +129,7 @@ public class AdminServicesAddController extends Constants {
                 PassController.setId(3);
                 Stage stage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pass.fxml"));
-                Scene scene = null;
+                Scene scene;
                 try {
                     scene = new Scene(fxmlLoader.load(), 400, 250);
                 } catch (IOException e) {
@@ -155,7 +153,7 @@ public class AdminServicesAddController extends Constants {
 
         System.out.println(insertNew);
 
-        PreparedStatement preparedStatement = databaseHandler.getDbConnection().prepareStatement(insertNew);
+        PreparedStatement preparedStatement = DatabaseHandler.getInstance().prepareStatement(insertNew);
         preparedStatement.setString(1, employee);
         preparedStatement.setString(2, mileage);
         preparedStatement.setString(3, work_time);

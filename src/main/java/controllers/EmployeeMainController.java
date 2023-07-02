@@ -10,13 +10,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.Constants;
-import main.DatabaseHandler;
 import main.Main;
 import special.User;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class EmployeeMainController extends Constants {
@@ -67,8 +64,6 @@ public class EmployeeMainController extends Constants {
     private Text text_work_time;
 
     private static String login;
-
-    private final DatabaseHandler databaseHandler = new DatabaseHandler();
 
     private boolean pane_flag = false;
 
@@ -145,7 +140,7 @@ public class EmployeeMainController extends Constants {
 
             Stage stage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("employee_edit.fxml"));
-            Scene scene = null;
+            Scene scene;
             try {
                 scene = new Scene(fxmlLoader.load(), 400, 250);
             } catch (IOException e) {
@@ -157,16 +152,16 @@ public class EmployeeMainController extends Constants {
         });
 
         // переход на окно просмотра услуг 1
-        personal_service1.setOnAction(actionEvent -> { Main.changeScene("employee_services.fxml"); });
+        personal_service1.setOnAction(actionEvent -> Main.changeScene("employee_services.fxml"));
 
         // переход на окно просмотра услуг 2
-        personal_service2.setOnAction(actionEvent -> { Main.changeScene("employee_services.fxml"); });
+        personal_service2.setOnAction(actionEvent -> Main.changeScene("employee_services.fxml"));
 
         // переход на окно работы 1
-        personal_work_time1.setOnAction(actionEvent -> { Main.changeScene("employee_work_time.fxml"); });
+        personal_work_time1.setOnAction(actionEvent -> Main.changeScene("employee_work_time.fxml"));
 
         // переход на окно работы 2
-        personal_work_time2.setOnAction(actionEvent -> { Main.changeScene("employee_work_time.fxml"); });
+        personal_work_time2.setOnAction(actionEvent -> Main.changeScene("employee_work_time.fxml"));
     }
 
     public static String getLogin() {

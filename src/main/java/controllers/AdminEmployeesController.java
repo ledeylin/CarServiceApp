@@ -1,8 +1,6 @@
 package controllers;
 
 import javafx.animation.TranslateTransition;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -100,8 +98,6 @@ public class AdminEmployeesController extends Constants {
 
     private static String post;
 
-    private static final DatabaseHandler databaseHandler = new DatabaseHandler();
-
     private boolean pane_flag = false;
 
     @FXML
@@ -123,10 +119,10 @@ public class AdminEmployeesController extends Constants {
                 EMPLOYEES_TABLE + "." + EMPLOYEES_FIRST_NAME + " ASC, " + EMPLOYEES_TABLE + "." +
                 EMPLOYEES_SECOND_NAME + " ASC";
 
-        PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
+        PreparedStatement statement = DatabaseHandler.getInstance().prepareStatement(query);
         ResultSet result = statement.executeQuery();
 
-        table.setCellValueFactory(new PropertyValueFactory<User, String>("name"));
+        table.setCellValueFactory(new PropertyValueFactory<>("name"));
         ObservableList<User> u = FXCollections.observableArrayList();
         while (result.next()) {
             String last_name = result.getString(CLIENTS_LAST_NAME);
@@ -155,34 +151,31 @@ public class AdminEmployeesController extends Constants {
         list_view.setItems(u);
 
         TableView.TableViewSelectionModel<special.User> selectionModel = list_view.getSelectionModel();
-        selectionModel.selectedItemProperty().addListener(new ChangeListener<special.User>() {
-            @Override
-            public void changed(ObservableValue<? extends User> observableValue, User user, User t1) {
+        selectionModel.selectedItemProperty().addListener((observableValue, user, t1) -> {
 
-                text_name.setText(list_view.getSelectionModel().getSelectedItem().getFirst_name() + " " +
-                        list_view.getSelectionModel().getSelectedItem().getFirst_name() + " " +
-                        list_view.getSelectionModel().getSelectedItem().getSecond_name());
-                text_address.setText(list_view.getSelectionModel().getSelectedItem().getAddress());
-                text_login.setText(list_view.getSelectionModel().getSelectedItem().getLogin());
-                text_pass.setText(list_view.getSelectionModel().getSelectedItem().getPassword());
-                if (Objects.equals(list_view.getSelectionModel().getSelectedItem().getPost(), "0")) {
-                    text_post.setText("Уволен");
-                    post = "Уволен";
-                }
-                else if (Objects.equals(list_view.getSelectionModel().getSelectedItem().getPost(), "1")){
-                    text_post.setText("Работник");
-                    post = "Работник";
-                }
-                else if (Objects.equals(list_view.getSelectionModel().getSelectedItem().getPost(), "2")){
-                    text_post.setText("Администратор");
-                    post = "Администратор";
-                }
-                text_work_time.setText(list_view.getSelectionModel().getSelectedItem().getWork_time());
-                text_salary.setText(list_view.getSelectionModel().getSelectedItem().getSalary());
-                text_services_count.setText(list_view.getSelectionModel().getSelectedItem().getService_count());
-                text_old_login = list_view.getSelectionModel().getSelectedItem().getLogin();
-
+            text_name.setText(list_view.getSelectionModel().getSelectedItem().getFirst_name() + " " +
+                    list_view.getSelectionModel().getSelectedItem().getFirst_name() + " " +
+                    list_view.getSelectionModel().getSelectedItem().getSecond_name());
+            text_address.setText(list_view.getSelectionModel().getSelectedItem().getAddress());
+            text_login.setText(list_view.getSelectionModel().getSelectedItem().getLogin());
+            text_pass.setText(list_view.getSelectionModel().getSelectedItem().getPassword());
+            if (Objects.equals(list_view.getSelectionModel().getSelectedItem().getPost(), "0")) {
+                text_post.setText("Уволен");
+                post = "Уволен";
             }
+            else if (Objects.equals(list_view.getSelectionModel().getSelectedItem().getPost(), "1")){
+                text_post.setText("Работник");
+                post = "Работник";
+            }
+            else if (Objects.equals(list_view.getSelectionModel().getSelectedItem().getPost(), "2")){
+                text_post.setText("Администратор");
+                post = "Администратор";
+            }
+            text_work_time.setText(list_view.getSelectionModel().getSelectedItem().getWork_time());
+            text_salary.setText(list_view.getSelectionModel().getSelectedItem().getSalary());
+            text_services_count.setText(list_view.getSelectionModel().getSelectedItem().getService_count());
+            text_old_login = list_view.getSelectionModel().getSelectedItem().getLogin();
+
         });
 
         // меню
@@ -231,22 +224,22 @@ public class AdminEmployeesController extends Constants {
         });
 
         // переход на окно личного кабинета 1
-        personal_acc1.setOnAction(actionEvent -> { Main.changeScene("admin_main.fxml"); });
+        personal_acc1.setOnAction(actionEvent -> Main.changeScene("admin_main.fxml"));
 
         // переход на окно личного кабинета 2
-        personal_acc2.setOnAction(actionEvent -> { Main.changeScene("admin_main.fxml"); });
+        personal_acc2.setOnAction(actionEvent -> Main.changeScene("admin_main.fxml"));
 
         // переход на окно клиентов 1
-        personal_clients1.setOnAction(actionEvent -> { Main.changeScene("admin_clients.fxml"); });
+        personal_clients1.setOnAction(actionEvent -> Main.changeScene("admin_clients.fxml"));
 
         // переход на окно клиентов 2
-        personal_clients2.setOnAction(actionEvent -> { Main.changeScene("admin_clients.fxml"); });
+        personal_clients2.setOnAction(actionEvent -> Main.changeScene("admin_clients.fxml"));
 
         // переход на окно услуг 1
-        personal_service1.setOnAction(actionEvent -> { Main.changeScene("admin_services.fxml"); });
+        personal_service1.setOnAction(actionEvent -> Main.changeScene("admin_services.fxml"));
 
         // переход на окно услуг 2
-        personal_service2.setOnAction(actionEvent -> { Main.changeScene("admin_services.fxml"); });
+        personal_service2.setOnAction(actionEvent -> Main.changeScene("admin_services.fxml"));
 
         // редактирование информации о сотруднике
         button_edit.setOnAction(actionEvent -> {
@@ -254,7 +247,7 @@ public class AdminEmployeesController extends Constants {
             AdminEmployeesEditController.setOld_login(text_old_login);
             Stage stage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_employees_edit.fxml"));
-            Scene scene = null;
+            Scene scene;
             try {
                 scene = new Scene(fxmlLoader.load(), 529, 267);
             } catch (IOException e) {
@@ -272,7 +265,7 @@ public class AdminEmployeesController extends Constants {
             if (Objects.equals(post, "Уволен")) {
 
                 try {
-                    Connection connection = databaseHandler.getDbConnection();
+                    Connection connection = DatabaseHandler.getInstance();
                     Statement statement1 = connection.createStatement();
                     statement1.executeUpdate("UPDATE " + EMPLOYEES_TABLE +
                             " SET " + EMPLOYEES_ACCESS_RIGHTS + " = '1' WHERE " +
@@ -292,7 +285,7 @@ public class AdminEmployeesController extends Constants {
             PassController.setId(4);
             Stage stage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pass.fxml"));
-            Scene scene = null;
+            Scene scene;
             try {
                 scene = new Scene(fxmlLoader.load(), 400, 250);
             } catch (IOException e) {
@@ -307,7 +300,7 @@ public class AdminEmployeesController extends Constants {
     }
 
     public static void delete() throws SQLException, ClassNotFoundException {
-        Connection connection = databaseHandler.getDbConnection();
+        Connection connection = DatabaseHandler.getInstance();
         Statement statement = connection.createStatement();
         statement.executeUpdate("UPDATE " + EMPLOYEES_TABLE +
                 " SET " + EMPLOYEES_ACCESS_RIGHTS + " = '0' WHERE " +

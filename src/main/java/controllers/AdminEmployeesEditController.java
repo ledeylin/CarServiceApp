@@ -63,8 +63,6 @@ public class AdminEmployeesEditController extends Constants {
 
     private boolean flag = true;
 
-    static DatabaseHandler databaseHandler = new DatabaseHandler();
-
     public static void setOld_login(String old_login) {
         AdminEmployeesEditController.old_login = old_login;
     }
@@ -103,7 +101,7 @@ public class AdminEmployeesEditController extends Constants {
                 String query_clients = "SELECT * FROM " + CLIENTS_TABLE + " WHERE " + CLIENTS_LOGIN + " =?";
                 String query_employees = "SELECT * FROM " + EMPLOYEES_TABLE + " WHERE " + EMPLOYEES_LOGIN + " =?";
 
-                PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query_clients);
+                PreparedStatement statement = DatabaseHandler.getInstance().prepareStatement(query_clients);
                 statement.setString(1, login);
                 ResultSet result = statement.executeQuery();
                 if (result.next()) {
@@ -112,7 +110,7 @@ public class AdminEmployeesEditController extends Constants {
                     flag = false;
                 }
 
-                statement = databaseHandler.getDbConnection().prepareStatement(query_employees);
+                statement = DatabaseHandler.getInstance().prepareStatement(query_employees);
                 statement.setString(1, login);
                 result = statement.executeQuery();
                 if (result.next()) {
@@ -127,7 +125,7 @@ public class AdminEmployeesEditController extends Constants {
                 PassController.setId(0);
                 Stage stage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pass.fxml"));
-                Scene scene = null;
+                Scene scene;
                 try {
                     scene = new Scene(fxmlLoader.load(), 400, 250);
                 } catch (IOException e) {
@@ -148,7 +146,7 @@ public class AdminEmployeesEditController extends Constants {
             String sqlAlterTable = "UPDATE " + EMPLOYEES_TABLE +
                     " SET " + EMPLOYEES_PASSWORD + " = '" + pass +
                     "' WHERE " + EMPLOYEES_LOGIN + " = '" + old_login + "';";
-            Connection connection = databaseHandler.getDbConnection();
+            Connection connection = DatabaseHandler.getInstance();
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
@@ -159,7 +157,7 @@ public class AdminEmployeesEditController extends Constants {
             String sqlAlterTable = "UPDATE " + EMPLOYEES_TABLE +
                     " SET " + EMPLOYEES_LAST_NAME + " = '" + last_name +
                     "' WHERE " + EMPLOYEES_LOGIN + " = '" + old_login + "';";
-            Connection connection = databaseHandler.getDbConnection();
+            Connection connection = DatabaseHandler.getInstance();
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
@@ -170,7 +168,7 @@ public class AdminEmployeesEditController extends Constants {
             String sqlAlterTable = "UPDATE " + EMPLOYEES_TABLE +
                     " SET " + EMPLOYEES_FIRST_NAME + " = '" + first_name +
                     "' WHERE " + EMPLOYEES_LOGIN + " = '" + old_login + "';";
-            Connection connection = databaseHandler.getDbConnection();
+            Connection connection = DatabaseHandler.getInstance();
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
@@ -182,7 +180,7 @@ public class AdminEmployeesEditController extends Constants {
                     " SET " + EMPLOYEES_SECOND_NAME + " = '" +
                     second_name + "' WHERE " + EMPLOYEES_LOGIN +
                     " = '" + old_login + "';";
-            Connection connection = databaseHandler.getDbConnection();
+            Connection connection = DatabaseHandler.getInstance();
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
@@ -193,7 +191,7 @@ public class AdminEmployeesEditController extends Constants {
             String sqlAlterTable = "UPDATE " + EMPLOYEES_TABLE +
                     " SET " + EMPLOYEES_ADDRESS + " = '" + address +
                     "' WHERE " + EMPLOYEES_LOGIN + " = '" + old_login + "';";
-            Connection connection = databaseHandler.getDbConnection();
+            Connection connection = DatabaseHandler.getInstance();
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
@@ -205,7 +203,7 @@ public class AdminEmployeesEditController extends Constants {
                     " SET " + EMPLOYEES_ACCESS_RIGHTS + " = " +
                     permissions + " WHERE " + CLIENTS_LOGIN +
                     " = '" + old_login + "';";
-            Connection connection = databaseHandler.getDbConnection();
+            Connection connection = DatabaseHandler.getInstance();
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");

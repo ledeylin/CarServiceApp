@@ -35,8 +35,6 @@ public class ClientEditController extends Constants {
 
     private static String pass = "";
 
-    static DatabaseHandler databaseHandler = new DatabaseHandler();
-
     private static boolean flag = true;
 
     @FXML
@@ -55,7 +53,7 @@ public class ClientEditController extends Constants {
                 try {
 
                     String query = "SELECT * FROM " + CLIENTS_TABLE + " WHERE " + CLIENTS_LOGIN + " =?";
-                    PreparedStatement preparedStatement = databaseHandler.getDbConnection().prepareStatement(query);
+                    PreparedStatement preparedStatement = DatabaseHandler.getInstance().prepareStatement(query);
                     preparedStatement.setString(1, ClientEditController.login);
                     ResultSet result = preparedStatement.executeQuery();
                     if (result.next()) {
@@ -65,7 +63,7 @@ public class ClientEditController extends Constants {
                     }
 
                     query = "SELECT * FROM " + EMPLOYEES_TABLE + " WHERE " + EMPLOYEES_LOGIN + " =?";
-                    preparedStatement = databaseHandler.getDbConnection().prepareStatement(query);
+                    preparedStatement = DatabaseHandler.getInstance().prepareStatement(query);
                     preparedStatement.setString(1, ClientEditController.login);
                     result = preparedStatement.executeQuery();
                     if (result.next()) {
@@ -85,7 +83,7 @@ public class ClientEditController extends Constants {
                 PassController.setId(11);
                 Stage stage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pass.fxml"));
-                Scene scene = null;
+                Scene scene;
                 try {
                     scene = new Scene(fxmlLoader.load(), 400, 250);
                 } catch (IOException e) {
@@ -102,10 +100,10 @@ public class ClientEditController extends Constants {
 
         // логин
         if (!Objects.equals(login, "")) {
-            String sqlAlterTable = sqlAlterTable = "UPDATE " + CLIENTS_TABLE + " SET " +
+            String sqlAlterTable = "UPDATE " + CLIENTS_TABLE + " SET " +
                     CLIENTS_LOGIN + " = '" + ClientEditController.login + "' WHERE " +
                     CLIENTS_LOGIN + " = '" + ClientEditController.old_login + "';";
-            Connection connection = databaseHandler.getDbConnection();
+            Connection connection = DatabaseHandler.getInstance();
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");
@@ -115,10 +113,10 @@ public class ClientEditController extends Constants {
 
         // пароль
         if (!Objects.equals(pass, "")) {
-            String sqlAlterTable = sqlAlterTable = "UPDATE " + CLIENTS_TABLE + " SET " +
+            String sqlAlterTable = "UPDATE " + CLIENTS_TABLE + " SET " +
                     CLIENTS_PASSWORD + " = '" + ClientEditController.pass + "' WHERE " +
                     CLIENTS_LOGIN + " = '" + ClientEditController.old_login + "';";
-            Connection connection = databaseHandler.getDbConnection();
+            Connection connection = DatabaseHandler.getInstance();
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlAlterTable);
             System.out.println("Success!");

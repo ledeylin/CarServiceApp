@@ -1,8 +1,6 @@
 package controllers;
 
 import javafx.animation.TranslateTransition;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -104,8 +102,6 @@ public class AdminServicesController extends Constants {
 
     private static Date final__date;
 
-    private static final DatabaseHandler databaseHandler = new DatabaseHandler();
-
     private boolean pane_flag = false;
 
     @FXML
@@ -121,10 +117,10 @@ public class AdminServicesController extends Constants {
                 " = " + CARS_TABLE + "." + CARS_LICENSE_PLATE + " \n" +
                 "JOIN " + DETAILS_TABLE + " ON " + SERVICES_TABLE + "." + SERVICES_DETAIL_SERIAL_NUMBER +
                         " = " + DETAILS_TABLE + "." + DETAILS_SERIAL_NUMBER + ";";
-        PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
+        PreparedStatement statement = DatabaseHandler.getInstance().prepareStatement(query);
         ResultSet result = statement.executeQuery();
 
-        table.setCellValueFactory(new PropertyValueFactory<Services, String>("date"));
+        table.setCellValueFactory(new PropertyValueFactory<>("date"));
         ObservableList<Services> s = FXCollections.observableArrayList();
         while (result.next()) {
             int id = result.getInt(SERVICES_ID);
@@ -146,22 +142,19 @@ public class AdminServicesController extends Constants {
         list_view.setItems(s);
 
         TableView.TableViewSelectionModel<special.Services> selectionModel = list_view.getSelectionModel();
-        selectionModel.selectedItemProperty().addListener(new ChangeListener<special.Services>() {
-            @Override
-            public void changed(ObservableValue<? extends Services> observableValue, Services services, Services t1) {
-                text_serial_number.setText(list_view.getSelectionModel().getSelectedItem().getDetail_serial_number());
-                text_license_plate.setText(list_view.getSelectionModel().getSelectedItem().getLicense_plate());
-                text_client_login.setText(list_view.getSelectionModel().getSelectedItem().getId_client());
-                text_car_model.setText(list_view.getSelectionModel().getSelectedItem().getModel());
-                text_price.setText(String.valueOf(list_view.getSelectionModel().getSelectedItem().getPrice()));
-                text_login_employee.setText(list_view.getSelectionModel().getSelectedItem().getId_employee());
-                text_start_date.setText(list_view.getSelectionModel().getSelectedItem().getStart_date().toString());
-                text_final_date.setText(list_view.getSelectionModel().getSelectedItem().getFinal_date().toString());
-                text_detail.setText(list_view.getSelectionModel().getSelectedItem().getDetail());
-                id = list_view.getSelectionModel().getSelectedItem().getId();
-                start__date = list_view.getSelectionModel().getSelectedItem().getStart_date();
-                final__date = list_view.getSelectionModel().getSelectedItem().getFinal_date();
-            }
+        selectionModel.selectedItemProperty().addListener((observableValue, services, t1) -> {
+            text_serial_number.setText(list_view.getSelectionModel().getSelectedItem().getDetail_serial_number());
+            text_license_plate.setText(list_view.getSelectionModel().getSelectedItem().getLicense_plate());
+            text_client_login.setText(list_view.getSelectionModel().getSelectedItem().getId_client());
+            text_car_model.setText(list_view.getSelectionModel().getSelectedItem().getModel());
+            text_price.setText(String.valueOf(list_view.getSelectionModel().getSelectedItem().getPrice()));
+            text_login_employee.setText(list_view.getSelectionModel().getSelectedItem().getId_employee());
+            text_start_date.setText(list_view.getSelectionModel().getSelectedItem().getStart_date().toString());
+            text_final_date.setText(list_view.getSelectionModel().getSelectedItem().getFinal_date().toString());
+            text_detail.setText(list_view.getSelectionModel().getSelectedItem().getDetail());
+            id = list_view.getSelectionModel().getSelectedItem().getId();
+            start__date = list_view.getSelectionModel().getSelectedItem().getStart_date();
+            final__date = list_view.getSelectionModel().getSelectedItem().getFinal_date();
         });
 
         // меню
@@ -210,22 +203,22 @@ public class AdminServicesController extends Constants {
         });
 
         // переход на окно личного кабинета 1
-        personal_acc1.setOnAction(actionEvent -> { Main.changeScene("admin_main.fxml"); });
+        personal_acc1.setOnAction(actionEvent -> Main.changeScene("admin_main.fxml"));
 
         // переход на окно личного кабинета 2
-        personal_acc2.setOnAction(actionEvent -> { Main.changeScene("admin_main.fxml"); });
+        personal_acc2.setOnAction(actionEvent -> Main.changeScene("admin_main.fxml"));
 
         // переход на окно работников 1
-        personal_employees1.setOnAction(actionEvent -> { Main.changeScene("admin_employees.fxml"); });
+        personal_employees1.setOnAction(actionEvent -> Main.changeScene("admin_employees.fxml"));
 
         // переход на окно работников 2
-        personal_employees2.setOnAction(actionEvent -> { Main.changeScene("admin_employees.fxml"); });
+        personal_employees2.setOnAction(actionEvent -> Main.changeScene("admin_employees.fxml"));
 
         // переход на окно клиентов 1
-        personal_clients1.setOnAction(actionEvent -> { Main.changeScene("admin_clients.fxml"); });
+        personal_clients1.setOnAction(actionEvent -> Main.changeScene("admin_clients.fxml"));
 
         // переход на окно клиентов 2
-        personal_clients2.setOnAction(actionEvent -> { Main.changeScene("admin_clients.fxml"); });
+        personal_clients2.setOnAction(actionEvent -> Main.changeScene("admin_clients.fxml"));
 
         // редактирование информации об услуге
         button_edit.setOnAction(actionEvent -> {
@@ -235,7 +228,7 @@ public class AdminServicesController extends Constants {
             AdminServicesEditController.setFinalDate(final__date.toLocalDate());
             Stage stage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_services_edit.fxml"));
-            Scene scene = null;
+            Scene scene;
 
             try {
                 scene = new Scene(fxmlLoader.load(), 529, 267);
@@ -252,7 +245,7 @@ public class AdminServicesController extends Constants {
         button_add.setOnAction(actionEvent -> {
             Stage stage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_services_add.fxml"));
-            Scene scene = null;
+            Scene scene;
 
             try {
                 scene = new Scene(fxmlLoader.load(), 529, 267);
@@ -270,7 +263,7 @@ public class AdminServicesController extends Constants {
             Stage stage = new Stage();
             PassController.setId(5);
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pass.fxml"));
-            Scene scene = null;
+            Scene scene;
 
             try { scene = new Scene(fxmlLoader.load(), 400, 250); }
             catch (IOException e) { throw new RuntimeException(e); }
@@ -283,7 +276,7 @@ public class AdminServicesController extends Constants {
     }
 
     public static void delete() throws SQLException, ClassNotFoundException {
-        Connection connection = databaseHandler.getDbConnection();
+        Connection connection = DatabaseHandler.getInstance();
         Statement statement = connection.createStatement();
         statement.executeUpdate("DELETE FROM " + SERVICES_TABLE + " WHERE " + SERVICES_ID + " = '" + id + "'");
 

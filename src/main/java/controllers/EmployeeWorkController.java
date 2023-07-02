@@ -1,12 +1,8 @@
 package controllers;
 
 import javafx.animation.TranslateTransition;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
-import javafx.collections.ObservableSet;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -19,12 +15,11 @@ import javafx.util.Duration;
 import main.Constants;
 import main.DatabaseHandler;
 import main.Main;
-import special.Services;
 import special.EmployeesWork;
+import special.Services;
 
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Objects;
 
@@ -96,8 +91,6 @@ public class EmployeeWorkController extends Constants {
 
     private static String detail_service = "";
 
-    private static final DatabaseHandler databaseHandler = new DatabaseHandler();
-
     private boolean pane_flag = false;
 
     @FXML
@@ -106,12 +99,12 @@ public class EmployeeWorkController extends Constants {
         // таблица с деталями
         String query = "SELECT * FROM " + EMPLOYEES_WORK_TABLE + " WHERE " + EMPLOYEES_WORK_LOGIN +
                 " = '" + EmployeeMainController.getLogin() + "';";
-        PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
+        PreparedStatement statement = DatabaseHandler.getInstance().prepareStatement(query);
         ResultSet result = statement.executeQuery();
 
         ObservableList<EmployeesWork> ew1 = FXCollections.observableArrayList();
-        details_detail.setCellValueFactory(new PropertyValueFactory<special.EmployeesWork, String>("detail_category"));
-        details_time.setCellValueFactory(new PropertyValueFactory<special.EmployeesWork, String>("work_time"));
+        details_detail.setCellValueFactory(new PropertyValueFactory<>("detail_category"));
+        details_time.setCellValueFactory(new PropertyValueFactory<>("work_time"));
 
         while(result.next()) {
             String detail_category = result.getString(EMPLOYEES_WORK_DETAIL_CATEGORY);
@@ -121,27 +114,22 @@ public class EmployeeWorkController extends Constants {
         table_work.setItems(ew1);
 
         TableView.TableViewSelectionModel<EmployeesWork> selectionModel = table_work.getSelectionModel();
-        selectionModel.selectedItemProperty().addListener(new ChangeListener<EmployeesWork>() {
-            @Override
-            public void changed(ObservableValue<? extends EmployeesWork> observableValue, EmployeesWork employeesWork, EmployeesWork t1) {
-                detail_service = t1.getDetail_category();
-            }
-        });
+        selectionModel.selectedItemProperty().addListener((observableValue, employeesWork, t1) -> detail_service = t1.getDetail_category());
 
         // таблица с услугами
         query = "SELECT * FROM " + SERVICES_TABLE + " WHERE " + SERVICES_ID_EMPLOYEE +
                 " = '" + EmployeeMainController.getLogin() +
                 "' AND " + SERVICES_FINAL_DATE + " > CURDATE();";
-        statement = databaseHandler.getDbConnection().prepareStatement(query);
+        statement = DatabaseHandler.getInstance().prepareStatement(query);
         result = statement.executeQuery();
 
         ObservableList<Services> ew2 = FXCollections.observableArrayList();
         services_detail.setCellValueFactory(
-                new PropertyValueFactory<special.Services, String>(SERVICES_DETAIL_SERIAL_NUMBER));
+                new PropertyValueFactory<>(SERVICES_DETAIL_SERIAL_NUMBER));
         services_start.setCellValueFactory(
-                new PropertyValueFactory<special.Services, Date>(SERVICES_START_DATE));
+                new PropertyValueFactory<>(SERVICES_START_DATE));
         services_final.setCellValueFactory(
-                new PropertyValueFactory<special.Services, Date>(SERVICES_FINAL_DATE));
+                new PropertyValueFactory<>(SERVICES_FINAL_DATE));
 
         while(result.next()) {
             String detail_serial_number = result.getString(SERVICES_DETAIL_SERIAL_NUMBER);
@@ -154,7 +142,7 @@ public class EmployeeWorkController extends Constants {
 
         // choice box
         query = "SELECT * FROM " + DETAILS_TABLE;
-        statement = databaseHandler.getDbConnection().prepareStatement(query);
+        statement = DatabaseHandler.getInstance().prepareStatement(query);
         result = statement.executeQuery();
         HashSet<String> hs = new HashSet<>();
 
@@ -164,9 +152,7 @@ public class EmployeeWorkController extends Constants {
         }
         choice_box_detail.getItems().setAll(hs);
 
-        choice_box_detail.setOnAction(actionEvent -> {
-            detail = choice_box_detail.getValue();
-        });
+        choice_box_detail.setOnAction(actionEvent -> detail = choice_box_detail.getValue());
 
         // добавление детали
         button_add.setOnMouseClicked(mouseEvent -> {
@@ -186,7 +172,7 @@ public class EmployeeWorkController extends Constants {
                 PassController.setId(15);
                 Stage stage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pass.fxml"));
-                Scene scene = null;
+                Scene scene;
                 try {
                     scene = new Scene(fxmlLoader.load(), 400, 250);
                 } catch (IOException e) {
@@ -199,18 +185,15 @@ public class EmployeeWorkController extends Constants {
 
         // удаление детали
         button_delete.setOnMouseClicked(mouseEvent -> {
-            boolean flag = true;
+            boolean flag = !Objects.equals(detail_service, "");
             // проверка на пустоту данных
-            if (Objects.equals(detail_service, "")) {
-                flag = false;
-            }
 
             // проверка пароля пользователя
             if (flag) {
                 PassController.setId(16);
                 Stage stage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pass.fxml"));
-                Scene scene = null;
+                Scene scene;
                 try {
                     scene = new Scene(fxmlLoader.load(), 400, 250);
                 } catch (IOException e) {
@@ -265,16 +248,16 @@ public class EmployeeWorkController extends Constants {
         });
 
         // переход на окно просмотра услуг 1
-        personal_service1.setOnAction(actionEvent -> { Main.changeScene("employee_services.fxml"); });
+        personal_service1.setOnAction(actionEvent -> Main.changeScene("employee_services.fxml"));
 
         // переход на окно просмотра услуг 2
-        personal_service2.setOnAction(actionEvent -> { Main.changeScene("employee_services.fxml"); });
+        personal_service2.setOnAction(actionEvent -> Main.changeScene("employee_services.fxml"));
 
         // переход на main 1
-        personal_acc1.setOnAction(actionEvent -> { Main.changeScene("employee_main.fxml"); });
+        personal_acc1.setOnAction(actionEvent -> Main.changeScene("employee_main.fxml"));
 
         // переход на main 2
-        personal_acc2.setOnAction(actionEvent -> { Main.changeScene("employee_main.fxml"); });
+        personal_acc2.setOnAction(actionEvent -> Main.changeScene("employee_main.fxml"));
     }
 
     public static void add() throws SQLException, ClassNotFoundException {
@@ -283,7 +266,7 @@ public class EmployeeWorkController extends Constants {
                 EMPLOYEES_WORK_WORK_TIME + ") " +
                 "VALUES(?, ?, ?)";
 
-        PreparedStatement preparedStatement = databaseHandler.getDbConnection().prepareStatement(insertNew);
+        PreparedStatement preparedStatement = DatabaseHandler.getInstance().prepareStatement(insertNew);
         preparedStatement.setString(1, EmployeeMainController.getLogin());
         preparedStatement.setString(2, detail);
         preparedStatement.setString(3, time);
@@ -292,7 +275,7 @@ public class EmployeeWorkController extends Constants {
     }
 
     public static void delete() throws SQLException, ClassNotFoundException {
-        Connection connection = databaseHandler.getDbConnection();
+        Connection connection = DatabaseHandler.getInstance();
         Statement statement = connection.createStatement();
         statement.executeUpdate("DELETE FROM " + EMPLOYEES_WORK_TABLE + " WHERE " +
                 EMPLOYEES_WORK_LOGIN + " = '" + EmployeeMainController.getLogin() +

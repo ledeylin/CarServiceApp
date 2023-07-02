@@ -1,18 +1,14 @@
 package controllers;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import main.Constants;
 import main.DatabaseHandler;
 import main.Main;
 
-import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -49,13 +45,11 @@ public class SignUpController extends Constants {
     @FXML
     private Text text_mistake;
 
-    private final DatabaseHandler databaseHandler = new DatabaseHandler();
-
     @FXML
     void initialize()  {
 
         // переход на окно авторизации
-        signInWindowButton.setOnAction(actionEvent -> { Main.changeScene("sign_in.fxml"); });
+        signInWindowButton.setOnAction(actionEvent -> Main.changeScene("sign_in.fxml"));
 
         // регистрация
         signUpButton.setOnAction(actionEvent -> {
@@ -114,7 +108,7 @@ public class SignUpController extends Constants {
             // проверка номера телефона на корректность
             if (phoneNumber != null) {
                 try {
-                    String regex = "(?:\\+[\\d]{1,3}|8)(?:[\\s-]?)\\(?(?:[\\d]{3})\\)?[\\s-]?[\\d]{3}[\\s-]?[\\d]{2}[\\s-]?[\\d]{2}";
+                    String regex = "(?:\\+\\d{1,3}|8)[\\s-]?\\(?\\d{3}\\)?[\\s-]?\\d{3}[\\s-]?\\d{2}[\\s-]?\\d{2}";
                     if (!phoneNumber.matches(regex)) {
                         System.out.println("Error: incorrect phone number");
                         text_mistake.setText("Некорректный номер телефона!");
@@ -143,7 +137,7 @@ public class SignUpController extends Constants {
                 String query_clients = "SELECT * FROM " + CLIENTS_TABLE + " WHERE " + CLIENTS_LOGIN + " =?";
                 String query_employees = "SELECT * FROM " + EMPLOYEES_TABLE + " WHERE " + EMPLOYEES_LOGIN + " =?";
 
-                PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query_clients);
+                PreparedStatement statement = DatabaseHandler.getInstance().prepareStatement(query_clients);
                 statement.setString(1, login);
                 ResultSet result = statement.executeQuery();
                 if (result.next()) {
@@ -152,7 +146,7 @@ public class SignUpController extends Constants {
                     flag = false;
                 }
 
-                statement = databaseHandler.getDbConnection().prepareStatement(query_employees);
+                statement = DatabaseHandler.getInstance().prepareStatement(query_employees);
                 statement.setString(1, login);
                 result = statement.executeQuery();
                 if (result.next()) {
@@ -202,7 +196,7 @@ public class SignUpController extends Constants {
                 CLIENTS_PHONE_NUMBER + ", " + CLIENTS_LOGIN + ", " + CLIENTS_PASSWORD + ", status" +
                 ") VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
-        PreparedStatement preparedStatement = databaseHandler.getDbConnection().prepareStatement(insertNew);
+        PreparedStatement preparedStatement = DatabaseHandler.getInstance().prepareStatement(insertNew);
         preparedStatement.setString(1, lastName);
         preparedStatement.setString(2, firstName);
         preparedStatement.setString(3, secondName);

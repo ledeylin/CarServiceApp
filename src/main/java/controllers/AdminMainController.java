@@ -9,13 +9,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import main.DatabaseHandler;
 import main.Main;
 import special.User;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AdminMainController {
@@ -66,8 +63,6 @@ public class AdminMainController {
     private Text text_pass;
 
     private static String login;
-
-    private final DatabaseHandler databaseHandler = new DatabaseHandler();
 
     private boolean pane_flag = false;
 
@@ -145,7 +140,7 @@ public class AdminMainController {
         button_edit.setOnAction(actionEvent -> {
             Stage stage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("admin_edit.fxml"));
-            Scene scene = null;
+            Scene scene;
             try {
                 scene = new Scene(fxmlLoader.load(), 400, 250);
             } catch (IOException e) {
@@ -156,22 +151,22 @@ public class AdminMainController {
         });
 
         // переход на окно работников 1
-        personal_employees1.setOnAction(actionEvent -> { Main.changeScene("admin_employees.fxml"); });
+        personal_employees1.setOnAction(actionEvent -> Main.changeScene("admin_employees.fxml"));
 
         // переход на окно работников 2
-        personal_employees2.setOnAction(actionEvent -> { Main.changeScene("admin_employees.fxml"); });
+        personal_employees2.setOnAction(actionEvent -> Main.changeScene("admin_employees.fxml"));
 
         // переход на окно клиентов 1
-        personal_clients1.setOnAction(actionEvent -> { Main.changeScene("admin_clients.fxml"); });
+        personal_clients1.setOnAction(actionEvent -> Main.changeScene("admin_clients.fxml"));
 
         // переход на окно клиентов 2
-        personal_clients2.setOnAction(actionEvent -> { Main.changeScene("admin_clients.fxml"); });
+        personal_clients2.setOnAction(actionEvent -> Main.changeScene("admin_clients.fxml"));
 
         // переход на окно услуг 1
-        personal_service1.setOnAction(actionEvent -> { Main.changeScene("admin_services.fxml"); });
+        personal_service1.setOnAction(actionEvent -> Main.changeScene("admin_services.fxml"));
 
         // переход на окно услуг 2
-        personal_service2.setOnAction(actionEvent -> { Main.changeScene("admin_services.fxml"); });
+        personal_service2.setOnAction(actionEvent -> Main.changeScene("admin_services.fxml"));
 
     }
 

@@ -43,8 +43,6 @@ public class ClientGarageEditCarController extends Constants {
 
     private static String model;
 
-    private static final DatabaseHandler databaseHandler = new DatabaseHandler();
-
     public static void setOld_license_plate(String old_license_plate) {
         ClientGarageEditCarController.old_license_plate = old_license_plate;
     }
@@ -79,7 +77,7 @@ public class ClientGarageEditCarController extends Constants {
 
             // проверка гос.номера
             if (Objects.equals(license_plate, "")) {
-                String regex = "[АВЕКМНОРСТУХ]{1}\\d{3}[АВЕКМНОРСТУХ]{2}\\d{2,3}\\b|\\b[ABEKMHOPCTYX]{1}\\d{3}[ABEKMHOPCTYX]{2}\\d{2,3}";
+                String regex = "[АВЕКМНОРСТУХ]\\d{3}[АВЕКМНОРСТУХ]{2}\\d{2,3}\\b|\\b[ABEKMHOPCTYX]\\d{3}[ABEKMHOPCTYX]{2}\\d{2,3}";
                 if (!license_plate.matches(regex)) {
                     flag = false;
                     text_mistake.setText("Гос.номер введён некорректно!");
@@ -91,7 +89,7 @@ public class ClientGarageEditCarController extends Constants {
                 PassController.setId(12);
                 Stage stage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pass.fxml"));
-                Scene scene = null;
+                Scene scene;
                 try {
                     scene = new Scene(fxmlLoader.load(), 400, 250);
                 } catch (IOException e) {
@@ -116,7 +114,7 @@ public class ClientGarageEditCarController extends Constants {
             old_license_plate = license_plate;
 
             try {
-                Connection connection = databaseHandler.getDbConnection();
+                Connection connection = DatabaseHandler.getInstance();
                 Statement statement = connection.createStatement();
                 statement.executeUpdate(sqlAlterTable);
                 System.out.println("Success!");
@@ -135,7 +133,7 @@ public class ClientGarageEditCarController extends Constants {
                     " = '" + old_license_plate + "';";
 
             try {
-                Connection connection = databaseHandler.getDbConnection();
+                Connection connection = DatabaseHandler.getInstance();
                 Statement statement = connection.createStatement();
                 statement.executeUpdate(sqlAlterTable);
                 System.out.println("Success!");
@@ -154,7 +152,7 @@ public class ClientGarageEditCarController extends Constants {
                     " = '" + old_license_plate + "';";
 
             try {
-                Connection connection = databaseHandler.getDbConnection();
+                Connection connection = DatabaseHandler.getInstance();
                 Statement statement = connection.createStatement();
                 statement.executeUpdate(sqlAlterTable);
                 System.out.println("Success!");

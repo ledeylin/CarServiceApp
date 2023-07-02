@@ -56,8 +56,6 @@ public class AdminEmployeesAddController extends Constants {
 
     private boolean flag = true;
 
-    private static final DatabaseHandler databaseHandler = new DatabaseHandler();
-
     @FXML
     void initialize() {
 
@@ -87,13 +85,13 @@ public class AdminEmployeesAddController extends Constants {
                 flag = false;
             }
             else {
-                lowerCase = text_first_name.getText().trim().toLowerCase();;
+                lowerCase = text_first_name.getText().trim().toLowerCase();
                 first_name = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
             }
 
             // отчество
             try {
-                lowerCase = text_second_name.getText().trim().toLowerCase();;
+                lowerCase = text_second_name.getText().trim().toLowerCase();
                 second_name = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
             } catch (Exception ignored) {}
 
@@ -126,7 +124,7 @@ public class AdminEmployeesAddController extends Constants {
                 String query_clients = "SELECT * FROM " + CLIENTS_TABLE + " WHERE " + CLIENTS_LOGIN + " =?";
                 String query_employees = "SELECT * FROM " + EMPLOYEES_TABLE + " WHERE " + EMPLOYEES_LOGIN + " =?";
 
-                PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query_clients);
+                PreparedStatement statement = DatabaseHandler.getInstance().prepareStatement(query_clients);
                 statement.setString(1, login);
                 ResultSet result = statement.executeQuery();
                 if (result.next()) {
@@ -135,7 +133,7 @@ public class AdminEmployeesAddController extends Constants {
                     flag = false;
                 }
 
-                statement = databaseHandler.getDbConnection().prepareStatement(query_employees);
+                statement = DatabaseHandler.getInstance().prepareStatement(query_employees);
                 statement.setString(1, login);
                 result = statement.executeQuery();
                 if (result.next()) {
@@ -151,7 +149,7 @@ public class AdminEmployeesAddController extends Constants {
                 PassController.setId(2);
                 Stage stage = new Stage();
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("pass.fxml"));
-                Scene scene = null;
+                Scene scene;
                 try {
                     scene = new Scene(fxmlLoader.load(), 400, 250);
                 } catch (IOException e) {
@@ -174,7 +172,7 @@ public class AdminEmployeesAddController extends Constants {
                 EMPLOYEES_LOGIN + ", " + EMPLOYEES_PASSWORD + ", " + EMPLOYEES_ACCESS_RIGHTS +
                 ") VALUES(?, ?, ?, ?, ?, ?, ?)";
 
-        PreparedStatement preparedStatement = databaseHandler.getDbConnection().prepareStatement(insertNew);
+        PreparedStatement preparedStatement = DatabaseHandler.getInstance().prepareStatement(insertNew);
         preparedStatement.setString(1, last_name);
         preparedStatement.setString(2, first_name);
         preparedStatement.setString(3, second_name);
