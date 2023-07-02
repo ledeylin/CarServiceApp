@@ -181,6 +181,7 @@ public class ClientGarageController extends Constants {
                 car_make.setText(t1.getMake());
                 car_model.setText(t1.getModel());
                 now_license_plate = t1.getLicense_plate();
+                text_mistake.setText("");
 
                 // таблица с услугами
 
@@ -189,7 +190,7 @@ public class ClientGarageController extends Constants {
 
                     String query = "SELECT " + SERVICES_TABLE + ".*," + DETAILS_TABLE + ".*" +
                             " FROM " + SERVICES_TABLE +
-                            " INNER JOIN " + DETAILS_TABLE + " ON " + SERVICES_TABLE + "." + DETAILS_SERIAL_NUMBER +
+                            " INNER JOIN " + DETAILS_TABLE + " ON " + SERVICES_TABLE + "." + SERVICES_DETAIL_SERIAL_NUMBER +
                             " = " + DETAILS_TABLE + "." + DETAILS_SERIAL_NUMBER +
                             " WHERE " + SERVICES_LICENSE_PLATE + " = '" + now_license_plate + "';";
                     PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
@@ -268,6 +269,7 @@ public class ClientGarageController extends Constants {
                 car_make.setText(t1.getMake());
                 car_model.setText(t1.getModel());
                 now_license_plate = t1.getLicense_plate();
+                text_mistake.setText("");
 
                 // таблица с услугами
 
@@ -353,6 +355,7 @@ public class ClientGarageController extends Constants {
                     }
                     stage.setScene(scene);
                     stage.show();
+                    text_mistake.setText("");
                 }
             }
 
@@ -392,6 +395,7 @@ public class ClientGarageController extends Constants {
                 }
                 stage.setScene(scene);
                 stage.show();
+                text_mistake.setText("");
             }
         });
 
@@ -413,6 +417,7 @@ public class ClientGarageController extends Constants {
                 }
                 stage.setScene(scene);
                 stage.show();
+                text_mistake.setText("");
             }
 
         });
@@ -447,6 +452,7 @@ public class ClientGarageController extends Constants {
                 int mileage1 = Integer.parseInt(mileage);
                 ServiceRecordCreator.createServiceRecord(mileage1, detail, now_license_plate);
                 flag_service = false;
+                text_mistake.setText("");
             }
 
             else if ((!flag_service) && (flag1)) {
@@ -465,6 +471,7 @@ public class ClientGarageController extends Constants {
                     ResultSet result1 = statement1.executeQuery();
                     if (result1.next()) {
                         price = result1.getString(DETAILS_PRICE);
+                        text_mistake.setText("Цена выбранной детали - " + price + ". Если вы согласны, нажмите на кнопку повторно.");
                         old_detail = detail;
                         old_mileage = mileage;
                         flag_service = true;

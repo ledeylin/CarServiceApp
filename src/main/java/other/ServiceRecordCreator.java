@@ -1,103 +1,121 @@
 package other;
 
+import controllers.ClientGarageEditCarController;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import main.Constants;
 import main.DatabaseHandler;
+import main.Main;
 
+import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 
-public class ServiceRecordCreator {
+public class ServiceRecordCreator extends Constants {
 
     private static final DatabaseHandler databaseHandler = new DatabaseHandler();
 
     public static void createServiceRecord(int mileage, String detailCategory, String licensePlate) {
 
-        try (Connection connection = databaseHandler.getDbConnection()) {
-            Statement statement = connection.createStatement();
+        try {
 
-            // Получаем логины сотрудников, которые могут выполнять работу данной категории детали
-            ResultSet resultSet = statement.executeQuery("SELECT login FROM employees_work WHERE detail_category = '" + detailCategory + "'");
+            String query = "SELECT *\n" +
+                    "FROM " + EMPLOYEES_TABLE + " e\n" +
+                    "INNER JOIN " + EMPLOYEES_WORK_TABLE + " ew ON ew." +
+                    EMPLOYEES_WORK_LOGIN + " = e." + EMPLOYEES_LOGIN + "\n" +
+                    "WHERE (ew." + EMPLOYEES_WORK_DETAIL_CATEGORY + " = '" +
+                    detailCategory + "') AND (e." + EMPLOYEES_LOGIN +
+                    " NOT IN (\n" +
+                    "    SELECT " + SERVICES_ID_EMPLOYEE + "\n" +
+                    "    FROM " + SERVICES_TABLE + "\n" +
+                    "    WHERE " + SERVICES_FINAL_DATE + " > CURDATE()))\n" +
+                    "ORDER BY " + EMPLOYEES_WORK_WORK_TIME + " ASC\n" +
+                    "LIMIT 1;";
+            PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
             String selectedEmployeeLogin = null;
+            int time = 0;
 
-            // Выбираем сотрудника, который закончит работу раньше остальных и у него нет других работ на выбранные даты
-            while (resultSet.next()) {
-                String employeeLogin = resultSet.getString("login");
-                if (!hasScheduledWorkOnDates(employeeLogin)) {
-                    selectedEmployeeLogin = employeeLogin;
-                    break;
-                }
-            }
-            if (selectedEmployeeLogin != null) {
-                // Получаем данные о выбранном сотруднике
-                ResultSet employeeResultSet = statement.executeQuery("SELECT work_time_in_day FROM employees_work WHERE login = '" + selectedEmployeeLogin + "'");
-                int employeeWorkTimeInDay = employeeResultSet.getInt("work_time_in_day");
-
-                // Вычисляем даты начала и завершения работы
-                LocalDate startDate = getStartDate(selectedEmployeeLogin);
-                LocalDate finalDate = startDate.plusDays(employeeWorkTimeInDay);
-
-                // Генерируем SQL-запрос для создания новой записи в таблице services
-                String insertQuery = "INSERT INTO services (work_time, mileage, start_date, final_date, id_employee, license_plate, detail_serial_number) " +
-                        "VALUES (" + employeeWorkTimeInDay + ", " + mileage + ", '" + startDate + "', '" + finalDate + "', '" + selectedEmployeeLogin + "', '" + licensePlate + "', '" + getDetailSerialNumber(detailCategory, licensePlate) + "')";
-
-                // Выполняем SQL-запрос
-                statement.executeUpdate(insertQuery);
-
-                System.out.println("Запись успешно создана");
-            } else {
-                System.out.println("Нет свободных сотрудников для выполнения работы");
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static boolean hasScheduledWorkOnDates(String employeeLogin) {
-
-        LocalDate currentDate = LocalDate.now();
-        try (Connection connection = databaseHandler.getDbConnection()) {
-            Statement statement = connection.createStatement();
-
-            // Проверяем, есть ли у выбранного сотрудника работы на ближайшие даты
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM services WHERE id_employee = '" + employeeLogin + "' AND (start_date <= '" + currentDate + "' OR final_date >= '" + currentDate + "')");
-            return resultSet.next();
-
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-    private static LocalDate getStartDate(String employeeLogin) {
-        LocalDate currentDate = LocalDate.now().plusDays(1);
-        try (Connection connection = databaseHandler.getDbConnection()) {
-            Statement statement = connection.createStatement();
-
-            // Получаем дату последней работы выбранного сотрудника
-            ResultSet resultSet = statement.executeQuery("SELECT MAX(final_date) AS last_work_date FROM services WHERE id_employee = '" + employeeLogin + "'");
             if (resultSet.next()) {
-                LocalDate lastWorkDate = resultSet.getDate("last_work_date").toLocalDate();
-                if (lastWorkDate.isAfter(currentDate)) {
-                    return lastWorkDate.plusDays(1);
-                }
+                selectedEmployeeLogin = resultSet.getString("login");
+                time = resultSet.getInt(EMPLOYEES_WORK_WORK_TIME);
             }
+
+            if (selectedEmployeeLogin != null) {
+
+                LocalDate startDate = LocalDate.now().plusDays(2);
+                LocalDate finalDate = startDate.plusDays(time);
+
+                sql(String.valueOf(mileage), startDate, finalDate, selectedEmployeeLogin, licensePlate, detailCategory);
+            }
+
+            else {
+                System.out.println("Нет свободных сотрудников для выполнения работы");
+                Stage stage = new Stage();
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("client_message.fxml"));
+                Scene scene = null;
+                try {
+                    scene = new Scene(fxmlLoader.load(), 330, 140);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                stage.setScene(scene);
+                stage.show();
+            }
+
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return currentDate;
     }
 
     private static String getDetailSerialNumber(String detailCategory, String licensePlate) {
-        try (Connection connection = databaseHandler.getDbConnection()) {
-            Statement statement = connection.createStatement();
-
-            // Получаем серийный номер детали, соответствующей выбранной категории и гос. номеру машины
-            ResultSet resultSet = statement.executeQuery("SELECT detail_serial_number FROM details_compatibilities WHERE model = '" + licensePlate + "' AND detail_category = '" + detailCategory + "'");
+        try {
+            String query = "SELECT d." +
+                    DETAILS_SERIAL_NUMBER + "\n" +
+                    "FROM " + DETAILS_TABLE + " d \n" +
+                    "INNER JOIN " + DETAILS_COMPATIBILITY_TABLE + " ds ON ds." +
+                    DETAILS_COMPATIBILITY_DETAIL_SERIAL_NUMBER + " = d." +
+                    DETAILS_SERIAL_NUMBER + "\n" +
+                    "INNER JOIN " + CARS_TABLE + " c ON c." + CARS_MODEL + " = ds." +
+                    DETAILS_COMPATIBILITY_MODEL + "\n" +
+                    "WHERE c." + CARS_LICENSE_PLATE + " = '" +
+                    licensePlate +  "' AND d." + DETAILS_CATEGORY +
+                    " = '" + detailCategory + "'";
+            PreparedStatement statement = databaseHandler.getDbConnection().prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+            System.out.println(query);
             if (resultSet.next()) {
-                return resultSet.getString("detail_serial_number");
+                return resultSet.getString(DETAILS_SERIAL_NUMBER);
             }
+
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private static void sql(String mileage, LocalDate startDate, LocalDate finalDate,
+                            String selectedEmployeeLogin, String licensePlate,
+                            String detailCategory) {
+        try (Connection connection = databaseHandler.getDbConnection()) {
+            Statement statement = connection.createStatement();
+
+        String insertQuery = "INSERT INTO " + SERVICES_TABLE + " (" + SERVICES_WORK_TIME + ", " +
+                SERVICES_MILEAGE + ", " + SERVICES_START_DATE + ", " + SERVICES_FINAL_DATE +
+                ", " + SERVICES_ID_EMPLOYEE + ", " + SERVICES_LICENSE_PLATE + ", " +
+                SERVICES_DETAIL_SERIAL_NUMBER + ") " + "VALUES (" + "0" +
+                ", " + mileage + ", '" + startDate + "', '" + finalDate + "', '" +
+                selectedEmployeeLogin + "', '" + licensePlate + "', '" +
+                getDetailSerialNumber(detailCategory, licensePlate) + "')";
+
+            statement.executeUpdate(insertQuery);
+            System.out.println("Запись успешно создана");
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
     }
 
 }
