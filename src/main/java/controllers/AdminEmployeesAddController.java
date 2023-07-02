@@ -64,24 +64,38 @@ public class AdminEmployeesAddController extends Constants {
         // сохранение
         button_save.setOnAction(actionEvent -> {
 
-            // проверка фамилии
             last_name = text_last_name.getText().trim();
+            first_name = text_first_name.getText().trim();
+            second_name = text_second_name.getText().trim();
+
+            String lowerCase;
+            // проверка фамилии на пустоту
             if (last_name.equals("")) {
                 System.out.println("Error: empty last name.");
                 text_mistake.setText("Вы не ввели фамилию!");
                 flag = false;
             }
+            else {
+                lowerCase = text_last_name.getText().trim().toLowerCase();
+                last_name = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
+            }
 
-            // проверка имени
-            first_name = text_first_name.getText().trim();
+            // проверка имени на пустоту
             if (first_name.equals("")) {
                 System.out.println("Error: empty first name.");
                 text_mistake.setText("Вы не ввели имя!");
                 flag = false;
             }
+            else {
+                lowerCase = text_first_name.getText().trim().toLowerCase();;
+                first_name = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
+            }
 
-            // фамилия
-            second_name = text_second_name.getText().trim();
+            // отчество
+            try {
+                lowerCase = text_second_name.getText().trim().toLowerCase();;
+                second_name = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
+            } catch (Exception ignored) {}
 
             // проверка адреса
             address = text_address.getText().trim();

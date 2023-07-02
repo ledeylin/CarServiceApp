@@ -82,6 +82,22 @@ public class AdminEmployeesEditController extends Constants {
             try { permissions = Integer.parseInt(signUpPermissions.getText().trim()); }
             catch (NumberFormatException ignored) { }
 
+            String lowerCase;
+            try {
+                lowerCase = last_name.toLowerCase();
+                last_name = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
+            } catch (Exception ignored) {}
+
+            try {
+                lowerCase = first_name.toLowerCase();
+                first_name = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
+            } catch (Exception ignored) {}
+
+            try {
+                lowerCase = second_name.toLowerCase();
+                second_name = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
+            } catch (Exception ignored) {}
+
             // проверка логина на повторение
             try {
                 String query_clients = "SELECT * FROM " + CLIENTS_TABLE + " WHERE " + CLIENTS_LOGIN + " =?";

@@ -78,11 +78,16 @@ public class AdminClientsAddController extends Constants {
             login = text_login.getText().trim();
             pass = text_password.getText().trim();
 
+            String lowerCase;
             // проверка фамилии на пустоту
             if (last_name.equals("")) {
                 System.out.println("Error: empty last name.");
                 text_mistake.setText("Вы не ввели фамилию!");
                 flag = false;
+            }
+            else {
+                lowerCase = text_last_name.getText().trim().toLowerCase();
+                last_name = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
             }
 
             // проверка имени на пустоту
@@ -91,6 +96,15 @@ public class AdminClientsAddController extends Constants {
                 text_mistake.setText("Вы не ввели имя!");
                 flag = false;
             }
+            else {
+                lowerCase = text_first_name.getText().trim().toLowerCase();;
+                first_name = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
+            }
+
+            try {
+                lowerCase = text_second_name.getText().trim().toLowerCase();;
+                second_name = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
+            } catch (Exception ignored) {}
 
             // проверка логина на пустоту
             if (login.equals("")) {

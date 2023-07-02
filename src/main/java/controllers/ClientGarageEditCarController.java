@@ -10,12 +10,13 @@ import javafx.stage.Stage;
 import main.Constants;
 import main.DatabaseHandler;
 import main.Main;
+import other.CarsBase;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Objects;
+import java.util.*;
 
 public class ClientGarageEditCarController extends Constants {
 
@@ -47,6 +48,7 @@ public class ClientGarageEditCarController extends Constants {
     public static void setOld_license_plate(String old_license_plate) {
         ClientGarageEditCarController.old_license_plate = old_license_plate;
     }
+
     @FXML
     void initialize() throws SQLException, ClassNotFoundException {
 
@@ -58,8 +60,31 @@ public class ClientGarageEditCarController extends Constants {
                 license_plate = signUpLicensePlate.getText().trim();
                 make = text_car_make.getText().trim();
                 model = text_car_model.getText().trim();
+            } catch (Exception ignored) {
             }
-            catch (Exception ignored) { }
+
+            // проверка существования марки
+            boolean exists = CarsBase.validateCarMake(make);
+            if (!exists) {
+                flag = false;
+                text_mistake.setText("Мы не обслуживаем введёную марку автомобилей.");
+            }
+
+            // проверка существования модели
+            exists = CarsBase.validateCarModel(model);
+            if (!exists) {
+                flag = false;
+                text_mistake.setText("Мы не обслуживаем введёную модель автомобилей.");
+            }
+
+            // проверка гос.номера
+            if (Objects.equals(license_plate, "")) {
+                String regex = "[АВЕКМНОРСТУХ]{1}\\d{3}[АВЕКМНОРСТУХ]{2}\\d{2,3}\\b|\\b[ABEKMHOPCTYX]{1}\\d{3}[ABEKMHOPCTYX]{2}\\d{2,3}";
+                if (!license_plate.matches(regex)) {
+                    flag = false;
+                    text_mistake.setText("Гос.номер введён некорректно!");
+                }
+            }
 
             // проверка пароля
             if (flag) {
@@ -140,5 +165,4 @@ public class ClientGarageEditCarController extends Constants {
         }
 
     }
-
 }

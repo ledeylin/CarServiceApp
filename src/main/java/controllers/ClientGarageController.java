@@ -21,6 +21,7 @@ import javafx.util.Duration;
 import main.Constants;
 import main.DatabaseHandler;
 import main.Main;
+import other.CarsBase;
 import other.ServiceRecordCreator;
 import special.Cars;
 import special.Services;
@@ -135,6 +136,10 @@ public class ClientGarageController extends Constants {
     private static String model = "";
 
     private String now_detail = "";
+
+    private String old_detail = "";
+
+    private String old_mileage = "";
 
     private boolean car_status = true;
 
@@ -315,6 +320,26 @@ public class ClientGarageController extends Constants {
                     flag = false;
                     text_mistake.setText("Вы не ввели гос.номер машины!");
                 }
+                // проверка существования марки
+                boolean exists = CarsBase.validateCarMake(make);
+                if (!exists) {
+                    flag = false;
+                    text_mistake.setText("Мы не обслуживаем введёную марку автомобилей.");
+                }
+                // проверка существования модели
+                exists = CarsBase.validateCarModel(model);
+                if (!exists) {
+                    flag = false;
+                    text_mistake.setText("Мы не обслуживаем введёную модель автомобилей.");
+                }
+                // проверка гос.номера
+                if (Objects.equals(licensePlate, "")) {
+                    String regex = "[АВЕКМНОРСТУХ]{1}\\d{3}[АВЕКМНОРСТУХ]{2}\\d{2,3}\\b|\\b[ABEKMHOPCTYX]{1}\\d{3}[ABEKMHOPCTYX]{2}\\d{2,3}";
+                    if (!licensePlate.matches(regex)) {
+                        flag = false;
+                        text_mistake.setText("Гос.номер введён некорректно!");
+                    }
+                }
                 // проверка пароля пользователя
                 if (flag) {
                     PassController.setId(13);
@@ -395,12 +420,37 @@ public class ClientGarageController extends Constants {
         // добавление услуги
         button_add_service.setOnMouseClicked(mouseEvent -> {
 
+            boolean flag1 = true;
             String mileage = text_mileage.getText();
             String detail = choice_box_detail.getValue();
 
-            if (!flag_service) {
+            try {
+                int i = Integer.parseInt(mileage);
+            } catch (NumberFormatException e) {
+                flag1 = false;
+                text_mistake.setText("Введите корректный пробег!");
+            }
 
-                boolean flag = true;
+            if (mileage.equals("")) {
+                flag1 = false;
+                text_mistake.setText("Вы не ввели пробег.");
+            }
+
+            if (detail.equals("")) {
+                flag1 = false;
+                text_mistake.setText("Вы не выбрали деталь.");
+            }
+
+            if ((flag_service) && (flag1) &&
+                    (mileage.equals(old_mileage)) &&
+                    (detail.equals(old_detail))) {
+                int mileage1 = Integer.parseInt(mileage);
+                ServiceRecordCreator.createServiceRecord(mileage1, detail, now_license_plate);
+                flag_service = false;
+            }
+
+            else if ((!flag_service) && (flag1)) {
+
                 String price = "";
 
                 try {
@@ -415,32 +465,15 @@ public class ClientGarageController extends Constants {
                     ResultSet result1 = statement1.executeQuery();
                     if (result1.next()) {
                         price = result1.getString(DETAILS_PRICE);
+                        old_detail = detail;
+                        old_mileage = mileage;
+                        flag_service = true;
                     } else {
-                        flag = false;
                         text_mistake.setText("К сожалению, детали закончились.");
                     }
                 } catch (SQLException | ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
-
-                if (mileage.equals("")) {
-                    flag = false;
-                    text_mistake.setText("Вы не ввели пробег машины!");
-                }
-                if (detail.equals("")) {
-                    flag = false;
-                    text_mistake.setText("Вы не выбрали деталь!");
-                }
-                if (flag) {
-                    text_mistake.setText("Цена выбранной детали равна " + price + ". Если согласны - повторно нажмите кнопку.");
-                    flag_service = true;
-                }
-            }
-
-            else {
-                int mileage1 = Integer.parseInt(mileage);
-                ServiceRecordCreator.createServiceRecord(mileage1, detail, now_license_plate);
-                flag_service = false;
             }
 
         });

@@ -81,6 +81,22 @@ public class AdminClientsEditController extends Constants {
             login = signUpLogin.getText().trim();
             pass = signUpPassword.getText().trim();
 
+            String lowerCase;
+            try {
+                lowerCase = last_name.toLowerCase();
+                last_name = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
+            } catch (Exception ignored) {}
+
+            try {
+                lowerCase = first_name.toLowerCase();
+                first_name = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
+            } catch (Exception ignored) {}
+
+            try {
+                lowerCase = second_name.toLowerCase();
+                second_name = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
+            } catch (Exception ignored) {}
+
             // проверка логина на повторение
             if (!Objects.equals(login, "")) {
                 try {

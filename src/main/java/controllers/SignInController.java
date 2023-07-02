@@ -124,6 +124,22 @@ public class SignInController extends Constants {
                         String car_now = result.getString("active_cars");
                         String car_old = result.getString("inactive_cars");
 
+                        String lowerCase;
+                        try {
+                            lowerCase = last_name.toLowerCase();
+                            last_name = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
+                        } catch (Exception ignored) {}
+
+                        try {
+                            lowerCase = first_name.toLowerCase();
+                            first_name = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
+                        } catch (Exception ignored) {}
+
+                        try {
+                            lowerCase = second_name.toLowerCase();
+                            second_name = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
+                        } catch (Exception ignored) {}
+
                         User user = new User(last_name, first_name,
                                 second_name, address,
                                 phone_number, login,
@@ -165,6 +181,22 @@ public class SignInController extends Constants {
                         String work_time = result.getString("total_work_time");
                         String salary = result.getString("total_salary");
 
+                        String lowerCase;
+                        try {
+                            lowerCase = last_name.toLowerCase();
+                            last_name = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
+                        } catch (Exception ignored) {}
+
+                        try {
+                            lowerCase = first_name.toLowerCase();
+                            first_name = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
+                        } catch (Exception ignored) {}
+
+                        try {
+                            lowerCase = second_name.toLowerCase();
+                            second_name = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
+                        } catch (Exception ignored) {}
+
                         User user = new User(last_name, first_name,
                                 second_name, address, login,
                                 password, "1", work_time, salary);
@@ -203,6 +235,22 @@ public class SignInController extends Constants {
                         String address = result.getString(EMPLOYEES_ADDRESS);
                         String work_time = result.getString("total_work_time");
                         String salary = result.getString("total_salary");
+
+                        String lowerCase;
+                        try {
+                            lowerCase = last_name.toLowerCase();
+                            last_name = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
+                        } catch (Exception ignored) {}
+
+                        try {
+                            lowerCase = first_name.toLowerCase();
+                            first_name = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
+                        } catch (Exception ignored) {}
+
+                        try {
+                            lowerCase = second_name.toLowerCase();
+                            second_name = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
+                        } catch (Exception ignored) {}
 
                         User user = new User(last_name, first_name,
                                 second_name, address, login,
