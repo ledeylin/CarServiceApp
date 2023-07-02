@@ -263,5 +263,7 @@ public class AdminServicesEditController extends Constants {
             System.out.println("Дата начала должна быть раньше, чем дата окончания");
         }
 
+        Main.changeScene("admin_services.fxml");
+
     }
 }

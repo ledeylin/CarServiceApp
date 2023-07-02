@@ -122,6 +122,8 @@ public class EmployeeEditController extends Constants {
             PassController.setPassword(pass);
         }
 
+        Main.changeScene("employee_main.fxml");
+
     }
 
 }

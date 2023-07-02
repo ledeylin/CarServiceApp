@@ -307,6 +307,8 @@ public class AdminEmployeesController extends Constants {
                 EMPLOYEES_LOGIN + " = '" + text_old_login + "';");
         System.out.println("Success!");
 
+        Main.changeScene("admin_employees.fxml");
+
     }
 
 }

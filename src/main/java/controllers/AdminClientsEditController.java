@@ -239,6 +239,8 @@ public class AdminClientsEditController extends Constants {
             System.out.println("Success!");
         }
 
+        Main.changeScene("admin_clients.fxml");
+
     }
 
 }

@@ -162,5 +162,7 @@ public class ClientGarageEditCarController extends Constants {
 
         }
 
+        Main.changeScene("client_garage.fxml");
+
     }
 }

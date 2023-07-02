@@ -272,6 +272,8 @@ public class EmployeeWorkController extends Constants {
         preparedStatement.setString(3, time);
         preparedStatement.executeUpdate();
 
+        Main.changeScene("employee_work_time.fxml");
+
     }
 
     public static void delete() throws SQLException, ClassNotFoundException {
@@ -280,6 +282,8 @@ public class EmployeeWorkController extends Constants {
         statement.executeUpdate("DELETE FROM " + EMPLOYEES_WORK_TABLE + " WHERE " +
                 EMPLOYEES_WORK_LOGIN + " = '" + EmployeeMainController.getLogin() +
                 "' AND " + EMPLOYEES_WORK_DETAIL_CATEGORY + " = '" + detail_service + "';");
+
+        Main.changeScene("employee_work_time.fxml");
 
     }
 

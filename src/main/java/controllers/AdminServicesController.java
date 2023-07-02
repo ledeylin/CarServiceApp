@@ -280,6 +280,8 @@ public class AdminServicesController extends Constants {
         Statement statement = connection.createStatement();
         statement.executeUpdate("DELETE FROM " + SERVICES_TABLE + " WHERE " + SERVICES_ID + " = '" + id + "'");
 
+        Main.changeScene("admin_services.fxml");
+
     }
 
 }

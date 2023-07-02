@@ -183,6 +183,8 @@ public class AdminEmployeesAddController extends Constants {
         preparedStatement.executeUpdate();
         System.out.println("Access!");
 
+        Main.changeScene("admin_employees.fxml");
+
     }
 
 }

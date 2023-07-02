@@ -148,7 +148,7 @@ public class ClientGarageController extends Constants {
         // таблица с машинами нынешними
 
         String query = "SELECT * FROM cars WHERE id_owner = '" + ClientMainController.getLogin() + "' AND status = '1';";
-        PreparedStatement statement = DatabaseHandler.getInstance().prepareStatement(query);
+        PreparedStatement statement = DatabaseHandler.getDbConnection().prepareStatement(query);
         ResultSet result = statement.executeQuery();
 
         ObservableList<special.Cars> c1 = FXCollections.observableArrayList();
@@ -559,6 +559,8 @@ public class ClientGarageController extends Constants {
             preparedStatement.setString(4, make);
             preparedStatement.setString(5, "1");
             preparedStatement.executeUpdate();
+
+            Main.changeScene("client_garage.fxml");
     }
 
     public static void delete() throws SQLException, ClassNotFoundException {
@@ -567,6 +569,9 @@ public class ClientGarageController extends Constants {
         statement.executeUpdate("UPDATE " + CARS_TABLE +
                 " SET status = '0' WHERE " +
                 CARS_LICENSE_PLATE + " = '" + now_license_plate + "';");
+
+        Main.changeScene("client_garage.fxml");
+
     }
 
 }

@@ -126,6 +126,8 @@ public class AdminEditController extends Constants {
             PassController.setPassword(pass);
         }
 
+        Main.changeScene("admin_main.fxml");
+
     }
 
 }

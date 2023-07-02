@@ -124,6 +124,8 @@ public class ClientEditController extends Constants {
             PassController.setPassword(pass);
         }
 
+        Main.changeScene("client_main.fxml");
+
     }
 
 }

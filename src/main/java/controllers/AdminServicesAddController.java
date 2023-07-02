@@ -163,6 +163,8 @@ public class AdminServicesAddController extends Constants {
         preparedStatement.setString(7, license_plate);
         preparedStatement.executeUpdate();
 
+        Main.changeScene("admin_services.fxml");
+
     }
 
 }

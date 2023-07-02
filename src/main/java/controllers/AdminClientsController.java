@@ -300,6 +300,8 @@ public class AdminClientsController extends Constants {
         statement.executeUpdate("UPDATE " + CLIENTS_TABLE +
                 " SET status = '0' WHERE " +
                 CLIENTS_LOGIN + " = '" + old_login + "';");
+
+        Main.changeScene("admin_clients.fxml");
     }
 
 }

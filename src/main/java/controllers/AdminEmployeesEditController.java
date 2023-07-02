@@ -209,5 +209,7 @@ public class AdminEmployeesEditController extends Constants {
             System.out.println("Success!");
         }
 
+        Main.changeScene("admin_employees.fxml");
+
     }
 }

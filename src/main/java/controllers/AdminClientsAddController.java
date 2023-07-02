@@ -208,6 +208,8 @@ public class AdminClientsAddController extends Constants {
         preparedStatement.setInt(8, 1);
         preparedStatement.executeUpdate();
 
+        Main.changeScene("admin_clients.fxml");
+
     }
 
 }
